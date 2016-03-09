@@ -2,7 +2,7 @@
 # Continuous Integration Tasks
 
 # Immediately exit on errors
-set -euo pipefail
+set -exuo pipefail
 
 # VARs
 APPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)"
