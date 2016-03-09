@@ -17,10 +17,10 @@ dependencies:
 
 test:
   override:
-    - ./scripts/ci.sh test
+    - scripts/ci.sh test
 
 deployment:
   s3:
     branch: /.*/
     commands:
-      - ./scripts/ci.sh deploy
+      - scripts/ci.sh deploy
