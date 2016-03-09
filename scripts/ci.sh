@@ -9,8 +9,8 @@ APPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)"
 AWS_S3_BUCKET="${AWS_S3_BUCKET:-}"
 VERSION_FILE="${APPDIR}/VERSION"
 VERSION=$(cat "$VERSION_FILE")
-GITSHA1=${CIRCLE_SHA1:-$(git rev-parse --short HEAD 2>/dev/null)}
-TARBALL="vgs-${VERSION}-${GITSHA1}.tgz"
+BUILD_NUM=${CIRCLE_BUILD_NUM:-}
+TARBALL="vgs-${VERSION}-${BUILD_NUM}.tgz"
 PKG_DIR=${CIRCLE_ARTIFACTS:-'./pkg'}
 TGZPATH="${PKG_DIR}/${TARBALL}"
 GIT_BRANCH=${CIRCLE_BRANCH:-$(git symbolic-ref --short HEAD 2>/dev/null)}
@@ -18,14 +18,14 @@ S3_PREFIX=$GIT_BRANCH
 
 # Load functions
 # shellcheck disable=1090
-. "${APPDIR}/load" || true
+. "${APPDIR}/load"
 
 # Sanity checks
 sanity_checks(){
   # Create packaging directory if it does not exists
   [[ -d "$PKG_DIR" ]] || mkdir -p "$PKG_DIR"
   # Remove existing an existing archive if it exists
-  [[ -s "$TGZPATH" ]] && rm -f "$TGZPATH"
+  [[ ! -s "$TGZPATH" ]] || rm -f "$TGZPATH"
 }
 
 # Archive all system assets to a tarball ready for upload
@@ -56,9 +56,15 @@ lint_sh_files(){
   done < <(find . -type f -name '*.sh' -print0)
 }
 
+install_ci(){
+  pip install --user --upgrade awscli
+  cabal update; cabal install shellcheck
+}
+
 # Process arguments
 case "${1:-}" in
   install)
+    install_ci
     ;;
   test)
     lint_sh_files

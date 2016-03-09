@@ -12,8 +12,8 @@ dependencies:
     - '~/.cabal'
     - '~/.ghc'
   override:
-    - pip install --user --upgrade awscli
-    - cabal update; cabal install shellcheck
+    - scripts/ci.sh install
+
 
 test:
   override:
