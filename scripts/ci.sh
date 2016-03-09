@@ -17,8 +17,7 @@ GIT_BRANCH=${CIRCLE_BRANCH:-$(git symbolic-ref --short HEAD 2>/dev/null)}
 S3_PREFIX=$GIT_BRANCH
 
 # Load functions
-# shellcheck disable=1090
-[ -s "${APPDIR}/load" ] && . "${APPDIR}/load"
+: . "${APPDIR}/load"
 
 # Sanity checks
 sanity_checks(){
