@@ -1,0 +1,26 @@
+machine:
+  ghc:
+    version: 7.10.2
+  environment:
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_S3_BUCKET: vghn-vgs
+    PATH: $HOME/.cabal/bin/:$PATH
+    SHELLCHECK_OPTS: '-e SC2059'
+
+dependencies:
+  cache_directories:
+    - '~/.cache/pip'
+    - "~/.cabal"
+  override:
+    - pip install --user --upgrade awscli
+    - cabal update; cabal install shellcheck
+
+test:
+  override:
+    - ./scripts/ci.sh test
+
+deployment:
+  s3:
+    branch: /.*/
+    commands:
+      - ./scripts/ci.sh deploy
