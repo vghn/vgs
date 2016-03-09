@@ -17,7 +17,7 @@ S3_PREFIX=$GIT_BRANCH
 
 # Load functions
 # shellcheck disable=1091
-[ -s ./load ] && . ./load
+[ -s ./load ] && . ./load || true
 
 # Sanity checks
 sanity_checks(){
