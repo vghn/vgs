@@ -2,6 +2,7 @@
 # Output Functions
 
 # BASH Colors
+export fgblk fgred fggrn fgylw fgblu fgpur fgcyn fgwht
 fgblk="$(tput setaf 0)"     # Black - Regular
 fgred="$(tput setaf 1)"     # Red
 fggrn="$(tput setaf 2)"     # Green
@@ -11,6 +12,7 @@ fgpur="$(tput setaf 5)"     # Purple
 fgcyn="$(tput setaf 6)"     # Cyan
 fgwht="$(tput setaf 7)"     # White
 
+export bfgblk bfgred bfggrn bfgylw bfgblu bfgpur bfgcyn bfgwht
 bfgblk="$(tput setaf 8)"    # Black - Bright
 bfgred="$(tput setaf 9)"    # Red
 bfggrn="$(tput setaf 10)"   # Green
@@ -20,6 +22,7 @@ bfgpur="$(tput setaf 13)"   # Purple
 bfgcyn="$(tput setaf 14)"   # Cyan
 bfgwht="$(tput setaf 15)"   # White
 
+export bgblk bgred bggrn bgylw bgblu bgpur bgcyn bgwht
 bgblk="$(tput setab 0)"     # Black - Background
 bgred="$(tput setab 1)"     # Red
 bggrn="$(tput setab 2)"     # Green
@@ -29,6 +32,7 @@ bgpur="$(tput setab 5)"     # Purple
 bgcyn="$(tput setab 6)"     # Cyan
 bgwht="$(tput setab 7)"     # White
 
+export bbgblk bbgred bbggrn bbgylw bbgblu bbgpur bbgcyn bbgwht
 bbgblk="$(tput setab 8)"    # Black - Background - Bright
 bbgred="$(tput setab 9)"    # Red
 bbggrn="$(tput setab 10)"   # Green
@@ -38,6 +42,7 @@ bbgpur="$(tput setab 13)"   # Purple
 bbgcyn="$(tput setab 14)"   # Cyan
 bbgwht="$(tput setab 15)"   # White
 
+export normal mkbolb undrln noundr mkblnk revers
 normal="$(tput sgr0)"       # text reset
 mkbold="$(tput bold)"       # make bold
 undrln="$(tput smul)"       # underline

@@ -4,8 +4,7 @@ machine:
   environment:
     AWS_DEFAULT_REGION: us-east-1
     AWS_S3_BUCKET: vghn-vgs
-    PATH: $HOME/.cabal/bin/:$PATH
-    SHELLCHECK_OPTS: '-e SC2059'
+    PATH: $HOME/.cabal/bin:$PATH
 
 dependencies:
   cache_directories:
