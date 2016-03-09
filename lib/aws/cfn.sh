@@ -47,7 +47,7 @@ vgs_aws_cfn_get_output(){
 }
 
 # NAME: vgs_aws_cfn_events
-# DESCRIPTION: Show all events for CF stack until update completes or fails.
+# DESCRIPTION: Lists CloudFormation stack events.
 # USAGE: vgs_aws_cfn_events {Stack name}
 # PARAMETERS:
 #   1) Stack name (required)
