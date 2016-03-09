@@ -5,8 +5,9 @@
 set -euo pipefail
 
 # VARs
+APPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)"
 AWS_S3_BUCKET="${AWS_S3_BUCKET:-}"
-VERSION_FILE='VERSION'
+VERSION_FILE="${APPDIR}/VERSION"
 VERSION=$(cat "$VERSION_FILE")
 GITSHA1=${CIRCLE_SHA1:-$(git rev-parse --short HEAD 2>/dev/null)}
 TARBALL="vgs-${VERSION}-${GITSHA1}.tgz"
@@ -16,8 +17,8 @@ GIT_BRANCH=${CIRCLE_BRANCH:-$(git symbolic-ref --short HEAD 2>/dev/null)}
 S3_PREFIX=$GIT_BRANCH
 
 # Load functions
-# shellcheck disable=1091
-[ -s ./load ] && . ./load
+# shellcheck disable=1090
+[ -s "${APPDIR}/load" ] && . "${APPDIR}/load"
 
 # Sanity checks
 sanity_checks(){
