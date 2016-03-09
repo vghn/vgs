@@ -1,4 +1,6 @@
 # VGS  (UNDER DEVELOPMENT!)
+  [![Circle CI](https://circleci.com/gh/vghn/vgs/tree/master.svg?style=svg)](https://circleci.com/gh/vghn/vgs/tree/master)
+
 A collection of useful functions
 
 ## Install
