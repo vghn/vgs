@@ -3,52 +3,52 @@
 
 # BASH Colors
 export fgblk fgred fggrn fgylw fgblu fgpur fgcyn fgwht
-fgblk="$(tput setaf 0)"     # Black - Regular
-fgred="$(tput setaf 1)"     # Red
-fggrn="$(tput setaf 2)"     # Green
-fgylw="$(tput setaf 3)"     # Yellow
-fgblu="$(tput setaf 4)"     # Blue
-fgpur="$(tput setaf 5)"     # Purple
-fgcyn="$(tput setaf 6)"     # Cyan
-fgwht="$(tput setaf 7)"     # White
+fgblk="$(tput setaf 0 || true)"     # Black - Regular
+fgred="$(tput setaf 1 || true)"     # Red
+fggrn="$(tput setaf 2 || true)"     # Green
+fgylw="$(tput setaf 3 || true)"     # Yellow
+fgblu="$(tput setaf 4 || true)"     # Blue
+fgpur="$(tput setaf 5 || true)"     # Purple
+fgcyn="$(tput setaf 6 || true)"     # Cyan
+fgwht="$(tput setaf 7 || true)"     # White
 
 export bfgblk bfgred bfggrn bfgylw bfgblu bfgpur bfgcyn bfgwht
-bfgblk="$(tput setaf 8)"    # Black - Bright
-bfgred="$(tput setaf 9)"    # Red
-bfggrn="$(tput setaf 10)"   # Green
-bfgylw="$(tput setaf 11)"   # Yellow
-bfgblu="$(tput setaf 12)"   # Blue
-bfgpur="$(tput setaf 13)"   # Purple
-bfgcyn="$(tput setaf 14)"   # Cyan
-bfgwht="$(tput setaf 15)"   # White
+bfgblk="$(tput setaf 8 || true)"    # Black - Bright
+bfgred="$(tput setaf 9 || true)"    # Red
+bfggrn="$(tput setaf 10 || true)"   # Green
+bfgylw="$(tput setaf 11 || true)"   # Yellow
+bfgblu="$(tput setaf 12 || true)"   # Blue
+bfgpur="$(tput setaf 13 || true)"   # Purple
+bfgcyn="$(tput setaf 14 || true)"   # Cyan
+bfgwht="$(tput setaf 15 || true)"   # White
 
 export bgblk bgred bggrn bgylw bgblu bgpur bgcyn bgwht
-bgblk="$(tput setab 0)"     # Black - Background
-bgred="$(tput setab 1)"     # Red
-bggrn="$(tput setab 2)"     # Green
-bgylw="$(tput setab 3)"     # Yellow
-bgblu="$(tput setab 4)"     # Blue
-bgpur="$(tput setab 5)"     # Purple
-bgcyn="$(tput setab 6)"     # Cyan
-bgwht="$(tput setab 7)"     # White
+bgblk="$(tput setab 0 || true)"     # Black - Background
+bgred="$(tput setab 1 || true)"     # Red
+bggrn="$(tput setab 2 || true)"     # Green
+bgylw="$(tput setab 3 || true)"     # Yellow
+bgblu="$(tput setab 4 || true)"     # Blue
+bgpur="$(tput setab 5 || true)"     # Purple
+bgcyn="$(tput setab 6 || true)"     # Cyan
+bgwht="$(tput setab 7 || true)"     # White
 
 export bbgblk bbgred bbggrn bbgylw bbgblu bbgpur bbgcyn bbgwht
-bbgblk="$(tput setab 8)"    # Black - Background - Bright
-bbgred="$(tput setab 9)"    # Red
-bbggrn="$(tput setab 10)"   # Green
-bbgylw="$(tput setab 11)"   # Yellow
-bbgblu="$(tput setab 12)"   # Blue
-bbgpur="$(tput setab 13)"   # Purple
-bbgcyn="$(tput setab 14)"   # Cyan
-bbgwht="$(tput setab 15)"   # White
+bbgblk="$(tput setab 8  || true)"   # Black - Background - Bright
+bbgred="$(tput setab 9  || true)"   # Red
+bbggrn="$(tput setab 10 || true)"   # Green
+bbgylw="$(tput setab 11 || true)"   # Yellow
+bbgblu="$(tput setab 12 || true)"   # Blue
+bbgpur="$(tput setab 13 || true)"   # Purple
+bbgcyn="$(tput setab 14 || true)"   # Cyan
+bbgwht="$(tput setab 15 || true)"   # White
 
 export normal mkbolb undrln noundr mkblnk revers
-normal="$(tput sgr0)"       # text reset
-mkbold="$(tput bold)"       # make bold
-undrln="$(tput smul)"       # underline
-noundr="$(tput rmul)"       # remove underline
-mkblnk="$(tput blink)"      # make blink
-revers="$(tput rev)"        # reverse
+normal="$(tput sgr0  || true)"      # text reset
+mkbold="$(tput bold  || true)"      # make bold
+undrln="$(tput smul  || true)"      # underline
+noundr="$(tput rmul  || true)"      # remove underline
+mkblnk="$(tput blink || true)"      # make blink
+revers="$(tput rev   || true)"      # reverse
 
 # Logging stuff.
 TERM=${TERM:-screen-256color}
