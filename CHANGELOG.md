@@ -1,2 +1,20 @@
-
+## Version 0.0.1 / 2016-03-10
+  * Initial import ([Vlad - 666a09f](https://github.com/vghn/vgs/commit/666a09f2cd2cbae4d842d80890c4aaa69be86cc0))
+  * Fix paths ([Vlad - 216393a](https://github.com/vghn/vgs/commit/216393ad9606706bd88f892912b96e45c386c22d))
+  * Fix CI ([Vlad - 1c3cdea](https://github.com/vghn/vgs/commit/1c3cdea3ba364e09991a510f9b3fd2a309bf23eb))
+  * Do not fail on load ([Vlad - 869cd4f](https://github.com/vghn/vgs/commit/869cd4f2dd9baff3483c3065126749f45bb1d5df))
+  * Lint code ([Vlad - 6a23249](https://github.com/vghn/vgs/commit/6a232497780117a9bcd8025b2f05ea0d96f437b0))
+  * Fix load command ([Vlad - d213e3e](https://github.com/vghn/vgs/commit/d213e3e55f73561ac037f8e2a9e74ad29412a0d8)) ([Vlad - 1afc13a](https://github.com/vghn/vgs/commit/1afc13a3bb62acf1938e03cfe310c7c8695dc575)) ([Vlad - 2a5a2ec](https://github.com/vghn/vgs/commit/2a5a2ecafc54e0adfdeb4c01251414d5d184ea52))
+  * Debug ci script ([Vlad - 83829be](https://github.com/vghn/vgs/commit/83829be0407a32f668fcb3d320204a18e1efa669))
+  * Improve deployment ([Vlad - 2b2b6da](https://github.com/vghn/vgs/commit/2b2b6da5cbc23eaa8a1afa3b6b9be06980bba55a))
+  * Do not fail tput ([Vlad - 8b8e5af](https://github.com/vghn/vgs/commit/8b8e5af49807f7475be0be4fa1a0c9770142ada2))
+  * Ignore pkg directory ([Vlad - 52940c5](https://github.com/vghn/vgs/commit/52940c5e7c7511dd6807382ffe75772280478d26))
+  * Fix deployment path ([Vlad - cb6d053](https://github.com/vghn/vgs/commit/cb6d0531b0c0b229efeaea71201d719f9d30ddc6))
+  * Stop debugging ci.sh ([Vlad - ba56413](https://github.com/vghn/vgs/commit/ba5641355d76c6cc51d6e6d848a200986a1cedbf))
+  * Add build badge ([Vlad - dd8026f](https://github.com/vghn/vgs/commit/dd8026fe6d4853e6ca8cbfd25c14f306bdeee9f7))
+  * Build number should default to 0 ([Vlad - 2280f0d](https://github.com/vghn/vgs/commit/2280f0d4107e189c4a17a6abaab42fe0985f6525))
+  * Fix function documentation ([Vlad - 0a7e7ba](https://github.com/vghn/vgs/commit/0a7e7bacb0d0b46e4a3018ab836182a0436ff434))
+  * Add a release script ([Vlad - 8214663](https://github.com/vghn/vgs/commit/8214663f7c4bc4d1839e0e7a5deb639bfa3c667d))
+  * Fix release script ([Vlad - 4f4fb8b](https://github.com/vghn/vgs/commit/4f4fb8b445ef39b5f629c7b40f3a81f52316cd37))
+  * Rename scripts dir ([Vlad - 16447f0](https://github.com/vghn/vgs/commit/16447f01bcd07c9db1bdfc938777a70b91c0b57b))
 
