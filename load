@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Loads VGS
+
+# VARs
+export VGS_DIR VGS_TMP
+VGS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+VGS_TMP="$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')"
+
+# Load functions
+for file in ${VGS_DIR}/lib/*.sh; do
+  # shellcheck disable=1090
+  . "$file"
+done
