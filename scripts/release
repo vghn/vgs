@@ -57,7 +57,9 @@ sanity_checks(){
 
 # List changes from git log, excluding those starting with 'Minor' or 'WIP'
 get_changes(){
-  git log "$(cat "$VERSION_FILE")"..."${GIT_BRANCH}" --reverse --no-merges \
+  local previous; previous=$(cat "$VERSION_FILE")
+  if [[ "$previous" == '0.0.0' ]]; then previous='master'; fi
+  git log "$previous"..."$GIT_BRANCH" --reverse --no-merges \
     --grep '^Submodules update$' --grep '^WIP' --grep '^Bump.*version.*' \
     --invert-grep --pretty=format:"  * %s ([%cn - %h](${GITHUB_URL}/commit/%H))"
 }
