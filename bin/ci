@@ -45,7 +45,7 @@ upload_to_s3(){
 
   e_info "Uploading to '${dest}' S3 bucket..."
   aws s3 cp --acl public-read "$TGZPATH" "${dest}/"
-  aws s3 cp --acl public-read "${dest}/${TARBALL}" "${dest}/vgs-latest.tgz"
+  aws s3 cp --acl public-read "${dest}/${TARBALL}" "${dest}/vgs.tgz"
   e_info 'S3 upload complete.'
 }
 

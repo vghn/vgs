@@ -13,7 +13,7 @@ sudo git clone https://github.com/vghn/vgs.git /opt/vgs
 - Via WGet
 ```
 mkdir -p /opt/vgs
-wget -qO- https://s3.amazonaws.com/vghn-vgs/vgs-latest.tgz | sudo tar xvz -C /opt/vgs
+wget -qO- https://s3.amazonaws.com/vghn-vgs/vgs.tgz | sudo tar xvz -C /opt/vgs
 . /opt/vgs/load
 ```
 
@@ -54,7 +54,7 @@ Guidelines:
 
   - If the script exports a variable it should be prefixed with the name of the
     script, all in capital letters with underscores.
-    EX: VGS_MY_VARIBALE; KEEP THESE TO A MINIMUM!
+    EX: VGS_MY_VARIABLE; KEEP THESE TO A MINIMUM!
 
 ## License
 Licensed under the Apache License, Version 2.0.
