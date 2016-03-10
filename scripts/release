@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+# Release tasks
+#
+# USAGE
+# `scripts/release {TYPE}`
+#   - TYPE: The semantic version type: major, minor or patch (defaults to patch)
+#
+# WORKFLOW:
+#   - Create a new feature branch
+#   - Commit your work and push it upstream
+#   - Create a Pull Request on GitHub and review changes (Optional)
+#   - run `scripts/release`
+#
+# This script will:
+#   - Verify that: the arguments are correct, there are no uncommitted changes
+#     or untracked files, the files exist and there are actually changes present
+#   - Increment the version number and update the VERSION file
+#   - Compile a list of commit messages since the latest tag and update the
+#     CHANGELOG file
+#   - Create a 'Bump version' commit and push it upstream
+#   - Wait for the CI to finish testing the current branch
+#   - Switch to the master branch and merge the branch
+#   - Tag the release
+#   - Switch back to the feature branch and rebase it from master
+
+# Immediately exit on errors
+set -euo pipefail
+
+# VARs
+APPDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)"
+CHANGELOG_FILE="${APPDIR}/CHANGELOG.md"
+VERSION_FILE="${APPDIR}/VERSION"
+GIT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+GITHUB_URL='https://github.com/vghn/vgs'
+
+# Load functions
+# shellcheck disable=1090
+. "${APPDIR}/load"
+
+# Sanity Checks
+sanity_checks(){
+  # Check if there are uncommitted changes
+  git diff --quiet HEAD || e_abort 'ERROR: There are uncommitted changes!'
+  # Check if there are untracked files
+  [[ -z $(git ls-files --others --exclude-standard ) ]] || \
+    e_abort 'ERROR: There are untracked files!'
+  # Check if the version file exists
+  [[ -s "$VERSION_FILE" ]] || \
+    e_abort 'ERROR: Could not find the VERSION file!'
+  # Check if the changelog file exists
+  [[ -s "$CHANGELOG_FILE" ]] || \
+    e_abort 'ERROR: Could not find the CHANGELOG file!'
+  # Check if there are changes between the branches
+  [[ -n $(git log master..."${GIT_BRANCH}" --no-merges) ]] || \
+    e_abort 'ERROR: No changes were detected'
+}
+
+# List changes from git log, excluding those starting with 'Minor' or 'WIP'
+get_changes(){
+  git log "$(cat "$VERSION_FILE")"..."${GIT_BRANCH}" --reverse --no-merges \
+    --grep '^Submodules update$' --grep '^WIP' --grep '^Bump.*version.*' \
+    --invert-grep --pretty=format:"  * %s ([%cn - %h](${GITHUB_URL}/commit/%H))"
+}
+
+# Increment version number in file
+# $1 - New version number
+write_version_to_file(){
+  echo 'Writing the new version'
+  echo "$1" > "$VERSION_FILE"
+}
+
+# Append to the beginning of the change log
+# $1 - Version number
+# $2 - Changes
+write_changes_to_file(){
+  echo 'Writing the new changelog'
+  echo -e "## Version ${1} / $(date +%Y-%m-%d)\n${2}\n\n$(cat "$CHANGELOG_FILE")" > "${CHANGELOG_FILE}.new"
+  mv "${CHANGELOG_FILE}.new" "$CHANGELOG_FILE"
+}
+
+# Increment patch version
+version_increment_patch(){ awk -F'[.]' '{print $1"."$2"."$3+1}' "$VERSION_FILE" ;}
+
+# Increment minor version and reset patch
+version_increment_minor(){ awk -F'[.]' '{print $1"."$2+1".0"}' "$VERSION_FILE" ;}
+
+# Increment major version and reset minor and patch
+version_increment_major(){ awk -F'[.]' '{print $1+1".0.0"}' "$VERSION_FILE" ;}
+
+# Prepare branch for merge
+# $1 - The type of change
+# $2 - The new version
+push_changes(){
+  echo "Committing version and changelog files ($1 version $2)"
+  git add "$VERSION_FILE" "$CHANGELOG_FILE"
+  git commit -m "Bump $1 version to $2"
+
+  git push --set-upstream origin "$GIT_BRANCH"
+
+  echo 'Waiting for CI to finish'
+  until [[ $(hub ci-status) == 'success' ]]; do sleep 5; done
+}
+
+# Switch branch
+# $1 - Branch name
+switch_branch(){
+  echo "Checking out branch ${1}"
+  git checkout "$1"
+}
+
+# Merge from branch
+# $1 - Pull Request Branch
+# $2 - Version number
+merge_branch(){
+  echo "Merging ${1}"
+  git merge --no-ff -m "Release v${2}" "$1"
+}
+
+# Tag release
+# $1 - Title
+tag_release(){
+  echo "Tagging release ${1}"
+  git tag -a "$1" -m "$2"
+}
+
+# Push upstream with tags
+push_with_tags(){
+  echo 'Pushing upstream with tags'
+  git push --follow-tags
+}
+
+# Release logic
+# $1 - The type of change. One of: major, minor or patch
+release(){
+  local release=$1
+  local version
+  version=$(version_increment_"${release}")
+  local changes
+  changes=$(get_changes)
+
+  sanity_checks
+
+  write_version_to_file "$version"
+  write_changes_to_file "$version" "$changes"
+  echo "Take a minute to review the change log (Press any key to continue)"
+  read -r -n1 -s
+  push_changes "$release" "$version"
+
+  switch_branch master
+  merge_branch "$GIT_BRANCH" "$version"
+
+  tag_release "$version" "Version ${version} / $(date +%Y-%m-%d)"
+  push_with_tags
+
+  switch_branch "$GIT_BRANCH"
+  git rebase master
+}
+
+# Process arguments
+case "${1:-}" in
+  major) release major ;;
+  minor) release minor ;;
+  *)     release patch ;;
+esac
