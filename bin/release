@@ -2,14 +2,14 @@
 # Release tasks
 #
 # USAGE
-# `scripts/release {TYPE}`
+# `bin/release {TYPE}`
 #   - TYPE: The semantic version type: major, minor or patch (defaults to patch)
 #
 # WORKFLOW:
 #   - Create a new feature branch
 #   - Commit your work and push it upstream
 #   - Create a Pull Request on GitHub and review changes (Optional)
-#   - run `scripts/release`
+#   - run `bin/release`
 #
 # This script will:
 #   - Verify that: the arguments are correct, there are no uncommitted changes
@@ -48,7 +48,7 @@ sanity_checks(){
   [[ -s "$VERSION_FILE" ]] || \
     e_abort 'ERROR: Could not find the VERSION file!'
   # Check if the changelog file exists
-  [[ -s "$CHANGELOG_FILE" ]] || \
+  [[ -f "$CHANGELOG_FILE" ]] || \
     e_abort 'ERROR: Could not find the CHANGELOG file!'
   # Check if there are changes between the branches
   [[ -n $(git log master..."${GIT_BRANCH}" --no-merges) ]] || \

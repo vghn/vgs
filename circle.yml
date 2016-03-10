@@ -12,15 +12,14 @@ dependencies:
     - '~/.cabal'
     - '~/.ghc'
   override:
-    - scripts/ci.sh install
-
+    - bin/ci install
 
 test:
   override:
-    - scripts/ci.sh test
+    - bin/ci test
 
 deployment:
   s3:
     branch: /.*/
     commands:
-      - scripts/ci.sh deploy
+      - bin/ci deploy
