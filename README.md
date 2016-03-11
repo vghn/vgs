@@ -40,6 +40,11 @@ load_vgs_library(){
 }
 ```
 
+- Self update
+```
+( . /opt/vgs/load; vgs_self_update )
+```
+
 ## Functions
 Check the comment of each function
 
