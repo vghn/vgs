@@ -1,3 +1,16 @@
+## Version 0.0.3 / 2016-03-11
+  * Add loading function ([Vlad - bc89d4e](https://github.com/vghn/vgs/commit/bc89d4eaff1dca2202cb3f77e99d1fe8532696c1))
+  * Add a self update function ([Vlad - 2e37978](https://github.com/vghn/vgs/commit/2e37978213f377039fd05ee0bbed887fee0a1b41))
+  * Fix release functions ([Vlad - 3a0644c](https://github.com/vghn/vgs/commit/3a0644cda32d7c57ddeca45d22c1c15791fec706))
+  * Add GIT functions ([Vlad - f78d273](https://github.com/vghn/vgs/commit/f78d27328d173cc894deee00201e683495c45d58))
+  * Fix typo ([Vlad - 36fcc90](https://github.com/vghn/vgs/commit/36fcc904b5170ec717d44fa35d38e6813965b097))
+  * Create a release function ([Vlad - 97ef489](https://github.com/vghn/vgs/commit/97ef48938b8cbeb8d99ac1a5a7865a96321322e7))
+  * Fix deployment files ([Vlad - 645607f](https://github.com/vghn/vgs/commit/645607f642b21fd9ed403910712ebc02635babd8))
+  * Fix typo ([Vlad - c5a98ad](https://github.com/vghn/vgs/commit/c5a98ad590d71c1e14cade101efe8e3e6e83ce85))
+  * Ensure we are in the root directory ([Vlad - a676b80](https://github.com/vghn/vgs/commit/a676b802216093dad5cad03d853ae8742a1adcd0))
+  * Fix release command ([Vlad - a21a49f](https://github.com/vghn/vgs/commit/a21a49f42a481531214396d5e7fec267b6f05260))
+  * Fix release function ([Vlad - 985441e](https://github.com/vghn/vgs/commit/985441ec25e74722d2a838f00e5a62c54296c060))
+
 ## Version 0.0.2 / 2016-03-10
   * Use shorter latest archive name ([Vlad - e010ac6](https://github.com/vghn/vgs/commit/e010ac65d3f92c8eebd955621b4e1b5f3c58cbfd))
   * Fix deploy.sh ([Vlad - 52e159f](https://github.com/vghn/vgs/commit/52e159f166c1ee8d5772d508aa0071f4bbc5c155))
