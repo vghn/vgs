@@ -6,6 +6,6 @@ set -euo pipefail
 
 # Load functions
 # shellcheck disable=1090
-. "${APPDIR}/load"
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)/load"
 
 vgs_release -t "${1:-patch}" -u 'https://github.com/vghn/vgs'
