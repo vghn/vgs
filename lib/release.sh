@@ -104,15 +104,14 @@ vgs_release_push_changes(){
 
 # Release logic
 vgs_release_main(){
+  # the current branch
+  git_branch=$(vgs_git_branch)
+  vgs_git_goto_root
+  vgs_release_sanity_checks
+
   local new_version changes
   new_version=$(vgs_release_version_increment_"${release}")
   changes=$(vgs_release_get_changes)
-
-  # the current branch
-  git_branch=$(vgs_git_branch)
-
-  vgs_git_goto_root
-  vgs_release_sanity_checks
 
   vgs_release_write_version_to_file "$new_version"
   vgs_release_write_changes_to_file "$new_version" "$changes"
