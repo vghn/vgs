@@ -1,3 +1,6 @@
+## Version 0.0.4 / 2016-03-11
+  * Fix typo ([Vlad - 9f45fab](https://github.com/vghn/vgs/commit/9f45fab4edef9ef806ac0735b2f739f6fbe56e88))
+
 ## Version 0.0.3 / 2016-03-11
   * Add loading function ([Vlad - bc89d4e](https://github.com/vghn/vgs/commit/bc89d4eaff1dca2202cb3f77e99d1fe8532696c1))
   * Add a self update function ([Vlad - 2e37978](https://github.com/vghn/vgs/commit/2e37978213f377039fd05ee0bbed887fee0a1b41))
