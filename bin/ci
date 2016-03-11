@@ -31,7 +31,7 @@ sanity_checks(){
 # Archive all system assets to a tarball ready for upload
 archive_assets(){
   e_info "Archiving as ${TGZPATH}..."
-  tar czvf "$TGZPATH" lib scripts load LICENSE README.md VERSION
+  tar czvf "$TGZPATH" bin lib load CHANGELOG LICENSE README.md VERSION
   e_info 'Achiving complete.'
 }
 
