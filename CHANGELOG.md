@@ -1,3 +1,7 @@
+## Version 0.0.2 / 2016-03-10
+  * Use shorter latest archive name ([Vlad - e010ac6](https://github.com/vghn/vgs/commit/e010ac65d3f92c8eebd955621b4e1b5f3c58cbfd))
+  * Fix deploy.sh ([Vlad - 52e159f](https://github.com/vghn/vgs/commit/52e159f166c1ee8d5772d508aa0071f4bbc5c155))
+
 ## Version 0.0.1 / 2016-03-10
   * Initial import ([Vlad - 666a09f](https://github.com/vghn/vgs/commit/666a09f2cd2cbae4d842d80890c4aaa69be86cc0))
   * Fix paths ([Vlad - 216393a](https://github.com/vghn/vgs/commit/216393ad9606706bd88f892912b96e45c386c22d))
@@ -17,4 +21,3 @@
   * Add a release script ([Vlad - 8214663](https://github.com/vghn/vgs/commit/8214663f7c4bc4d1839e0e7a5deb639bfa3c667d))
   * Fix release script ([Vlad - 4f4fb8b](https://github.com/vghn/vgs/commit/4f4fb8b445ef39b5f629c7b40f3a81f52316cd37))
   * Rename scripts dir ([Vlad - 16447f0](https://github.com/vghn/vgs/commit/16447f01bcd07c9db1bdfc938777a70b91c0b57b))
-
