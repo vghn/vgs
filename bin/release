@@ -37,6 +37,17 @@ GITHUB_URL='https://github.com/vghn/vgs'
 # shellcheck disable=1090
 . "${APPDIR}/load"
 
+# Get previous version
+get_last_tag(){
+  local previous
+  previous=$(cat "$VERSION_FILE")
+  if [[ "$previous" == '0.0.0' ]]; then
+    echo 'master'
+  else
+    echo "$previous"
+  fi
+}
+
 # Sanity Checks
 sanity_checks(){
   # Check if there are uncommitted changes
@@ -51,15 +62,13 @@ sanity_checks(){
   [[ -f "$CHANGELOG_FILE" ]] || \
     e_abort 'ERROR: Could not find the CHANGELOG file!'
   # Check if there are changes between the branches
-  [[ -n $(git log master..."${GIT_BRANCH}" --no-merges) ]] || \
+  [[ -n $(git log "$(get_last_tag)"..."${GIT_BRANCH}" --no-merges) ]] || \
     e_abort 'ERROR: No changes were detected'
 }
 
 # List changes from git log, excluding those starting with 'Minor' or 'WIP'
 get_changes(){
-  local previous; previous=$(cat "$VERSION_FILE")
-  if [[ "$previous" == '0.0.0' ]]; then previous='master'; fi
-  git log "$previous"..."$GIT_BRANCH" --reverse --no-merges \
+  git log "$(get_last_tag)"..."$GIT_BRANCH" --reverse --no-merges \
     --grep '^Submodules update$' --grep '^WIP' --grep '^Bump.*version.*' \
     --invert-grep --pretty=format:"  * %s ([%cn - %h](${GITHUB_URL}/commit/%H))"
 }
@@ -135,23 +144,23 @@ push_with_tags(){
 # $1 - The type of change. One of: major, minor or patch
 release(){
   local release=$1
-  local version
-  version=$(version_increment_"${release}")
+  local new_version
+  new_version=$(version_increment_"${release}")
   local changes
   changes=$(get_changes)
 
   sanity_checks
 
-  write_version_to_file "$version"
-  write_changes_to_file "$version" "$changes"
+  write_version_to_file "$new_version"
+  write_changes_to_file "$new_version" "$changes"
   echo "Take a minute to review the change log (Press any key to continue)"
   read -r -n1 -s
-  push_changes "$release" "$version"
+  push_changes "$release" "$new_version"
 
   switch_branch master
-  merge_branch "$GIT_BRANCH" "$version"
+  merge_branch "$GIT_BRANCH" "$new_version"
 
-  tag_release "$version" "Version ${version} / $(date +%Y-%m-%d)"
+  tag_release "$new_version" "Version ${new_version} / $(date +%Y-%m-%d)"
   push_with_tags
 
   switch_branch "$GIT_BRANCH"
