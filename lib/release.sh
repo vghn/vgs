@@ -121,10 +121,9 @@ vgs_release_main(){
 
   vgs_git_switch_branch master
   vgs_git_merge_branch "$git_branch" "Release v${new_version}"
-
   vgs_git_tag_release "$new_version" "Version ${new_version} / $(date +%Y-%m-%d)"
 
-  vgs_release_switch_branch "$git_branch"
+  vgs_git_switch_branch "$git_branch"
   git rebase master
 }
 
