@@ -22,7 +22,7 @@ vgs_git_switch_branch(){
 # USAGE: vgs_git_merge_branch {Branch} {Message}
 # PARAMETERS:
 #   1) The branch name (required)
-#   1) The message (required)
+#   2) The message (required)
 vgs_git_merge_branch(){
   local branch message
   branch="${1:-}"
