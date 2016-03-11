@@ -131,8 +131,8 @@ vgs_aws_deploy_create_deployment(){
   local bundle=$5
   local config=$6
 
-  if aws_deploy_group_exists "$@"; then
-    aws_deploy_wait "$@"
+  if vgs_aws_deploy_group_exists "$@"; then
+    vgs_aws_deploy_wait "$@"
 
     e_info "Creating deployment for application '${app}', group '${group}'"
     aws deploy create-deployment \
