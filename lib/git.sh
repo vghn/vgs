@@ -48,3 +48,8 @@ vgs_git_tag_release(){
   echo 'Pushing upstream with tags'
   git push --follow-tags
 }
+
+# Make sure we are in the root directory
+vgs_git_goto_root(){
+  cd "$(git rev-parse --show-cdup)" || return
+}
