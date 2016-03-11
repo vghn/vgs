@@ -6,8 +6,17 @@ export VGS_DIR VGS_TMP
 VGS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 VGS_TMP="$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')"
 
-# Load functions
-for file in ${VGS_DIR}/lib/*.sh; do
-  # shellcheck disable=1090
-  . "$file"
-done
+export vgs_env_loaded
+# set env loaded flag if not yet set
+: vgs_env_loaded:"${vgs_env_loaded:=0}":
+# increase load count counter
+: vgs_env_loaded:$(( vgs_env_loaded+=1 )):
+
+# Load only if not yet loaded or first time loading
+if [[ -z "$VGS_DIR" ]] || (( vgs_env_loaded == 1 )); then
+  # Load functions
+  for file in ${VGS_DIR}/lib/*.sh; do
+    # shellcheck disable=1090
+    . "$file"
+  done
+fi

@@ -17,6 +17,29 @@ wget -qO- https://s3.amazonaws.com/vghn-vgs/vgs.tgz | sudo tar xvz -C /opt/vgs
 . /opt/vgs/load
 ```
 
+- Sample function to load the environment or download if needed
+```
+load_vgs_library(){
+  local vgs_path vgs_url
+  vgs_url='https://s3.amazonaws.com/vghn-vgs/vgs.tgz'
+
+  if (( ${vgs_env_loaded:-0} != 1 )); then
+    if [[ $EUID == 0 ]]; then
+      vgs_path='/opt/vgs'
+    else
+      vgs_path="${HOME}/vgs"
+    fi
+    if [[ ! -s "${vgs_path}/load" ]]; then
+      echo 'Downloading VGS Library'
+      mkdir -p "$vgs_path" && \
+      wget -qO- "$vgs_url" | tar xvz -C "$vgs_path"
+    fi
+    # shellcheck disable=SC1090
+    . "${vgs_path}/load"
+  fi
+}
+```
+
 ## Functions
 Check the comment of each function
 
