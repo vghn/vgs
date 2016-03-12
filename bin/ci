@@ -24,50 +24,58 @@ S3PATH="s3://${AWS_S3_BUCKET}"
 sanity_checks(){
   # Create packaging directory if it does not exists
   [[ -d "$PKG_DIR" ]] || mkdir -p "$PKG_DIR"
-  # Remove existing an existing archive if it exists
+  # Remove existing archive if it exists
   [[ ! -s "$TGZPATH" ]] || rm -f "$TGZPATH"
 }
 
 # Archive all system assets to a tarball ready for upload
 archive_assets(){
   e_info "Archiving as ${TGZPATH}..."
-  tar czvf "$TGZPATH" bin lib load CHANGELOG.md LICENSE README.md VERSION
+  tar czvf "$TGZPATH" \
+    bin lib install load CHANGELOG.md LICENSE README.md VERSION
   e_info 'Achiving complete.'
 }
 
 # Upload to S3 bucket then copy as latest.tgz
 upload_to_s3(){
   e_info "Uploading to '${S3PATH}/${TARBALL}'..."
-  aws s3 cp --acl public-read "$TGZPATH" "${S3PATH}/${TARBALL}"
-  e_info 'S3 upload complete.'
+  aws s3 cp --acl public-read --storage-class REDUCED_REDUNDANCY \
+    "$TGZPATH" "${S3PATH}/${TARBALL}"
+  e_ok 'S3 upload complete.'
+
   if [[ "$GIT_BRANCH" == 'master' ]]; then
     e_info 'Copying the latest archive'
-    aws s3 cp --acl public-read "${S3PATH}/${TARBALL}" "${S3PATH}/vgs.tgz"
+    aws s3 cp --acl public-read --storage-class STANDARD \
+      "${S3PATH}/${TARBALL}" "${S3PATH}/vgs.tgz"
   fi
 }
 
+ci_install(){
+  cabal update; cabal install shellcheck
+  pip install --user --upgrade awscli
+}
+
 # Use shellcheck to lint all .sh files
-lint_sh_files(){
+ci_test(){
   while IFS= read -r -d '' file; do
     shellcheck "$file" && e_ok "Sucessfully linted $file"
   done < <(find . -type f -name '*.sh' -print0)
 }
 
-install_ci(){
-  pip install --user --upgrade awscli
-  cabal update; cabal install shellcheck
+ci_deploy(){
+  sanity_checks && archive_assets && upload_to_s3
 }
 
 # Process arguments
 case "${1:-}" in
   install)
-    install_ci
+    ci_install
     ;;
   test)
-    lint_sh_files
+    ci_test
     ;;
   deploy)
-    sanity_checks && archive_assets && upload_to_s3
+    ci_deploy
     ;;
   *)
     echo "USAGE: ${BASH_SOURCE[0]} [install | test | deploy]" >&2; exit 1

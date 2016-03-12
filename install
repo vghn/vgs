@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Installs/Upgrades VGS Library
+
+# Immediately exit on errors
+set -euo pipefail
+
+# DEFAULTS
+VGS_DIR='/opt/vgs'
+VGS_URL='https://s3.amazonaws.com/vghn/vgs.tgz'
+
+# VARS
+BAK_DIR="/tmp/vgs_backup_$(date +%Y%m%d)"
+
+# Installs VGS Library
+vgs_install(){
+  if [[ -d "$VGS_DIR" ]]; then
+    echo "Backing up existing directory to: ${BAK_DIR}"
+    cp -rf "$VGS_DIR" "$BAK_DIR"; rm -rf "$VGS_DIR"
+  fi
+
+  echo "Downloading VGS Library to ${VGS_DIR}"
+  mkdir -p "$VGS_DIR"
+  wget -qO- "$VGS_URL" | tar xz -C "$VGS_DIR"
+}
+vgs_install
