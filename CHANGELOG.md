@@ -1,3 +1,7 @@
+## Version 0.0.5 / 2016-03-11
+  * Change S3 bucket ([Vlad - 7810994](https://github.com/vghn/vgs/commit/78109946891b64c579426f0cf2f3841a5b13de47))
+  * Improve deploy script ([Vlad - 4c18944](https://github.com/vghn/vgs/commit/4c1894493ccb1ab27bb72345c90f629e524f9498))
+
 ## Version 0.0.4 / 2016-03-11
   * Fix typo ([Vlad - 9f45fab](https://github.com/vghn/vgs/commit/9f45fab4edef9ef806ac0735b2f739f6fbe56e88))
 
