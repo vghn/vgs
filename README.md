@@ -6,43 +6,34 @@ A collection of useful functions
 ## Install
 - Via GIT:
 ```
-sudo git clone https://github.com/vghn/vgs.git /opt/vgs
-. /opt/vgs/load
+git clone https://github.com/vghn/vgs.git
+sudo bash vgs/install
 ```
 
 - Via WGet
 ```
-mkdir -p /opt/vgs
-wget -qO- https://s3.amazonaws.com/vghn-vgs/vgs.tgz | sudo tar xvz -C /opt/vgs
+wget -O- https://s3.amazonaws.com/vghn/vgs.tgz | sudo tar xvz -C vgs
+sudo bash vgs/install
+```
+
+- Via WGet Pipe SH
+```
+wget -O- https://raw.githubusercontent.com/vghn/vgs/master/install | sudo bash
+```
+
+## Load
+```
 . /opt/vgs/load
 ```
 
-- Sample function to load the environment or download if needed
+## Sample scripts
+- Cron job to update every hour (10 minutes past)
 ```
-load_vgs_library(){
-  local vgs_path vgs_url
-  vgs_url='https://s3.amazonaws.com/vghn-vgs/vgs.tgz'
-
-  if (( ${vgs_env_loaded:-0} != 1 )); then
-    if [[ $EUID == 0 ]]; then
-      vgs_path='/opt/vgs'
-    else
-      vgs_path="${HOME}/vgs"
-    fi
-    if [[ ! -s "${vgs_path}/load" ]]; then
-      echo 'Downloading VGS Library'
-      mkdir -p "$vgs_path" && \
-      wget -qO- "$vgs_url" | tar xvz -C "$vgs_path"
-    fi
-    # shellcheck disable=SC1090
-    . "${vgs_path}/load"
-  fi
-}
-```
-
-- Self update
-```
-( . /opt/vgs/load; vgs_self_update )
+cat << EOF > /etc/cron.d/vgs_update
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+10 * * * * root bash -c '/opt/vgs/install'
+EOF
 ```
 
 ## Functions
