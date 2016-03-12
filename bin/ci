@@ -10,11 +10,11 @@ AWS_S3_BUCKET="${AWS_S3_BUCKET:-}"
 VERSION_FILE="${APPDIR}/VERSION"
 VERSION=$(cat "$VERSION_FILE")
 BUILD_NUM=${CIRCLE_BUILD_NUM:-0}
-TARBALL="vgs-${VERSION}-${BUILD_NUM}.tgz"
 PKG_DIR=${CIRCLE_ARTIFACTS:-'./pkg'}
-TGZPATH="${PKG_DIR}/${TARBALL}"
 GIT_BRANCH=${CIRCLE_BRANCH:-$(git symbolic-ref --short HEAD 2>/dev/null)}
-S3_PREFIX=$GIT_BRANCH
+TARBALL="vgs-${VERSION}+${GIT_BRANCH}-${BUILD_NUM}.tgz"
+TGZPATH="${PKG_DIR}/${TARBALL}"
+S3PATH="s3://${AWS_S3_BUCKET}"
 
 # Load functions
 # shellcheck disable=1090
@@ -37,16 +37,13 @@ archive_assets(){
 
 # Upload to S3 bucket then copy as latest.tgz
 upload_to_s3(){
-  if [[ "$S3_PREFIX" == 'master' ]]; then
-    local dest="s3://${AWS_S3_BUCKET}"
-  else
-    local dest="s3://${AWS_S3_BUCKET}/${S3_PREFIX}"
-  fi
-
-  e_info "Uploading to '${dest}' S3 bucket..."
-  aws s3 cp --acl public-read "$TGZPATH" "${dest}/"
-  aws s3 cp --acl public-read "${dest}/${TARBALL}" "${dest}/vgs.tgz"
+  e_info "Uploading to '${S3PATH}/${TARBALL}'..."
+  aws s3 cp --acl public-read "$TGZPATH" "${S3PATH}/${TARBALL}"
   e_info 'S3 upload complete.'
+  if [[ "$GIT_BRANCH" == 'master' ]]; then
+    e_info 'Copying the latest archive'
+    aws s3 cp --acl public-read "${S3PATH}/${TARBALL}" "${S3PATH}/vgs.tgz"
+  fi
 }
 
 # Use shellcheck to lint all .sh files
