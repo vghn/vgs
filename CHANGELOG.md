@@ -1,3 +1,7 @@
+## Version 0.0.6 / 2016-03-12
+  * Create an install script ([Vlad - 6dc2e20](https://github.com/vghn/vgs/commit/6dc2e2068ae085de63627eae557dd4ef39e6acff))
+  * Improve CI script ([Vlad - 62e90e9](https://github.com/vghn/vgs/commit/62e90e97a71732dc3cfc1393bee8a8d6fff4afdf))
+
 ## Version 0.0.5 / 2016-03-11
   * Change S3 bucket ([Vlad - 7810994](https://github.com/vghn/vgs/commit/78109946891b64c579426f0cf2f3841a5b13de47))
   * Improve deploy script ([Vlad - 4c18944](https://github.com/vghn/vgs/commit/4c1894493ccb1ab27bb72345c90f629e524f9498))
