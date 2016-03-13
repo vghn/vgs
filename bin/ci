@@ -33,7 +33,7 @@ archive_assets(){
   e_info "Archiving as ${TGZPATH}..."
   tar czvf "$TGZPATH" \
     bin lib install load CHANGELOG.md LICENSE README.md VERSION
-  e_ok 'Achiving complete.'
+  e_ok 'Archiving complete.'
 }
 
 # Upload to S3 bucket then copy as latest.tgz
