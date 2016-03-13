@@ -1,3 +1,8 @@
+## Version 0.0.7 / 2016-03-13
+  * Improve CI script output ([Vlad - c22b109](https://github.com/vghn/vgs/commit/c22b109d59ffd2aac878532ec31842c4969ea361))
+  * Load bash colors only if needed ([Vlad - e25d50a](https://github.com/vghn/vgs/commit/e25d50abc7f0523cdf89aa88b8679576bf9b7ba6))
+  * Fix typo ([Vlad - c4bafeb](https://github.com/vghn/vgs/commit/c4bafebcb45d5a154f09b25daf2bda6e1361f788))
+
 ## Version 0.0.6 / 2016-03-12
   * Create an install script ([Vlad - 6dc2e20](https://github.com/vghn/vgs/commit/6dc2e2068ae085de63627eae557dd4ef39e6acff))
   * Improve CI script ([Vlad - 62e90e9](https://github.com/vghn/vgs/commit/62e90e97a71732dc3cfc1393bee8a8d6fff4afdf))
