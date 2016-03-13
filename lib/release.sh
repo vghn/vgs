@@ -6,7 +6,13 @@
 #   - $version_file : the version file
 vgs_release_get_last_tag(){
   local previous; previous=$(cat "$version_file")
-  if [[ "$previous" == '0.0.0' ]]; then echo 'master'; else echo "$previous"; fi
+  if [[ "$previous" == '0.0.0' ]]; then
+    echo 'master'
+  elif ! git show-ref --quiet --verify "refs/tags/${previous}"; then
+    echo 'master'
+  else
+    echo "$previous"
+  fi
 }
 
 # DESCRIPTION: Sanity Checks
