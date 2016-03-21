@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # AWS CodeDeploy functions
 
-# NAME: vgs_aws_deploy_application_create
+# NAME: vgs_aws_deploy_application_ensure
 # DESCRIPTION: Ensure AWS CodeDeploy Application exists. Returns the id.
-# USAGE: vgs_aws_deploy_application_create {Application name}
+# USAGE: vgs_aws_deploy_application_ensure {Application name}
 # PARAMETERS:
 #   1) The application name (required)
-vgs_aws_deploy_application_create(){
+vgs_aws_deploy_application_ensure(){
   local name="${1:?}"
   aws deploy get-application \
     --application-name "$name" \
@@ -16,12 +16,13 @@ vgs_aws_deploy_application_create(){
     --application-name "$name" \
     --output text \
     --query 'application.applicationId' || \
-  e_abort 'Could not create application'
+  return 1
 }
 
-# NAME: aws_deploy_create_deployment_group
-# DESCRIPTION: Creates an AWS CodeDeploy deployment group.
-# USAGE: aws_deploy_create_deployment_group {App} {Group} {Autoscaling Groups}
+# NAME: vgs_aws_deploy_group_ensure
+# DESCRIPTION: Creates or updates an AWS CodeDeploy deployment group.
+#              Returns the id.
+# USAGE: vgs_aws_deploy_group_ensure {App} {Group} {Autoscaling Groups}
 #        {Configuration Name} {Service Role ARN}
 # PARAMETERS:
 #   1) The application name (required)
@@ -29,51 +30,61 @@ vgs_aws_deploy_application_create(){
 #   3) A list of associated Auto Scaling groups (required)
 #   4) The deployment configuration name (required)
 #   5) The AWS CodeDeploy service role ARN (required)
-vgs_aws_deploy_group_create(){
-  local app=${1:?}
-  local group=${2:?}
-  local asg=${3:?}
-  local cfg=${4:?}
-  local role=${5:?}
+vgs_aws_deploy_group_ensure(){
+  local app grp asg cfg arn
+  app=${1:?}
+  grp=${2:?}
+  asg=${3:?}
+  cfg=${4:?}
+  arn=${5:?}
 
-  aws deploy get-deployment-group \
-    --application-name "$app" \
-    --deployment-group-name "$group" \
-    --output text \
-    --query 'deploymentGroupInfo.deploymentGroupId' || \
-  aws deploy create-deployment-group \
-    --application-name "$app" \
-    --deployment-group-name "$group" \
-    --auto-scaling-groups "$asg" \
-    --deployment-config-name "$cfg" \
-    --service-role-arn "$role" \
-    --output text \
-    --query 'deploymentGroupInfo.deploymentGroupId' || \
-  aws deploy create-deployment-group \
-    --application-name "$app" \
-    --current-deployment-group-name "$group" \
-    --auto-scaling-groups "$asg" \
-    --deployment-config-name "$cfg" \
-    --service-role-arn "$role" \
-    --output text \
-    --query 'deploymentGroupInfo.deploymentGroupId' || \
-  e_abort "Could not create or update the '${group}' deployment group"
+  local id
+
+  if vgs_aws_deploy_group_exists "$app" "$grp"; then
+    id=$(aws deploy update-deployment-group \
+      --application-name "$app" \
+      --current-deployment-group-name "$grp" \
+      --auto-scaling-groups "$asg" \
+      --deployment-config-name "$cfg" \
+      --service-role-arn "$arn" \
+      --output text \
+      --query 'deploymentGroupInfo.deploymentGroupId')
+  else
+    id=$(aws deploy create-deployment-group \
+      --application-name "$app" \
+      --deployment-group-name "$grp" \
+      --auto-scaling-groups "$asg" \
+      --deployment-config-name "$cfg" \
+      --service-role-arn "$arn" \
+      --output text \
+      --query 'deploymentGroupInfo.deploymentGroupId')
+  fi
+  echo "$id"
 }
 
 # NAME: vgs_aws_deploy_group_exists
-# DESCRIPTION: Returns true if the given deployment group exists.
+# DESCRIPTION: Returns the group id if the given deployment group exists.
 # USAGE: vgs_aws_deploy_group_exists {App} {Group}
 # PARAMETERS:
 #   1) The application name
 #   2) The deployment group name
 vgs_aws_deploy_group_exists() {
-  local app=$1
-  local group=$2
+  local app grp
+  app=$1
+  grp=$2
 
-  aws deploy get-deployment-group \
-    --query 'deploymentGroupInfo.deploymentGroupId' --output text \
-    --application-name "$1" \
-    --deployment-group-name "$2" >/dev/null
+  local id
+
+  if id=$(aws deploy get-deployment-group \
+    --application-name "$app" \
+    --deployment-group-name "$grp" \
+    --output text \
+    --query 'deploymentGroupInfo.deploymentGroupId')
+  then
+    echo "$id"
+  else
+    return 1
+  fi
 }
 
 # NAME: vgs_aws_deploy_list_running_deployments
@@ -84,15 +95,16 @@ vgs_aws_deploy_group_exists() {
 #   1) The application name
 #   2) The deployment group name
 vgs_aws_deploy_list_running_deployments() {
-  local app=$1
-  local group=$2
+  local app grp
+  app=$1
+  grp=$2
 
   aws deploy list-deployments \
+    --application-name "$app" \
+    --deployment-group-name "$grp" \
+    --include-only-statuses Queued InProgress \
     --output text \
-    --query 'deployments' \
-    --application-name "$1" \
-    --deployment-group-name "$2" \
-    --include-only-statuses Queued InProgress
+    --query 'deployments'
 }
 
 # NAME: vgs_aws_deploy_wait
@@ -103,11 +115,12 @@ vgs_aws_deploy_list_running_deployments() {
 #   1) The application name
 #   2) The deployment group name
 vgs_aws_deploy_wait() {
-  local app=$1
-  local group=$2
+  local app grp
+  app=$1
+  grp=$2
 
   e_info 'Waiting for other deployments to finish ...'
-  until [[ -z "$(vgs_aws_deploy_list_running_deployments "$app" "$group")" ]]; do
+  until [[ -z "$(vgs_aws_deploy_list_running_deployments "$app" "$grp")" ]]; do
     sleep 5
   done
   e_ok ' Done.'
@@ -124,26 +137,27 @@ vgs_aws_deploy_wait() {
 #   5) The bundle type ("tar"|"tgz"|"zip")
 #   6) The deployment config name
 vgs_aws_deploy_create_deployment(){
-  local app=$1
-  local group=$2
-  local bucket=$3
-  local key=$4
-  local bundle=$5
-  local config=$6
+  local app grp bucket key bundle config
+  app=$1
+  grp=$2
+  bucket=$3
+  key=$4
+  bundle=$5
+  config=$6
 
   if vgs_aws_deploy_group_exists "$@"; then
     vgs_aws_deploy_wait "$@"
 
-    e_info "Creating deployment for application '${app}', group '${group}'"
+    e_info "Creating deployment for application '${app}', group '${grp}'"
     aws deploy create-deployment \
       --application-name "$app" \
       --s3-location bucket="${bucket}",key="${key}",bundleType="${bundle}" \
-      --deployment-group-name "$group" \
+      --deployment-group-name "$grp" \
       --deployment-config-name "$config" \
       --output text \
       --query 'deploymentId' || \
     e_abort 'Could not create deployment'
   else
-    e_warn "The '${group}' group does not exist in the '${app}' application"
+    e_warn "The '${grp}' group does not exist in the '${app}' application"
   fi
 }
