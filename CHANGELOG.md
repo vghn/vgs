@@ -1,3 +1,6 @@
+## Version 0.0.9 / 2016-03-21
+  * Improve deployment scripts ([Vlad - 944ad4b](https://github.com/vghn/vgs/commit/944ad4bb94d4faaf58ca62ba646c223270b91e7a))
+
 ## Version 0.0.8 / 2016-03-13
   * Fix release script ([Vlad - 1edf5a9](https://github.com/vghn/vgs/commit/1edf5a9d7016eaa3849beec3801c0206194d4dfe))
 
