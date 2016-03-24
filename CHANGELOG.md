@@ -1,3 +1,6 @@
+## Version 0.0.10 / 2016-03-24
+  * Improve cloudformation functions ([Vlad - 9535dc8](https://github.com/vghn/vgs/commit/9535dc88c646f84fff6a70093f78d1c47b0899ba))
+
 ## Version 0.0.9 / 2016-03-21
   * Improve deployment scripts ([Vlad - 944ad4b](https://github.com/vghn/vgs/commit/944ad4bb94d4faaf58ca62ba646c223270b91e7a))
 
