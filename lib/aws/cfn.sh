@@ -34,10 +34,13 @@ vgs_aws_cfn_wait(){
 #   1) Stack name
 #   1) Output name
 vgs_aws_cfn_get_output(){
-  local stack="$1"
-  local output="$2"
+  local stack output
+  stack="$1"
+  output="$2"
 
-  if [[ -z "$stack" ]] || [[ -z "$output" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack output"; fi
+  if [[ -z "$stack" ]] || [[ -z "$output" ]]; then
+    e_abort "Usage: ${FUNCNAME[0]} stack output"
+  fi
 
   if output_value=$(aws cloudformation describe-stacks --stack-name "${stack}" --query "Stacks[].Outputs[?OutputKey=='${output}'].OutputValue[]" --output text); then
     echo "$output_value"
@@ -52,11 +55,11 @@ vgs_aws_cfn_get_output(){
 # PARAMETERS:
 #   1) Stack name (required)
 vgs_aws_cfn_events() {
-  if [ -z "$1" ] ; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
-  local stack
-  stack="$(basename "$1" .json)"
-  shift
-  local output
+  local stack output
+  stack="$1"; shift
+
+  if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
+
   if output=$(aws --color on cloudformation describe-stack-events --stack-name "$stack" --query 'sort_by(StackEvents, &Timestamp)[].{Resource: LogicalResourceId, Type: ResourceType, Status: ResourceStatus}' --output table "$@"); then
     echo "$output" | uniq -u
   else
@@ -70,26 +73,24 @@ vgs_aws_cfn_events() {
 # PARAMETERS:
 #   1) Stack name (required)
 vgs_aws_cfn_tail() {
-  if [ -z "$1" ] ; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
-  local stack
-  stack="$(basename "$1" .json)"
-  local current
-  local final_line
-  local output
-  local previous
+  local stack current final_line output previous
+  stack="$1"
+
+  if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
+
   until echo "$current" | tail -1 | egrep -q "${stack}.*_(COMPLETE|FAILED)"
   do
     if ! output=$(vgs_aws_cfn_events "$stack"); then
-      # Something went wrong with cf_events (like stack not known)
+      # Something went wrong with vgs_aws_cfn_events (like stack not known)
       return 1
     fi
-    if [ -z "$output" ]; then sleep 1; continue; fi
+    if [[ -z "$output" ]]; then sleep 1; continue; fi
 
     current=$(echo "$output" | sed '$d')
     final_line=$(echo "$output" | tail -1)
-    if [ -z "$previous" ]; then
+    if [[ -z "$previous" ]]; then
       echo "$current"
-    elif [ "$current" != "$previous" ]; then
+    elif [[ "$current" != "$previous" ]]; then
       comm -13 <(echo "$previous") <(echo "$current")
     fi
     previous="$current"
