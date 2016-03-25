@@ -1,3 +1,6 @@
+## Version 0.0.11 / 2016-03-25
+  * Add encrypt/decrypt functions ([Vlad - 0161d15](https://github.com/vghn/vgs/commit/0161d15f2fa57bced83a1f581091dbb50bf0cbc8))
+
 ## Version 0.0.10 / 2016-03-24
   * Improve cloudformation functions ([Vlad - 9535dc8](https://github.com/vghn/vgs/commit/9535dc88c646f84fff6a70093f78d1c47b0899ba))
 
