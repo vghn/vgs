@@ -1,3 +1,6 @@
+## Version 0.0.12 / 2016-03-25
+  * Detect installation path ([Vlad - 1106a25](https://github.com/vghn/vgs/commit/1106a25d56b3ee0860b35244e62d5b39c6e89761))
+
 ## Version 0.0.11 / 2016-03-25
   * Add encrypt/decrypt functions ([Vlad - 0161d15](https://github.com/vghn/vgs/commit/0161d15f2fa57bced83a1f581091dbb50bf0cbc8))
 
