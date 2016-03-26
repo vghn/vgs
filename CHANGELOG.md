@@ -1,3 +1,6 @@
+## Version 0.0.13 / 2016-03-26
+  * Fix output load times ([Vlad - cb69cf2](https://github.com/vghn/vgs/commit/cb69cf25da6af9712b0da1f7b9e681b896c755e2))
+
 ## Version 0.0.12 / 2016-03-25
   * Detect installation path ([Vlad - 1106a25](https://github.com/vghn/vgs/commit/1106a25d56b3ee0860b35244e62d5b39c6e89761))
 
