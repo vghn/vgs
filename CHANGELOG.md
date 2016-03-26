@@ -1,3 +1,6 @@
+## Version 0.0.14 / 2016-03-26
+  * Add generate presigned url function ([Vlad - 20d66ea](https://github.com/vghn/vgs/commit/20d66eabb4fb280c37d70e2f5b6392cb99b3d3ab))
+
 ## Version 0.0.13 / 2016-03-26
   * Fix output load times ([Vlad - cb69cf2](https://github.com/vghn/vgs/commit/cb69cf25da6af9712b0da1f7b9e681b896c755e2))
 
