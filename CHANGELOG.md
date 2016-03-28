@@ -1,3 +1,6 @@
+## Version 0.0.15 / 2016-03-27
+  * Add parse yaml function ([Vlad - ef382b5](https://github.com/vghn/vgs/commit/ef382b5b7682ce7e257fc143a0db3f4c0cbb674f))
+
 ## Version 0.0.14 / 2016-03-26
   * Add generate presigned url function ([Vlad - 20d66ea](https://github.com/vghn/vgs/commit/20d66eabb4fb280c37d70e2f5b6392cb99b3d3ab))
 
