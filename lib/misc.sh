@@ -50,3 +50,27 @@ vgs_decrypt(){
   # Start a subshell and ensure it is not run in debug mode
   ( set +e; openssl aes-256-cbc -k "$key" -in "$in" -out "$out" -d )
 }
+
+# NAME: vgs_parse_yaml
+# DESCRIPTION: Parses an YAML file.
+#              Credits: https://gist.github.com/pkuczynski/8665367
+# USAGE: eval $(vgs_parse_yaml {File} {Prefix})
+# PARAMETERS:
+#   1) The yaml file (required)
+#   2) The prefix (optional)
+vgs_parse_yaml() {
+   local prefix=${2:-}
+   local s w fs
+   s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  "${1:?}" |
+   awk -F"$fs" '{
+      indent = length($1)/2;
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]}}
+      if (length($3) > 0) {
+         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+         printf("%s%s%s=\"%s\"\n", "'"$prefix"'", vn, $2, $3);
+      }
+   }'
+}
