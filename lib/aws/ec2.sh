@@ -266,10 +266,10 @@ vgs_aws_ec2_get_latest_ami_id() {
 #   3) The file containing the data to configure the instance (required)
 #   4) The IAM instance profile (required)
 vgs_aws_ec2_create_instance(){
-  local key="${1:-?}"
-  local instance_type="${2:-?}"
-  local user_data_file="${3:-?}"
-  local instance_profile="${4:-?}"
+  local key="${1:?}"
+  local instance_type="${2:?}"
+  local user_data_file="${3:?}"
+  local instance_profile="${4:-}"
 
   local base_image_id; base_image_id=$(vgs_aws_ec2_get_trusty_base_image_id)
 
@@ -298,7 +298,7 @@ vgs_aws_ec2_create_instance(){
 #   1) Image prefix (defaults to 'AMI')
 #   1) Image description (defaults to 'AMI')
 vgs_aws_ec2_image_create(){
-  local instance_id="${1:-?}"
+  local instance_id="${1:?}"
   local prefix="${2:-AMI}"
   local description="${3:-AMI}"
 
