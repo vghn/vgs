@@ -1,3 +1,6 @@
+## Version 0.0.16 / 2016-04-07
+  * Always load entire library ([Vlad - 4914963](https://github.com/vghn/vgs/commit/4914963f32dde6a173963721991bb06b825539ca))
+
 ## Version 0.0.15 / 2016-03-27
   * Add parse yaml function ([Vlad - ef382b5](https://github.com/vghn/vgs/commit/ef382b5b7682ce7e257fc143a0db3f4c0cbb674f))
 
