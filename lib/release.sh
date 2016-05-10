@@ -7,9 +7,9 @@
 vgs_release_get_last_tag(){
   local previous; previous=$(cat "$version_file")
   if [[ "$previous" == '0.0.0' ]]; then
-    echo 'master'
+    echo "$release_branch"
   elif ! git show-ref --quiet --verify "refs/tags/${previous}"; then
-    echo 'master'
+    echo "$release_branch"
   else
     echo "$previous"
   fi
@@ -125,12 +125,12 @@ vgs_release_main(){
   read -r -n1 -s
   vgs_release_push_changes "$release" "$new_version"
 
-  vgs_git_switch_branch master
+  vgs_git_switch_branch "$release_branch"
   vgs_git_merge_branch "$git_branch" "Release v${new_version}"
   vgs_git_tag_release "$new_version" "Version ${new_version} / $(date +%Y-%m-%d)"
 
   vgs_git_switch_branch "$git_branch"
-  git rebase master
+  git rebase "$release_branch"
 }
 
 # WORKFLOW:
@@ -148,12 +148,13 @@ vgs_release_main(){
 #     CHANGELOG file
 #   - Create a 'Bump version' commit and push it upstream
 #   - Wait for the CI to finish testing the current branch
-#   - Switch to the master branch and merge the branch
+#   - Switch to the release branch and merge the feature branch
 #   - Tag the release
-#   - Switch back to the feature branch and rebase it from master
+#   - Switch back to the feature branch and rebase it from the release branch
 vgs_release(){
   # Defaults
   release='patch'
+  release_branch='master'
   changelog_file='CHANGELOG.md'
   version_file='VERSION'
   github_url=''
@@ -164,6 +165,10 @@ vgs_release(){
     case "${1:-}" in
       -t | --type)
         release="${2:-patch}"
+        shift 2
+        ;;
+      -b | --release_branch)
+        release_branch="$2"
         shift 2
         ;;
       -c | --changelog-file)
