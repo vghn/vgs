@@ -13,6 +13,11 @@ vgs_notify_slack(){
   channel="${1:?}"
   username="${2:?}"
   text="${3:?}"
+
+  # red:   ce0814
+  # green: 3ca553
+  # blue:  4484c2
+
   printf "Notify slack... "
   curl -s -X POST --data-urlencode "payload={\"channel\": \"#${channel}\", \"username\": \"${username}\", \"text\": \"${text}\", \"icon_emoji\": \":taurus:\"}" "$SLACK_WEBHOOK"
 }
