@@ -1,3 +1,9 @@
+## Version 0.0.17 / 2016-05-10
+  * Fix required parameters in was functions ([Vlad - e7dc66c](https://github.com/vghn/vgs/commit/e7dc66cf5034a6765c96e3a320456778f6cd40eb))
+  * Update comments ([Vlad - 38d7ef1](https://github.com/vghn/vgs/commit/38d7ef1ba61517990c48c5d8d3b9ea41206030a2))
+  * Add slack notifications colors ([Vlad - 19e17b0](https://github.com/vghn/vgs/commit/19e17b0f24acaa912aff68d383458354a0560df2))
+  * Add parameter to specify release branch ([Vlad - 6ec718b](https://github.com/vghn/vgs/commit/6ec718b54decb5a87a16346dfc36d3e711d7df57))
+
 ## Version 0.0.16 / 2016-04-07
   * Always load entire library ([Vlad - 4914963](https://github.com/vghn/vgs/commit/4914963f32dde6a173963721991bb06b825539ca))
 
