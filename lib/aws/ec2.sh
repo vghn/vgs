@@ -389,7 +389,7 @@ vgs_aws_ec2_elb_configure_health_check() {
 
 # NAME: vgs_aws_ec2_run_command
 # DESCRIPTION: Sends a command to instances
-# USAGE: vgs_aws_ec2_run_command {Filter}
+# USAGE: vgs_aws_ec2_run_command {Filter} {Parameters} {Comment} {TimeOut}
 # PARAMETERS:
 #   1) Filter the instances (required)
 #      See --filters section at http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html
