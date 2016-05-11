@@ -1,3 +1,6 @@
+## Version 0.0.18 / 2016-05-11
+  * Be consistent ([Vlad - 2f0c25d](https://github.com/vghn/vgs/commit/2f0c25de2401408c1edebe0046d552a707856c13))
+
 ## Version 0.0.17 / 2016-05-10
   * Fix required parameters in was functions ([Vlad - e7dc66c](https://github.com/vghn/vgs/commit/e7dc66cf5034a6765c96e3a320456778f6cd40eb))
   * Update comments ([Vlad - 38d7ef1](https://github.com/vghn/vgs/commit/38d7ef1ba61517990c48c5d8d3b9ea41206030a2))

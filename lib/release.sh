@@ -167,7 +167,7 @@ vgs_release(){
         release="${2:-patch}"
         shift 2
         ;;
-      -b | --release_branch)
+      -b | --release-branch)
         release_branch="$2"
         shift 2
         ;;
