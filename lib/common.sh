@@ -10,10 +10,26 @@ is_cmd() { command -v "$@" >/dev/null 2>&1 ;}
 # OS detection
 is_linux()  { [[ $(uname) != Linux ]] ;}
 is_osx()    { [[ $(uname) == Darwin ]] ;}
-is_ubuntu() { is_cmd lsb_release && [[ "$(lsb_release -si)" =~ Ubuntu ]] ;}
+is_ubuntu() {
+  if is_cmd lsb_release; then
+    DISTRIB_ID="$(lsb_release -si)"
+  else
+    # shellcheck disable=1091
+    . /etc/lsb-release
+  fi
+  [[ "$DISTRIB_ID" =~ Ubuntu ]]
+}
 
 # Get codename
-get_dist() { is_cmd lsb_release && lsb_release -cs ;}
+get_dist() {
+  if is_cmd lsb_release; then
+    lsb_release -cs
+  else
+    # shellcheck disable=1091
+    . /etc/lsb-release
+    echo "$DISTRIB_CODENAME"
+  fi
+}
 
 # APT install package
 apt_install(){ e_info "Installing $*"; apt-get -qy install "$@" < /dev/null ;}
