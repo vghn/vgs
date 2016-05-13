@@ -1,3 +1,6 @@
+## Version 0.0.19 / 2016-05-13
+  * Improve distibution detection ([Vlad - df10615](https://github.com/vghn/vgs/commit/df10615be009c883104cacd40c4a9ba42d0b3e63))
+
 ## Version 0.0.18 / 2016-05-11
   * Be consistent ([Vlad - 2f0c25d](https://github.com/vghn/vgs/commit/2f0c25de2401408c1edebe0046d552a707856c13))
 
