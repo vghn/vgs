@@ -26,12 +26,10 @@ vgs_release_sanity_checks(){
   # Check if there are untracked files
   [[ -z $(git ls-files --others --exclude-standard ) ]] || \
     e_abort 'ERROR: There are untracked files!'
-  # Check if the version file exists
-  [[ -s "$version_file" ]] || \
-    e_abort 'ERROR: Could not find the VERSION file!'
-  # Check if the changelog file exists
-  [[ -f "$changelog_file" ]] || \
-    e_abort 'ERROR: Could not find the CHANGELOG file!'
+  # Check if the version file exists (create otherwise)
+  [[ -s "$version_file" ]] || echo '0.0.0' > "$version_file"
+  # Check if the changelog file exists (create otherwise)
+  [[ -f "$changelog_file" ]] || touch "$changelog_file"
   # Check if there are changes between the branches
   [[ -n $(git log "$(vgs_release_get_last_tag)"..."$git_branch" --no-merges) ]] || \
     e_abort 'ERROR: No changes were detected'
@@ -100,7 +98,7 @@ vgs_release_version_increment_major(){ awk -F'[.]' '{print $1+1".0.0"}' "$versio
 vgs_release_commit_changes(){
   echo "Committing version and changelog files ($1 version $2)"
   git add "$version_file" "$changelog_file"
-  git commit -m "Bump $1 version to $2"
+  git commit -m "Bump ${1} version to v${2}"
 }
 
 # NAME: vgs_release_push_changes
