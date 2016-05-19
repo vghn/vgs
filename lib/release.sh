@@ -88,22 +88,32 @@ vgs_release_version_increment_minor(){ awk -F'[.]' '{print $1"."$2+1".0"}' "$ver
 #   - $version_file : the version file
 vgs_release_version_increment_major(){ awk -F'[.]' '{print $1+1".0.0"}' "$version_file" ;}
 
-# NAME: vgs_release_push_changes
-# DESCRIPTION: Merges a git branch
-# USAGE: vgs_release_push_changes {Type} {Version}
+# NAME: vgs_release_commit_changes
+# DESCRIPTION: Commits the changes to version file and changelog
+# USAGE: vgs_release_commit_changes {Type} {Version}
 # REQUIRES:
 #   - $version_file : the version file
 #   - $changelog_file : the changelog file
 # PARAMETERS:
 #   1) The type of change (required)
 #   2) The new version (required)
-vgs_release_push_changes(){
+vgs_release_commit_changes(){
   echo "Committing version and changelog files ($1 version $2)"
   git add "$version_file" "$changelog_file"
   git commit -m "Bump $1 version to $2"
+}
 
+# NAME: vgs_release_push_changes
+# DESCRIPTION: Pushes the current branch upstream
+# USAGE: vgs_release_push_changes
+# REQUIRES:
+#   - $git_branch : the branch name
+vgs_release_push_changes(){
   git push --set-upstream origin "$git_branch"
+}
 
+# Merges a git branch
+vgs_release_wait_for_ci(){
   echo 'Waiting for CI to finish'
   until [[ $(hub ci-status) == 'success' ]]; do sleep 5; done
 }
@@ -121,9 +131,12 @@ vgs_release_main(){
 
   vgs_release_write_version_to_file "$new_version"
   vgs_release_write_changes_to_file "$new_version" "$changes"
-  echo "Take a minute to review the change log (Press any key to continue)"
+  echo 'Take a minute to review the change log'
+  echo 'Press any key to continue or "CTRL+C" to exit'
   read -r -n1 -s
-  vgs_release_push_changes "$release" "$new_version"
+  vgs_release_commit_changes "$release" "$new_version"
+  vgs_release_push_changes
+  vgs_release_wait_for_ci
 
   vgs_git_switch_branch "$release_branch"
   vgs_git_merge_branch "$git_branch" "Release v${new_version}"
