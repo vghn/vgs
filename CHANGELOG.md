@@ -1,3 +1,6 @@
+## Version 0.0.21 / 2016-05-19
+  * Use v0.0.0 format for tags ([Vlad - 5dc407f](https://github.com/vghn/vgs/commit/5dc407fbe93be7613d3747f2c57e88cfd07b7daf))
+
 ## Version 0.0.20 / 2016-05-19
   * Break down release script into smaller functions ([Vlad - aecb56c](https://github.com/vghn/vgs/commit/aecb56c29b5016b52beab2290eca043448fd1e6c))
 
