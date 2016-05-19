@@ -1,3 +1,6 @@
+## Version 0.0.22 / 2016-05-19
+  * Create version and changelog files if absent ([Vlad - 78c3ace](https://github.com/vghn/vgs/commit/78c3ace8fa299ba7f9deb9ea9e06b432e7fe038b))
+
 ## Version 0.0.21 / 2016-05-19
   * Use v0.0.0 format for tags ([Vlad - 5dc407f](https://github.com/vghn/vgs/commit/5dc407fbe93be7613d3747f2c57e88cfd07b7daf))
 
