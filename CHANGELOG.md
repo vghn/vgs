@@ -1,3 +1,6 @@
+## Version 0.0.20 / 2016-05-19
+  * Break down release script into smaller functions ([Vlad - aecb56c](https://github.com/vghn/vgs/commit/aecb56c29b5016b52beab2290eca043448fd1e6c))
+
 ## Version 0.0.19 / 2016-05-13
   * Improve distibution detection ([Vlad - df10615](https://github.com/vghn/vgs/commit/df10615be009c883104cacd40c4a9ba42d0b3e63))
 
