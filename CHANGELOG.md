@@ -1,3 +1,7 @@
+## Version 0.0.23 / 2016-05-20
+  * Fix quotes in CI scripts ([Vlad - 7d5230f](https://github.com/vghn/vgs/commit/7d5230fa9ecc49df8cb9338037a46781e87fc3d6))
+  * Improve range detection in release script ([Vlad - e18e32a](https://github.com/vghn/vgs/commit/e18e32afb682c7893ce104ae1d441c3ea87dcaa0))
+
 ## Version 0.0.22 / 2016-05-19
   * Create version and changelog files if absent ([Vlad - 78c3ace](https://github.com/vghn/vgs/commit/78c3ace8fa299ba7f9deb9ea9e06b432e7fe038b))
 

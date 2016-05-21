@@ -4,12 +4,12 @@
 # DESCRIPTION: Get previous version
 # REQUIRES:
 #   - $version_file : the version file
-vgs_release_get_last_tag(){
+vgs_release_get_range(){
   local previous; previous=$(cat "$version_file")
   if [[ "$previous" == '0.0.0' ]]; then
-    echo "$release_branch"
+    echo "$git_branch"
   elif ! git show-ref --quiet --verify "refs/tags/${previous}"; then
-    echo "$release_branch"
+    echo "${release_branch}...${git_branch}"
   else
     echo "$previous"
   fi
@@ -31,7 +31,7 @@ vgs_release_sanity_checks(){
   # Check if the changelog file exists (create otherwise)
   [[ -f "$changelog_file" ]] || touch "$changelog_file"
   # Check if there are changes between the branches
-  [[ -n $(git log "$(vgs_release_get_last_tag)"..."$git_branch" --no-merges) ]] || \
+  [[ -n $(git log "$(vgs_release_get_range)" --no-merges) ]] || \
     e_abort 'ERROR: No changes were detected'
 }
 
@@ -40,7 +40,7 @@ vgs_release_sanity_checks(){
 #   - $git_branch : the curent git branch
 #   - $github_url : the url for the GitHub repository
 vgs_release_get_changes(){
-  git log "$(vgs_release_get_last_tag)"..."$git_branch" --reverse --no-merges \
+  git log "$(vgs_release_get_range)" --reverse --no-merges \
     --grep '^Submodules update$' --grep '^WIP' --grep '^Bump.*version.*' \
     --invert-grep --pretty=format:"  * %s ([%cn - %h](${github_url}/commit/%H))"
 }
