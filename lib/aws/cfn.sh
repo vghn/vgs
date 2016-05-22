@@ -27,6 +27,26 @@ vgs_aws_cfn_wait(){
   fi
 }
 
+# NAME: vgs_aws_cfn_get_resource
+# DESCRIPTION: Gets the physical ID of a resource given a logical ID.
+# USAGE: vgs_aws_cfn_get_resource {Stack} {Resource}
+# PARAMETERS:
+#   1) Stack name
+#   1) Resource logical ID
+vgs_aws_cfn_get_resource(){
+  local stack output
+  stack="$1"
+  id="$2"
+
+  if [[ -z "$stack" ]] || [[ -z "$id" ]]; then
+    e_abort "Usage: ${FUNCNAME[0]} stack output"
+  fi
+
+  if ! aws cloudformation describe-stack-resource --stack-name "${stack}" --logical-resource-id "${id}" --query "StackResourceDetail.PhysicalResourceId" --output text; then
+    e_abort "Could not get physical id of resource"
+  fi
+}
+
 # NAME: vgs_aws_cfn_get_output
 # DESCRIPTION: Gets the value of a stack output.
 # USAGE: vgs_aws_cfn_get_output {Stack} {Output}
