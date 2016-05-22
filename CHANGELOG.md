@@ -1,3 +1,6 @@
+## Version 0.0.24 / 2016-05-22
+  * Add function to get the physical resource id ([Vlad - 51f49c6](https://github.com/vghn/vgs/commit/51f49c69f636115650c1c706c532d56b7640ea64))
+
 ## Version 0.0.23 / 2016-05-20
   * Fix quotes in CI scripts ([Vlad - 7d5230f](https://github.com/vghn/vgs/commit/7d5230fa9ecc49df8cb9338037a46781e87fc3d6))
   * Improve range detection in release script ([Vlad - e18e32a](https://github.com/vghn/vgs/commit/e18e32afb682c7893ce104ae1d441c3ea87dcaa0))
