@@ -1,3 +1,6 @@
+## Version 0.0.25 / 2016-05-23
+  * Add function to list S3 keys ([Vlad - 4b2c3f9](https://github.com/vghn/vgs/commit/4b2c3f9af71baf0e6e8f01e3814a26963c0c6881))
+
 ## Version 0.0.24 / 2016-05-22
   * Add function to get the physical resource id ([Vlad - 51f49c6](https://github.com/vghn/vgs/commit/51f49c69f636115650c1c706c532d56b7640ea64))
 
