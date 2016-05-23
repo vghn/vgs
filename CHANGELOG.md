@@ -1,3 +1,7 @@
+## Version 0.0.26 / 2016-05-23
+  * Allow an extra list of image ids to keep ([Vlad - 122972b](https://github.com/vghn/vgs/commit/122972b21310679bc2251b657b25a6fd36eee243))
+  * Add function to list all images in use ([Vlad - 4c34d04](https://github.com/vghn/vgs/commit/4c34d04cd5f9d34ed4c0a2e7e471f52cd360a644))
+
 ## Version 0.0.25 / 2016-05-23
   * Add function to list S3 keys ([Vlad - 4b2c3f9](https://github.com/vghn/vgs/commit/4b2c3f9af71baf0e6e8f01e3814a26963c0c6881))
 
