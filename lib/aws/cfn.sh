@@ -118,3 +118,28 @@ vgs_aws_cfn_tail() {
   done
   echo "$final_line"
 }
+
+# NAME: vgh_aws_cfn_list_images_in_use
+# DESCRIPTION: Gets all image ids for all autoscaling launch configurations
+# USAGE: vgh_aws_cfn_list_images_in_use {Stack name}
+# PARAMETERS:
+#   1) Stack name (required)
+vgh_aws_cfn_list_images_in_use(){
+  local stack images_in_use
+  stack="$1"
+  images_in_use=''
+
+  if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
+
+  for launchconfig in $(aws cloudformation describe-stack-resources \
+    --stack-name "${AWS_CFN_STACK_NAME}" \
+    --query "StackResources[?ResourceType=='AWS::AutoScaling::LaunchConfiguration'].PhysicalResourceId" \
+    --output text)
+  do
+    images_in_use="${images_in_use} $(aws autoscaling describe-launch-configurations \
+      --launch-configuration-names "$launchconfig" \
+      --query "LaunchConfigurations[].ImageId" \
+      --output text)"
+  done
+  echo "${images_in_use/ /}"
+}

@@ -323,8 +323,10 @@ vgs_aws_ec2_image_create(){
 # USAGE: vgs_aws_ec2_images_purge {Image name}
 # PARAMETERS:
 #   1) Image name (required). Can contain wildcard (Ex: My_AMI_*)
+#   2) A list of image ids to keep (optional) (Ex: 'ami-123 ami-456')
 vgs_aws_ec2_images_purge(){
-  local image_name="${1}"
+  local image_name="${1:?}"
+  local keep="${2:-}"
   if [ -z "$1" ] ; then e_abort "USAGE: ${FUNCNAME[0]} {Image name}"; fi
 
   newest_image=$(aws ec2 describe-images \
@@ -340,7 +342,8 @@ vgs_aws_ec2_images_purge(){
     --query 'Images[*].{ID:ImageId}')
 
   for image_id in $all_images; do
-    [[ "$image_id" == "$newest_image" ]] && continue
+    [[ "$newest_image" == "$image_id" ]] && continue
+    [[ "$keep" =~ $image_id ]] && continue
     snapshot_id=$(aws ec2 describe-images \
       --image-ids "$image_id" \
       --query 'Images[*].BlockDeviceMappings[*].Ebs.SnapshotId' \
