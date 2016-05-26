@@ -1,3 +1,6 @@
+## Version 0.0.28 / 2016-05-26
+  * Allow tagging the merge commits and tags ([Vlad - 39df4cd](https://github.com/vghn/vgs/commit/39df4cdebfbe5d85139a68c2e4fe58575ef97d71))
+
 ## Version 0.0.27 / 2016-05-26
   * Add release option to sign commits ([Vlad - 6e6ec8f](https://github.com/vghn/vgs/commit/6e6ec8fdc33d5a0791448e8a81c56ffac9be0717))
 
