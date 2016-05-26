@@ -101,7 +101,7 @@ vgs_release_commit_changes(){
   echo "Committing version and changelog files ($1 version $2)"
   git add "$version_file" "$changelog_file"
   if [[ "$sign_commit" == 'true' ]]; then
-    git commit -S -m "$commit_message"
+    git commit --gpg-sign -m "$commit_message"
   else
     git commit -m "$commit_message"
   fi
@@ -143,8 +143,8 @@ vgs_release_main(){
   vgs_release_wait_for_ci
 
   vgs_git_switch_branch "$release_branch"
-  vgs_git_merge_branch "$git_branch" "Release v${new_version}"
-  vgs_git_tag_release "v${new_version}" "Version ${new_version} / $(date +%Y-%m-%d)"
+  vgs_git_merge_branch "$git_branch" "Release v${new_version}" "$sign_commit"
+  vgs_git_tag_release "v${new_version}" "Version ${new_version} / $(date +%Y-%m-%d)" "$sign_commit"
 
   vgs_git_switch_branch "$git_branch"
   git rebase "$release_branch"
@@ -175,6 +175,7 @@ vgs_release(){
   changelog_file='CHANGELOG.md'
   version_file='VERSION'
   github_url=''
+  sign_commit=false
 
   # Process arguments
   while :

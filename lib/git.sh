@@ -23,13 +23,19 @@ vgs_git_switch_branch(){
 # PARAMETERS:
 #   1) The branch name (required)
 #   2) The message (required)
+#   3) Sign the resulting merge commit itself (defaults to false)
 vgs_git_merge_branch(){
-  local branch message
+  local branch message sign
   branch="${1:-}"
   message="${2:-}"
+  sign="${3:-false}"
 
   echo "Merging ${branch}"
-  git merge --no-ff -m "$message" "$branch"
+  if [[ "$sign" == 'true' ]]; then
+    git merge --gpg-sign --no-ff -m "$message" "$branch"
+  else
+    git merge --no-ff -m "$message" "$branch"
+  fi
 }
 
 # NAME: vgs_git_tag_release
@@ -38,13 +44,19 @@ vgs_git_merge_branch(){
 # PARAMETERS:
 #   1) The tag name (required)
 #   2) The tag description (required)
+#   3) Sign the tag using the default GPG key (defaults to false)
 vgs_git_tag_release(){
-  local tag description
+  local tag description sign
   tag="${1:-}"
   description="${2:-}"
+  sign="${3:-false}"
 
   echo "Tagging release ${tag}"
-  git tag -a "$tag" -m "$description"
+  if [[ "$sign" == 'true' ]]; then
+    git tag --sign "$tag" -m "$description"
+  else
+    git tag --annotate "$tag" -m "$description"
+  fi
   echo 'Pushing upstream with tags'
   git push --follow-tags
 }
