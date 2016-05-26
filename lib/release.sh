@@ -96,9 +96,15 @@ vgs_release_version_increment_major(){ awk -F'[.]' '{print $1+1".0.0"}' "$versio
 #   1) The type of change (required)
 #   2) The new version (required)
 vgs_release_commit_changes(){
+  local commit_message="Bump ${1} version to v${2}"
+
   echo "Committing version and changelog files ($1 version $2)"
   git add "$version_file" "$changelog_file"
-  git commit -m "Bump ${1} version to v${2}"
+  if [[ "$sign_commit" == 'true' ]]; then
+    git commit -S -m "$commit_message"
+  else
+    git commit -m "$commit_message"
+  fi
 }
 
 # NAME: vgs_release_push_changes
@@ -193,6 +199,10 @@ vgs_release(){
       -u | --github-url)
         github_url="$2"
         shift 2
+        ;;
+      -s | --sign)
+        sign_commit=true
+        shift
         ;;
       --) # End of all options
         shift

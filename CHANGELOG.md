@@ -1,3 +1,6 @@
+## Version 0.0.27 / 2016-05-26
+  * Add release option to sign commits ([Vlad - 6e6ec8f](https://github.com/vghn/vgs/commit/6e6ec8fdc33d5a0791448e8a81c56ffac9be0717))
+
 ## Version 0.0.26 / 2016-05-23
   * Allow an extra list of image ids to keep ([Vlad - 122972b](https://github.com/vghn/vgs/commit/122972b21310679bc2251b657b25a6fd36eee243))
   * Add function to list all images in use ([Vlad - 4c34d04](https://github.com/vghn/vgs/commit/4c34d04cd5f9d34ed4c0a2e7e471f52cd360a644))

@@ -8,4 +8,7 @@ set -euo pipefail
 # shellcheck disable=1090
 . "$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)/load"
 
-vgs_release -t "${1:-patch}" -u 'https://github.com/vghn/vgs'
+vgs_release \
+  --sign \
+  --type "${1:-patch}" \
+  --github-url 'https://github.com/vghn/vgs'
