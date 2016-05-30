@@ -150,6 +150,23 @@ vgs_release_main(){
   git rebase "$release_branch"
 }
 
+# Usage
+vgs_release_usage(){
+  read -r -d '' usage <<-'EOF' || true # exits non-zero when EOF encountered
+  -t --type [arg]             Release type. One of: patch, minor or major.
+                              Default: 'patch'
+  -b --release-branch [arg]   The branch to release from. Default: 'master'
+  -c ----changelog-file [arg] The path to the changelog file
+                              Default: 'CHANGELOG.md'
+  -f --version-file [arg]     The path to the version file
+                              Default: 'VERSION'
+  -u --github-url [arg]       The URL of the GitHub repository
+  -s --sign                   Sign the merge commit and tags
+  -h --help                   Usage
+EOF
+  echo "$usage"
+}
+
 # WORKFLOW:
 #   - Create a new feature branch
 #   - Commit your work and push it upstream
@@ -204,6 +221,9 @@ vgs_release(){
       -s | --sign)
         sign_commit=true
         shift
+        ;;
+      -h | --help)
+        vgs_release_usage; return 0
         ;;
       --) # End of all options
         shift
