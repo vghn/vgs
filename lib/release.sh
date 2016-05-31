@@ -230,7 +230,7 @@ vgs_release(){
         break
         ;;
       -*)
-        e_abort "Error: Unknown option: ${1}"
+        e_abort "Error: Unknown option: ${1}"; return 1
         ;;
       *)  # No more options
         break
