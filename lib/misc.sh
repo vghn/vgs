@@ -20,6 +20,43 @@ vgs_notify_slack(){
   curl -s -X POST --data-urlencode "payload={\"channel\": \"#${channel}\", \"username\": \"${username}\", \"text\": \"${text}\", \"icon_emoji\": \":taurus:\"}" "$SLACK_WEBHOOK"
 }
 
+# NAME: vgs_slack_trap
+# DESCRIPTION: Traps exit and notify Slack.
+# ENVIRONMENT VARIABLES REQUIRED:
+# - SLACK_CHANNEL
+# - SLACK_USER
+# - SLACK_WEBHOOK
+# USAGE: trap 'vgs_slack_trap $?' EXIT TERM INT
+# PARAMETERS:
+#   1) The exit status (required)
+#   1) The command title (optional)
+vgs_slack_trap(){
+  local exit_code cmd info title color text
+  exit_code=${1:-0}
+  cmd=${2:-Command}
+  info="$(hostname) @ $(TZ=US/Central date)"
+
+  if [[ $exit_code == 0 ]]; then
+    title='SUCCESS'
+    color='#3ca553'
+  else
+    title='FAILED'
+    color='#ce0814'
+  fi
+  text="${cmd} exited with ${exit_code} on ${info}"
+
+  if [[ -n "$SLACK_CHANNEL" ]] && \
+    [[ -n "$SLACK_USER" ]] && \
+    [[ -n "$SLACK_WEBHOOK" ]]
+  then
+    printf 'Sending Slack message... '
+    curl -s -X POST --data-urlencode "payload={\"channel\": \"#${SLACK_CHANNEL}\", \"username\": \"${SLACK_USER}\", \"icon_emoji\": \":taurus:\", \"attachments\": [{\"title\": \"${title}\", \"text\": \"${text}\", \"color\": \"${color}\"}]}" "${SLACK_WEBHOOK}" || echo 'failed'
+    echo
+  fi
+
+  echo "$title: $text"; exit "$exit_code"
+}
+
 # NAME: vgs_encrypt
 # DESCRIPTION: Encrypts a file.
 # USAGE: vgs_encrypt {Key} {Source} {Destination}
