@@ -61,6 +61,11 @@ vgs_git_tag_release(){
   git push --follow-tags
 }
 
+# Prints the most recently created tag for the current branch
+vgs_git_tag_get_latest(){
+  git describe --abbrev=0 --tags
+}
+
 # Make sure we are in the root directory
 vgs_git_goto_root(){
   cd "$(git rev-parse --show-cdup)" || return

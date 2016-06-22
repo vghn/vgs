@@ -10,9 +10,9 @@
 #   3) The expiration time, in seconds (defaults: 600)
 vgs_aws_s3_generate_presigned_url(){
   local bucket key expires
-  bucket=${1:?}
-  key=${2:?}
-  expires=${3:?}
+  bucket=${1:?Must specify the S3 bucket name as the 1st argument}
+  key=${2:?Must specify the S3 key name as the 2nd argument}
+  expires=${3:-600}
 
   python <<< "import boto3; print boto3.client('s3').generate_presigned_url('get_object', Params = {'Bucket': '${bucket}', 'Key': '${key}'}, ExpiresIn = ${expires})"
 }
@@ -30,9 +30,9 @@ vgs_aws_s3_generate_presigned_url(){
 #   3) How many items to keep (required)
 vgs_aws_s3_list_old_keys(){
   local bucket prefix keep
-  bucket=${1:?}
-  prefix=${2:?}
-  keep=${3:?}
+  bucket=${1:?Must specify the S3 bucket name as the 1st argument}
+  prefix=${2:?Must specify the S3 prefix as the 2nd argument}
+  keep=${3:?Must specify how many items to keep as the 3rd argument}
 
   aws s3api list-objects \
     --bucket "$bucket" \

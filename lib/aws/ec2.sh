@@ -64,7 +64,7 @@ vgs_aws_ec2_get_tag(){
 #   1) The resource id (required)
 #   2) One or more tags (Key=string,Value=string ...)
 vgs_aws_ec2_create_tags(){
-  local id="${1}"
+  local id=${1:?Must specify the resource id as the 1st argument}
   shift
 
   e_info "Tagging ${id}"
@@ -78,7 +78,7 @@ vgs_aws_ec2_create_tags(){
 # PARAMETERS:
 #   1) The instance id
 vgs_aws_ec2_get_asg_instance_state() {
-  local instance_id=$1
+  local instance_id=${1:?Must specify the instance id as the 1st argument}
   local state; state=$(aws autoscaling describe-auto-scaling-instances \
     --instance-ids "$instance_id" \
     --query "AutoScalingInstances[?InstanceId == \`$instance_id\`].LifecycleState | [0]" \
@@ -98,7 +98,7 @@ vgs_aws_ec2_get_asg_instance_state() {
 # PARAMETERS:
 #   1) The instance id
 vgs_aws_ec2_get_asg_name() {
-  local instance_id=$1
+  local instance_id=${1:?Must specify the instance id as the 1st argument}
   local asg_name; asg_name=$(aws autoscaling \
     describe-auto-scaling-instances \
     --instance-ids "$instance_id" \
@@ -266,10 +266,10 @@ vgs_aws_ec2_get_latest_ami_id() {
 #   3) The file containing the data to configure the instance (required)
 #   4) The IAM instance profile (required)
 vgs_aws_ec2_create_instance(){
-  local key="${1:?}"
-  local instance_type="${2:?}"
-  local user_data_file="${3:?}"
-  local instance_profile="${4:-}"
+  local key=${1:?Must specify the key name as the 1st argument}
+  local instance_type=${2:?Must specify the instance type as the 2nd argument}
+  local user_data_file=${3:?Must specify the user data file as the 3rd argument}
+  local instance_profile=${4:-}
 
   local base_image_id; base_image_id=$(vgs_aws_ec2_get_trusty_base_image_id)
 
@@ -298,9 +298,9 @@ vgs_aws_ec2_create_instance(){
 #   1) Image prefix (defaults to 'AMI')
 #   1) Image description (defaults to 'AMI')
 vgs_aws_ec2_image_create(){
-  local instance_id="${1:?}"
-  local prefix="${2:-AMI}"
-  local description="${3:-AMI}"
+  local instance_id=${1:?Must specify the instance id as the 1st argument}
+  local prefix=${2:-AMI}
+  local description=${3:-AMI}
 
   local image_name; image_name="${prefix}_$(date +%Y%m%d%H%M%S)"
 
@@ -325,8 +325,8 @@ vgs_aws_ec2_image_create(){
 #   1) Image name (required). Can contain wildcard (Ex: My_AMI_*)
 #   2) A list of image ids to keep (optional) (Ex: 'ami-123 ami-456')
 vgs_aws_ec2_images_purge(){
-  local image_name="${1:?}"
-  local keep="${2:-}"
+  local image_name=${1:?Must specify the image name as the 1st argument}
+  local keep=${2:-}
   if [ -z "$1" ] ; then e_abort "USAGE: ${FUNCNAME[0]} {Image name}"; fi
 
   newest_image=$(aws ec2 describe-images \
@@ -404,10 +404,10 @@ vgs_aws_ec2_elb_configure_health_check() {
 #   4) Timeout. If this time is reached and the command has not already started
 #      executing, it will not execute. (required)
 vgs_aws_ec2_run_command(){
-  local filter="${1:?}"
-  local params="${2:?}"
-  local comment="${3:?}"
-  local timeout="${4:?}"
+  local filter=${1:?Must specify the filter as the 1st argument}
+  local params=${2:?Must specify the parameters as the 2nd argument}
+  local comment=${3:?Must specify the comment as the 3rd argument}
+  local timeout=${4:?Must specify the timeout as the 4th argument}
 
   ids=$(aws ec2 describe-instances \
     --filter "$filter" \

@@ -6,33 +6,29 @@ A collection of useful functions
 ## Install
 - Via GIT:
 ```
-git clone https://github.com/vghn/vgs.git
-sudo bash vgs/install
+git clone https://github.com/vghn/vgs.git ~/vgs
 ```
-
+- Via GIT (as root):
+```
+sudo git clone https://github.com/vghn/vgs.git /opt/vgs
+```
 - Via WGet
 ```
-wget -O- https://s3.amazonaws.com/vghn/vgs.tgz | sudo tar xvz -C vgs
-sudo bash vgs/install
-```
-
-- Via WGet Pipe SH
-```
-wget -O- https://raw.githubusercontent.com/vghn/vgs/master/install | sudo bash
+wget -O- https://github.com/vghn/vgs/archive/master.tar.gz | tar xz
 ```
 
 ## Load
 ```
-. /opt/vgs/load
+. ~/vgs/load
 ```
 
 ## Sample scripts
 - Cron job to update every hour (10 minutes past)
 ```
-cat << EOF > /etc/cron.d/vgs_update
+cat << EOF > /etc/cron.d/vgs-update
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-10 * * * * root bash -c '/opt/vgs/install'
+10 * * * * root ( cd /opt/vgs && git fetch --all 2>&1 && git reset --hard origin/master 2>&1 ) | logger -it vgs-update
 EOF
 ```
 

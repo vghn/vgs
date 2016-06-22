@@ -7,7 +7,7 @@
 # PARAMETERS:
 #   1) The application name (required)
 vgs_aws_deploy_application_ensure(){
-  local name="${1:?}"
+  local name="${1:?Must specify the application name as the only argument}"
   aws deploy get-application \
     --application-name "$name" \
     --output text \
@@ -32,11 +32,11 @@ vgs_aws_deploy_application_ensure(){
 #   5) The AWS CodeDeploy service role ARN (required)
 vgs_aws_deploy_group_ensure(){
   local app grp asg cfg arn
-  app=${1:?}
-  grp=${2:?}
-  asg=${3:?}
-  cfg=${4:?}
-  arn=${5:?}
+  app=${1:?Must specify the application name as the 1st argument}
+  grp=${2:?Must specify the deployment group name as the 2nd argument}
+  asg=${3:?Must specify the autoscaling group name as the 3rd argument}
+  cfg=${4:?Must specify the deployment configuration name as the 4th argument}
+  arn=${5:?Must specify the service role arn as the 5th argument}
 
   local id
 
@@ -70,8 +70,8 @@ vgs_aws_deploy_group_ensure(){
 #   2) The deployment group name
 vgs_aws_deploy_group_exists() {
   local app grp
-  app=$1
-  grp=$2
+  app=${1:?Must specify the application name as the 1st argument}
+  grp=${2:?Must specify the deployment group name as the 2nd argument}
 
   local id
 
@@ -96,8 +96,8 @@ vgs_aws_deploy_group_exists() {
 #   2) The deployment group name
 vgs_aws_deploy_list_running_deployments() {
   local app grp
-  app=$1
-  grp=$2
+  app=${1:?Must specify the application name as the 1st argument}
+  grp=${2:?Must specify the deployment group name as the 2nd argument}
 
   aws deploy list-deployments \
     --application-name "$app" \
@@ -116,8 +116,8 @@ vgs_aws_deploy_list_running_deployments() {
 #   2) The deployment group name
 vgs_aws_deploy_wait() {
   local app grp
-  app=$1
-  grp=$2
+  app=${1:?Must specify the application name as the 1st argument}
+  grp=${2:?Must specify the deployment group name as the 2nd argument}
 
   e_info 'Waiting for other deployments to finish ...'
   until [[ -z "$(vgs_aws_deploy_list_running_deployments "$app" "$grp")" ]]; do
@@ -138,12 +138,12 @@ vgs_aws_deploy_wait() {
 #   6) The deployment config name
 vgs_aws_deploy_create_deployment(){
   local app grp bucket key bundle config
-  app=$1
-  grp=$2
-  bucket=$3
-  key=$4
-  bundle=$5
-  config=$6
+  app=${1:?Must specify the application name as the 1st argument}
+  grp=${2:?Must specify the deployment group name as the 2nd argument}
+  bucket=${3:?Must specify the S3 bucket name as the 3rd argument}
+  key=${4:?Must specify the S3 key name as the 4th argument}
+  bundle=${5:?Must specify the bundle type as the 5th argument}
+  config=${5:?Must specify the deployment configuration name as the 5th argument}
 
   if vgs_aws_deploy_group_exists "$@"; then
     vgs_aws_deploy_wait "$@"

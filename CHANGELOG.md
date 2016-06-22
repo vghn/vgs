@@ -1,3 +1,11 @@
+## Version 0.0.29 / 2016-06-22
+  * Improve function arguments ([Vlad - be6e335](https://github.com/vghn/vgs/commit/be6e335b9ad508580f2d52c44541c25ec5c528cc))
+  * Add release usage ([Vlad - 6c463c1](https://github.com/vghn/vgs/commit/6c463c14e0ecc13698759220204892e86106ea04))
+  * Add function to get the latest git tag ([Vlad - 4247276](https://github.com/vghn/vgs/commit/42472767b04813b0cf90b407598e8355cfb6a0e9))
+  * Fix release script ([Vlad - e05ddb8](https://github.com/vghn/vgs/commit/e05ddb8ff80542d3e23a128b6ae988b72a712a59))
+  * Add function to trap exit and notify Slack ([Vlad - 3690b79](https://github.com/vghn/vgs/commit/3690b795bc1222fa6e320b868d62e3d3c3e34423))
+  * Improve install method ([Vlad - 388f0f3](https://github.com/vghn/vgs/commit/388f0f378b86e5057533bbec5f4bd741257d58a8))
+
 ## Version 0.0.28 / 2016-05-26
   * Allow tagging the merge commits and tags ([Vlad - 39df4cd](https://github.com/vghn/vgs/commit/39df4cdebfbe5d85139a68c2e4fe58575ef97d71))
 
