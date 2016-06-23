@@ -1,3 +1,6 @@
+## Version 0.0.30 / 2016-06-23
+  * Fix deployement functon ([Vlad - aab5435](https://github.com/vghn/vgs/commit/aab5435937fa39da2c313dd31569496272e0b515))
+
 ## Version 0.0.29 / 2016-06-22
   * Improve function arguments ([Vlad - be6e335](https://github.com/vghn/vgs/commit/be6e335b9ad508580f2d52c44541c25ec5c528cc))
   * Add release usage ([Vlad - 6c463c1](https://github.com/vghn/vgs/commit/6c463c14e0ecc13698759220204892e86106ea04))
