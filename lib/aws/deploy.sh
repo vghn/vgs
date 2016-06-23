@@ -143,7 +143,7 @@ vgs_aws_deploy_create_deployment(){
   bucket=${3:?Must specify the S3 bucket name as the 3rd argument}
   key=${4:?Must specify the S3 key name as the 4th argument}
   bundle=${5:?Must specify the bundle type as the 5th argument}
-  config=${5:?Must specify the deployment configuration name as the 5th argument}
+  config=${6:?Must specify the deployment configuration name as the 6th argument}
 
   if vgs_aws_deploy_group_exists "$@"; then
     vgs_aws_deploy_wait "$@"
