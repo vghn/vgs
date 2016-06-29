@@ -53,3 +53,9 @@ vgs_is_wget(){
   is_cmd wget && return
   apt_update && apt_install wget
 }
+
+# Ensure NFS tools are installed
+vgs_is_nfs(){
+  is_cmd mount.nfs4 && return
+  apt_update && apt_install nfs-common
+}
