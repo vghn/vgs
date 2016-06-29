@@ -32,4 +32,11 @@ vgs_aws_efs_mount(){
 
   e_info "Mounting Elastic File System at '${path}'"
   mount -t nfs4 -o nfsvers=4.1 "$mnt" "$path"
+
+  e_info "Check ${path} mount point",
+  if mountpoint -q "$path"; then
+    e_ok "${path} seems to be mounted ok"
+  else
+    e_abort "${path} does not seem to be mounted"
+  fi
 }
