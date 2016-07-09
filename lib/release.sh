@@ -17,22 +17,31 @@ vgs_release_get_range(){
 
 # DESCRIPTION: Sanity Checks
 # REQUIRES:
+#   - $release : the release type
 #   - $version_file : the version file
 #   - $changelog_file : the changelog file
 #   - $git_branch : the curent git branch
 vgs_release_sanity_checks(){
-  # Check if there are uncommitted changes
-  git diff --quiet HEAD || e_abort 'ERROR: There are uncommitted changes!'
-  # Check if there are untracked files
-  [[ -z $(git ls-files --others --exclude-standard ) ]] || \
-    e_abort 'ERROR: There are untracked files!'
-  # Check if the version file exists (create otherwise)
-  [[ -s "$version_file" ]] || echo '0.0.0' > "$version_file"
-  # Check if the changelog file exists (create otherwise)
-  [[ -f "$changelog_file" ]] || touch "$changelog_file"
-  # Check if there are changes between the branches
-  [[ -n $(git log "$(vgs_release_get_range)" --no-merges) ]] || \
-    e_abort 'ERROR: No changes were detected'
+  # Check if the type is correct
+  case "$release" in
+    major|minor|patch)
+      # Check if there are uncommitted changes
+      git diff --quiet HEAD || e_abort 'ERROR: There are uncommitted changes!'
+      # Check if there are untracked files
+      [[ -z $(git ls-files --others --exclude-standard ) ]] || \
+        e_abort 'ERROR: There are untracked files!'
+      # Check if the version file exists (create otherwise)
+      [[ -s "$version_file" ]] || echo '0.0.0' > "$version_file"
+      # Check if the changelog file exists (create otherwise)
+      [[ -f "$changelog_file" ]] || touch "$changelog_file"
+      # Check if there are changes between the branches
+      [[ -n $(git log "$(vgs_release_get_range)" --no-merges) ]] || \
+        e_abort 'ERROR: No changes were detected'
+      ;;
+    *)
+      e_abort 'ERROR: The release type needs to be one of: major, minor, patch!'
+      ;;
+  esac
 }
 
 # DESCRIPTION: List changes from git log, excluding those starting with 'Minor' or 'WIP'
