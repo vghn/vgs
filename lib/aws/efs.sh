@@ -11,14 +11,17 @@ vgs_aws_efs_mount(){
   local id=$1
   local path=$2
   local zone; zone=$(vgs_aws_ec2_get_instance_az)
-  local mnt="${zone}.${id}.efs.${zone%?}.amazonaws.com:/"
+  local region; region=$(vgs_aws_ec2_get_instance_region)
+  local mnt="${zone}.${id}.efs.${region}.amazonaws.com:/"
 
   # Check arguments
   if [ $# -eq 0 ] ; then e_abort "Usage: ${FUNCNAME[0]} EFS_ID PATH"; fi
-  # Check if NFS tools are installed
-  if ! is_cmd mount.nfs4; then echo "Install 'nfs-common' first"; return 1; fi
+
+  # Ensure NFS tools are installed
+  vgs_is_nfs
+
   # Check if already mounted
-  if mount | grep -q "$mnt"; then echo "'${mnt}' already mounted"; return; fi
+  if mount | grep -q "$mnt"; then e_info "'${mnt}' already mounted"; return; fi
 
   if [ ! -d "$path" ]; then
     e_info "Creating '${path}' and mounting Elastic File System"
@@ -26,6 +29,14 @@ vgs_aws_efs_mount(){
   else
     e_info "'${path}' already present"
   fi
-  echo "Mounting Elastic File System at '${path}'"
-  mount -t nfs4 "$mnt" "$path"
+
+  e_info "Mounting Elastic File System at '${path}'"
+  mount -t nfs4 -o nfsvers=4.1 "$mnt" "$path"
+
+  e_info "Check ${path} mount point",
+  if mountpoint -q "$path"; then
+    e_ok "${path} seems to be mounted ok"
+  else
+    e_abort "${path} does not seem to be mounted"
+  fi
 }
