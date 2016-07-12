@@ -1,3 +1,8 @@
+## Version 0.0.31 / 2016-07-12
+  * Improve AWS Elastic File System functions ([Vlad - 4166ea4](https://github.com/vghn/vgs/commit/4166ea4f83d92bb18c1e213508922f589220636b))
+  * Check if EFS mounted correctly ([Vlad - c9660fd](https://github.com/vghn/vgs/commit/c9660fdee6340795499cb70afcd59a81f8d43fe2))
+  * Check the release type ([Vlad - 7cd6fd5](https://github.com/vghn/vgs/commit/7cd6fd59e89c6cb7780b43f1c82ecaef951406f6))
+
 ## Version 0.0.30 / 2016-06-23
   * Fix deployement functon ([Vlad - aab5435](https://github.com/vghn/vgs/commit/aab5435937fa39da2c313dd31569496272e0b515))
 
