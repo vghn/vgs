@@ -215,12 +215,19 @@ vgs_aws_ec2_get_ubuntu_official_ami_id() {
     '$5 == dtyp && $6 == arch && $7 == region && $9 == virt { print $8 }'
 }
 
-# Gets the image id for Ubuntu Trusty x64 hvm ssd ebs.
-vgs_aws_ec2_get_trusty_base_image_id(){
+# NAME: vgs_aws_ec2_get_ubuntu_base_image_id
+# DESCRIPTION: Retrieves the latest AMI ID for the official Ubuntu image
+# (x64 hvm ssd ebs).
+# USAGE: vgs_aws_ec2_get_ubuntu_base_image_id {Code Name}
+# PARAMETERS:
+#   1) Distribution code name (defaults to 'xenial-16.04')
+vgs_aws_ec2_get_ubuntu_base_image_id(){
+  local codename=${1:-'xenial-16.04'}
+
   local base_image_id; base_image_id=$(aws ec2 describe-images \
       --owners 099720109477 \
       --filters \
-        Name=name,Values=*ubuntu-trusty-14.04* \
+        Name=name,Values="*ubuntu-${codename}-*" \
         Name=architecture,Values=x86_64 \
         Name=block-device-mapping.volume-type,Values=gp2 \
         Name=state,Values=available \
@@ -271,7 +278,7 @@ vgs_aws_ec2_create_instance(){
   local user_data_file=${3:?Must specify the user data file as the 3rd argument}
   local instance_profile=${4:-}
 
-  local base_image_id; base_image_id=$(vgs_aws_ec2_get_trusty_base_image_id)
+  local base_image_id; base_image_id=$(vgs_aws_ec2_get_ubuntu_base_image_id 'xenial-16.04')
 
   local instance_id; instance_id=$(aws ec2 run-instances \
     --key "$key" \
