@@ -32,7 +32,7 @@ sanity_checks(){
 archive_assets(){
   e_info "Archiving as ${TGZPATH}..."
   tar czvf "$TGZPATH" \
-    bin lib install load CHANGELOG.md LICENSE README.md VERSION
+    bin lib load CHANGELOG.md LICENSE README.md VERSION
   e_ok 'Archiving complete.'
 }
 

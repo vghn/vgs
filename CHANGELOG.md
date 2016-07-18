@@ -1,3 +1,7 @@
+## Version 0.0.32 / 2016-07-18
+  * Get ubuntu ami id defaults to xenial ([Vlad - 059111b](https://github.com/vghn/vgs/commit/059111b123fe58fd0c22efe8e513c634ad2fadd5))
+  * Minor updates ([Vlad - 036ab7a](https://github.com/vghn/vgs/commit/036ab7a91a37645c9ac71e6023b74161fd109b90))
+
 ## Version 0.0.31 / 2016-07-12
   * Improve AWS Elastic File System functions ([Vlad - 4166ea4](https://github.com/vghn/vgs/commit/4166ea4f83d92bb18c1e213508922f589220636b))
   * Check if EFS mounted correctly ([Vlad - c9660fd](https://github.com/vghn/vgs/commit/c9660fdee6340795499cb70afcd59a81f8d43fe2))
