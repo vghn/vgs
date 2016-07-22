@@ -34,7 +34,7 @@ vgs_aws_cfn_wait(){
 #   1) Stack name
 #   1) Resource logical ID
 vgs_aws_cfn_get_resource(){
-  local stack output
+  local stack id
   stack="$1"
   id="$2"
 
@@ -66,6 +66,30 @@ vgs_aws_cfn_get_output(){
     echo "$output_value"
   else
     return $?
+  fi
+}
+
+# NAME: vgs_aws_cfn_get_param
+# DESCRIPTION: Gets the value of a given parameter.
+# USAGE: vgs_aws_cfn_get_param {Stack} {Parameter}
+# PARAMETERS:
+#   1) Stack name
+#   1) Parameter
+vgs_aws_cfn_get_param(){
+  local stack param
+  stack="$1"
+  param="$2"
+
+  if [[ -z "$stack" ]] || [[ -z "$param" ]]; then
+    e_abort "Usage: ${FUNCNAME[0]} stack parameter"
+  fi
+
+  if ! aws cloudformation describe-stacks \
+    --stack-name "${stack}" \
+    --query "Stacks[0].Parameters[?ParameterKey=='${param}'].ParameterValue" \
+    --output text
+  then
+    e_abort "Could not get the value of '${param}'"
   fi
 }
 
@@ -119,6 +143,30 @@ vgs_aws_cfn_tail() {
   echo "$final_line"
 }
 
+# NAME: vgh_aws_cfn_params_list_images_in_use
+# DESCRIPTION: Gets all image ids for all autoscaling launch configurations
+# USAGE: vgh_aws_cfn_params_list_images_in_use {Stack name}
+# PARAMETERS:
+#   1) Stack name (required)
+vgh_aws_cfn_params_list_images_in_use(){
+  local stack images_in_use
+  stack="$1"
+  images_in_use=''
+
+  if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
+  for launchconfig in $(aws cloudformation describe-stacks \
+    --stack-name "${stack}" \
+    --query "Stacks[0].Parameters[?ParameterKey=='RheaAMIId'].ParameterValue" \
+    --output text)
+  do
+    images_in_use="${images_in_use} $(aws autoscaling describe-launch-configurations \
+      --launch-configuration-names "$launchconfig" \
+      --query "LaunchConfigurations[].ImageId" \
+      --output text)"
+  done
+  echo "${images_in_use/ /}"
+}
+
 # NAME: vgh_aws_cfn_list_images_in_use
 # DESCRIPTION: Gets all image ids for all autoscaling launch configurations
 # USAGE: vgh_aws_cfn_list_images_in_use {Stack name}
@@ -128,11 +176,9 @@ vgh_aws_cfn_list_images_in_use(){
   local stack images_in_use
   stack="$1"
   images_in_use=''
-
   if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
-
   for launchconfig in $(aws cloudformation describe-stack-resources \
-    --stack-name "${AWS_CFN_STACK_NAME}" \
+    --stack-name "${stack}" \
     --query "StackResources[?ResourceType=='AWS::AutoScaling::LaunchConfiguration'].PhysicalResourceId" \
     --output text)
   do
