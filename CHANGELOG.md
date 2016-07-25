@@ -1,3 +1,9 @@
+## Version 0.0.33 / 2016-07-25
+  * Allow specifying the base ami codename ([Vlad - a1d08ae](https://github.com/vghn/vgs/commit/a1d08aede7802415946f6c4fef4197acff510e50))
+  * Add function to get the value of a ClodFormation parameter ([Vlad - c8a88da](https://github.com/vghn/vgs/commit/c8a88da5bd435073c33aacb85981652ac3f2907f))
+  * Improve CloudFormation scripts ([Vlad - b9c595a](https://github.com/vghn/vgs/commit/b9c595ad1c0d91f8db29d6aa6fb40e08098ae3dd))
+  * Fix generation of s3 presigned url ([Vlad - 3295221](https://github.com/vghn/vgs/commit/3295221e7ab5027e182ead212792d910b35c4ec4))
+
 ## Version 0.0.32 / 2016-07-18
   * Get ubuntu ami id defaults to xenial ([Vlad - 059111b](https://github.com/vghn/vgs/commit/059111b123fe58fd0c22efe8e513c634ad2fadd5))
   * Minor updates ([Vlad - 036ab7a](https://github.com/vghn/vgs/commit/036ab7a91a37645c9ac71e6023b74161fd109b90))

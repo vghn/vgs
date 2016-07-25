@@ -266,19 +266,21 @@ vgs_aws_ec2_get_latest_ami_id() {
 
 # NAME: vgs_aws_ec2_create_instance
 # DESCRIPTION: Deletes all but the most recent image
-# USAGE: vgs_aws_ec2_create_instance {Key} {Type} {User Data} {IAM Profile}
+# USAGE: vgs_aws_ec2_create_instance {Code Name} {Key} {Type} {User Data} {IAM Profile}
 # PARAMETERS:
+#   1) Base AMI codename (required)
 #   1) Key pair name (required)
 #   2) The instance type (required)
 #   3) The file containing the data to configure the instance (required)
 #   4) The IAM instance profile (required)
 vgs_aws_ec2_create_instance(){
-  local key=${1:?Must specify the key name as the 1st argument}
-  local instance_type=${2:?Must specify the instance type as the 2nd argument}
-  local user_data_file=${3:?Must specify the user data file as the 3rd argument}
-  local instance_profile=${4:-}
+  local ami=${1:?Must specify the base ami codename as the 1st argument}
+  local key=${2:?Must specify the key name as the 1st argument}
+  local instance_type=${3:?Must specify the instance type as the 2nd argument}
+  local user_data_file=${4:?Must specify the user data file as the 3rd argument}
+  local instance_profile=${5:-}
 
-  local base_image_id; base_image_id=$(vgs_aws_ec2_get_ubuntu_base_image_id 'xenial-16.04')
+  local base_image_id; base_image_id=$(vgs_aws_ec2_get_ubuntu_base_image_id "$ami")
 
   local instance_id; instance_id=$(aws ec2 run-instances \
     --key "$key" \

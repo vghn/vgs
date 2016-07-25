@@ -4,6 +4,7 @@
 # NAME: vgs_aws_s3_generate_presigned_url
 # DESCRIPTION: Returns a temporary presigned url for an existing S3 object.
 # USAGE: vgs_aws_s3_generate_presigned_url {Bucket} {Key} {Expiration}
+#        Download with wget -O myFile "https://..." (Note the quotes)
 # PARAMETERS:
 #   1) The bucket name (required)
 #   2) The key name (required)
@@ -14,7 +15,7 @@ vgs_aws_s3_generate_presigned_url(){
   key=${2:?Must specify the S3 key name as the 2nd argument}
   expires=${3:-600}
 
-  python <<< "import boto3; print boto3.client('s3').generate_presigned_url('get_object', Params = {'Bucket': '${bucket}', 'Key': '${key}'}, ExpiresIn = ${expires})"
+  python <<< "import boto3; print boto3.client('s3').generate_presigned_url(ClientMethod='get_object', Params={'Bucket': '${bucket}', 'Key': '${key}'}, ExpiresIn = ${expires})"
 }
 
 # NAME: vgs_aws_s3_list_old_keys

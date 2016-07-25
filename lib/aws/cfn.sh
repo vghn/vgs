@@ -34,16 +34,21 @@ vgs_aws_cfn_wait(){
 #   1) Stack name
 #   1) Resource logical ID
 vgs_aws_cfn_get_resource(){
-  local stack output
+  local stack resource
   stack="$1"
-  id="$2"
+  resource="$2"
 
-  if [[ -z "$stack" ]] || [[ -z "$id" ]]; then
-    e_abort "Usage: ${FUNCNAME[0]} stack output"
+  if [[ -z "$stack" ]] || [[ -z "$resource" ]]; then
+    e_abort "Usage: ${FUNCNAME[0]} stack resource"
   fi
 
-  if ! aws cloudformation describe-stack-resource --stack-name "${stack}" --logical-resource-id "${id}" --query "StackResourceDetail.PhysicalResourceId" --output text; then
-    e_abort "Could not get physical id of resource"
+  if ! aws cloudformation describe-stack-resource \
+    --stack-name "${stack}" \
+    --logical-resource-id "${resource}" \
+    --query "StackResourceDetail.PhysicalResourceId" \
+    --output text
+  then
+    e_abort "Could not get the physical id of '${resource}'"
   fi
 }
 
@@ -62,10 +67,36 @@ vgs_aws_cfn_get_output(){
     e_abort "Usage: ${FUNCNAME[0]} stack output"
   fi
 
-  if output_value=$(aws cloudformation describe-stacks --stack-name "${stack}" --query "Stacks[].Outputs[?OutputKey=='${output}'].OutputValue[]" --output text); then
-    echo "$output_value"
-  else
-    return $?
+  if ! aws cloudformation describe-stacks \
+    --stack-name "${stack}" \
+    --query "Stacks[].Outputs[?OutputKey=='${output}'].OutputValue[]" \
+    --output text
+  then
+    e_abort "Could not get the value of '${output}'"
+  fi
+}
+
+# NAME: vgs_aws_cfn_get_param
+# DESCRIPTION: Gets the value of a given parameter.
+# USAGE: vgs_aws_cfn_get_param {Stack} {Parameter}
+# PARAMETERS:
+#   1) Stack name
+#   1) Parameter
+vgs_aws_cfn_get_parameter(){
+  local stack parameter
+  stack="$1"
+  parameter="$2"
+
+  if [[ -z "$stack" ]] || [[ -z "$parameter" ]]; then
+    e_abort "Usage: ${FUNCNAME[0]} stack parameter"
+  fi
+
+  if ! aws cloudformation describe-stacks \
+    --stack-name "${stack}" \
+    --query "Stacks[0].Parameters[?ParameterKey=='${parameter}'].ParameterValue" \
+    --output text
+  then
+    e_abort "Could not get the value of '${parameter}'"
   fi
 }
 
@@ -119,6 +150,30 @@ vgs_aws_cfn_tail() {
   echo "$final_line"
 }
 
+# NAME: vgh_aws_cfn_params_list_images_in_use
+# DESCRIPTION: Gets all image ids for all autoscaling launch configurations
+# USAGE: vgh_aws_cfn_params_list_images_in_use {Stack name}
+# PARAMETERS:
+#   1) Stack name (required)
+vgh_aws_cfn_params_list_images_in_use(){
+  local stack images_in_use
+  stack="$1"
+  images_in_use=''
+
+  if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
+  for launchconfig in $(aws cloudformation describe-stacks \
+    --stack-name "${stack}" \
+    --query "Stacks[0].Parameters[?ParameterKey=='RheaAMIId'].ParameterValue" \
+    --output text)
+  do
+    images_in_use="${images_in_use} $(aws autoscaling describe-launch-configurations \
+      --launch-configuration-names "$launchconfig" \
+      --query "LaunchConfigurations[].ImageId" \
+      --output text)"
+  done
+  echo "${images_in_use/ /}"
+}
+
 # NAME: vgh_aws_cfn_list_images_in_use
 # DESCRIPTION: Gets all image ids for all autoscaling launch configurations
 # USAGE: vgh_aws_cfn_list_images_in_use {Stack name}
@@ -128,11 +183,9 @@ vgh_aws_cfn_list_images_in_use(){
   local stack images_in_use
   stack="$1"
   images_in_use=''
-
   if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
-
   for launchconfig in $(aws cloudformation describe-stack-resources \
-    --stack-name "${AWS_CFN_STACK_NAME}" \
+    --stack-name "${stack}" \
     --query "StackResources[?ResourceType=='AWS::AutoScaling::LaunchConfiguration'].PhysicalResourceId" \
     --output text)
   do
