@@ -34,16 +34,21 @@ vgs_aws_cfn_wait(){
 #   1) Stack name
 #   1) Resource logical ID
 vgs_aws_cfn_get_resource(){
-  local stack id
+  local stack resource
   stack="$1"
-  id="$2"
+  resource="$2"
 
-  if [[ -z "$stack" ]] || [[ -z "$id" ]]; then
-    e_abort "Usage: ${FUNCNAME[0]} stack output"
+  if [[ -z "$stack" ]] || [[ -z "$resource" ]]; then
+    e_abort "Usage: ${FUNCNAME[0]} stack resource"
   fi
 
-  if ! aws cloudformation describe-stack-resource --stack-name "${stack}" --logical-resource-id "${id}" --query "StackResourceDetail.PhysicalResourceId" --output text; then
-    e_abort "Could not get physical id of resource"
+  if ! aws cloudformation describe-stack-resource \
+    --stack-name "${stack}" \
+    --logical-resource-id "${resource}" \
+    --query "StackResourceDetail.PhysicalResourceId" \
+    --output text
+  then
+    e_abort "Could not get the physical id of '${resource}'"
   fi
 }
 
@@ -62,10 +67,12 @@ vgs_aws_cfn_get_output(){
     e_abort "Usage: ${FUNCNAME[0]} stack output"
   fi
 
-  if output_value=$(aws cloudformation describe-stacks --stack-name "${stack}" --query "Stacks[].Outputs[?OutputKey=='${output}'].OutputValue[]" --output text); then
-    echo "$output_value"
-  else
-    return $?
+  if ! aws cloudformation describe-stacks \
+    --stack-name "${stack}" \
+    --query "Stacks[].Outputs[?OutputKey=='${output}'].OutputValue[]" \
+    --output text
+  then
+    e_abort "Could not get the value of '${output}'"
   fi
 }
 
@@ -75,21 +82,21 @@ vgs_aws_cfn_get_output(){
 # PARAMETERS:
 #   1) Stack name
 #   1) Parameter
-vgs_aws_cfn_get_param(){
-  local stack param
+vgs_aws_cfn_get_parameter(){
+  local stack parameter
   stack="$1"
-  param="$2"
+  parameter="$2"
 
-  if [[ -z "$stack" ]] || [[ -z "$param" ]]; then
+  if [[ -z "$stack" ]] || [[ -z "$parameter" ]]; then
     e_abort "Usage: ${FUNCNAME[0]} stack parameter"
   fi
 
   if ! aws cloudformation describe-stacks \
     --stack-name "${stack}" \
-    --query "Stacks[0].Parameters[?ParameterKey=='${param}'].ParameterValue" \
+    --query "Stacks[0].Parameters[?ParameterKey=='${parameter}'].ParameterValue" \
     --output text
   then
-    e_abort "Could not get the value of '${param}'"
+    e_abort "Could not get the value of '${parameter}'"
   fi
 }
 
