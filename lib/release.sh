@@ -122,6 +122,9 @@ vgs_release_commit_changes(){
 # REQUIRES:
 #   - $git_branch : the branch name
 vgs_release_push_changes(){
+  # Disable ENVTYPE cli overriding (it should be auto detected only, otherwise
+  # it will persist between pushes)
+  unset ENVTYPE
   git push --set-upstream origin "$git_branch"
 }
 

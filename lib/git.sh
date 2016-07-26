@@ -3,7 +3,12 @@
 
 # Returns the branch name
 vgs_git_branch(){
-  git symbolic-ref --short HEAD 2>/dev/null
+  git symbolic-ref --short HEAD 2>/dev/null || echo ''
+}
+
+# Returns the short SHA-1 hash
+vgs_git_sha1(){
+  git rev-parse --short HEAD 2>/dev/null || echo '0'
 }
 
 # NAME: vgs_git_switch_branch
