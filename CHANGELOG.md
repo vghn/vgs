@@ -1,3 +1,8 @@
+## Version 0.0.34 / 2016-07-26
+  * Add environment detection ([Vlad - 68303e1](https://github.com/vghn/vgs/commit/68303e111d97620ed3e5c9734e4aaa42e6bb1076))
+  * Add git branch and sha detection ([Vlad - f0b8e8c](https://github.com/vghn/vgs/commit/f0b8e8cc71851f773ae776dab5a6598cd284f989))
+  * Fix environment persistence when switching branches ([Vlad - cc1ddd9](https://github.com/vghn/vgs/commit/cc1ddd9669b806acaaee762311d24966f8491160))
+
 ## Version 0.0.33 / 2016-07-25
   * Allow specifying the base ami codename ([Vlad - a1d08ae](https://github.com/vghn/vgs/commit/a1d08aede7802415946f6c4fef4197acff510e50))
   * Add function to get the value of a ClodFormation parameter ([Vlad - c8a88da](https://github.com/vghn/vgs/commit/c8a88da5bd435073c33aacb85981652ac3f2907f))
