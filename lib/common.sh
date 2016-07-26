@@ -40,6 +40,52 @@ apt_update() { e_info 'Updating APT' && apt-get -qy update < /dev/null ;}
 # Upgrade box
 apt_upgrade(){ e_info 'Upgrading box' && sudo apt-get -qy upgrade < /dev/null ;}
 
+# Detect environment
+detect_environment(){
+  if [[ -n "${ENVTYPE:-}" ]]; then
+    # If env var
+    ENVTYPE="$ENVTYPE"
+  elif [[ -n "$(vgs_git_branch)" ]]; then
+    # If git branch
+    ENVTYPE="$(vgs_git_branch)"
+  elif [[ -n "${TRAVIS_BRANCH:-}" ]]; then
+    # If TravisCI git branch
+    ENVTYPE="$TRAVIS_BRANCH"
+  elif [[ -n "${CIRCLE_BRANCH:-}" ]]; then
+    # If CircleCI git branch
+    ENVTYPE="$CIRCLE_BRANCH"
+  elif [[ -n "${DEPLOYMENT_GROUP_NAME:-}" ]]; then
+    # If AWS CodeDeploy hook
+    ENVTYPE="$DEPLOYMENT_GROUP_NAME"
+  else
+    # Default
+    ENVTYPE=${ENVTYPE:-production}
+  fi
+
+  # Rename master to production
+  if [[ "$ENVTYPE" == 'master' ]]; then
+    ENVTYPE='production'
+  fi
+
+  export ENVTYPE
+}
+
+# Detect CI environment
+detect_ci_environment(){
+  export CI=${CI:-false}
+  export PR=false
+  export BUILD=${GIT_SHA1:-0}
+  if [[ ${CIRCLECI:-false} == true ]]; then
+    export PR=${CIRCLE_PR_NUMBER}
+    export BUILD=${CIRCLE_BUILD_NUM}
+    git config --global user.name "CircleCI"
+  elif [[ ${TRAVIS:-false} == true ]]; then
+    export PR=${TRAVIS_PULL_REQUEST}
+    export BUILD=${TRAVIS_BUILD_NUMBER}
+    git config --global user.name "TravisCI"
+  fi
+}
+
 # Check if RVM is loaded
 is_rvm() { [[ $(type rvm 2>/dev/null | head -1) =~ 'rvm is ' ]] ;}
 
