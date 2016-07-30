@@ -1,3 +1,9 @@
+## Version 0.0.35 / 2016-07-30
+  * Minor fixes ([Vlad - 48a4de9](https://github.com/vghn/vgs/commit/48a4de922de283d323fcb441366663fe270128d9))
+  * Clean-up environment detection function ([Vlad - 3c5f892](https://github.com/vghn/vgs/commit/3c5f8927c61d4adaf1866a860c7e2877ca3e5ab4))
+  * Improve git environment detection ([Vlad - c19e985](https://github.com/vghn/vgs/commit/c19e98529a66cb2583168d8632ec82a83e12462d))
+  * Fix release script ([Vlad - 7f02224](https://github.com/vghn/vgs/commit/7f0222458cd06d7bd87d4f3e755f11dfc433facd))
+
 ## Version 0.0.34 / 2016-07-26
   * Add environment detection ([Vlad - 68303e1](https://github.com/vghn/vgs/commit/68303e111d97620ed3e5c9734e4aaa42e6bb1076))
   * Add git branch and sha detection ([Vlad - f0b8e8c](https://github.com/vghn/vgs/commit/f0b8e8cc71851f773ae776dab5a6598cd284f989))

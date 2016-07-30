@@ -42,23 +42,19 @@ apt_upgrade(){ e_info 'Upgrading box' && sudo apt-get -qy upgrade < /dev/null ;}
 
 # Detect environment
 detect_environment(){
-  if [[ -n "${ENVTYPE:-}" ]]; then
-    # If env var
+  GIT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo '')
+  GIT_SHA1=$(git rev-parse --short HEAD 2>/dev/null || echo '0')
+  if [[ -n "${ENVTYPE:-}" ]]; then # If env var
     ENVTYPE="$ENVTYPE"
-  elif [[ -n "$(vgs_git_branch)" ]]; then
-    # If git branch
-    ENVTYPE="$(vgs_git_branch)"
-  elif [[ -n "${TRAVIS_BRANCH:-}" ]]; then
-    # If TravisCI git branch
+  elif [[ -n "${GIT_BRANCH:-}" ]]; then # If git branch
+    ENVTYPE="$GIT_BRANCH"
+  elif [[ -n "${TRAVIS_BRANCH:-}" ]]; then # If TravisCI git branch
     ENVTYPE="$TRAVIS_BRANCH"
-  elif [[ -n "${CIRCLE_BRANCH:-}" ]]; then
-    # If CircleCI git branch
+  elif [[ -n "${CIRCLE_BRANCH:-}" ]]; then # If CircleCI git branch
     ENVTYPE="$CIRCLE_BRANCH"
-  elif [[ -n "${DEPLOYMENT_GROUP_NAME:-}" ]]; then
-    # If AWS CodeDeploy hook
+  elif [[ -n "${DEPLOYMENT_GROUP_NAME:-}" ]]; then # If AWS CodeDeploy hook
     ENVTYPE="$DEPLOYMENT_GROUP_NAME"
   else
-    # Default
     ENVTYPE=${ENVTYPE:-production}
   fi
 
@@ -67,7 +63,7 @@ detect_environment(){
     ENVTYPE='production'
   fi
 
-  export ENVTYPE
+  export ENVTYPE GIT_BRANCH GIT_SHA1
 }
 
 # Detect CI environment

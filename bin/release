@@ -6,7 +6,7 @@ set -euo pipefail
 
 # Load functions
 # shellcheck disable=1090
-. "$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" && pwd -P)/load"
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/../" && pwd -P)/load"
 
 vgs_release \
   --sign \
