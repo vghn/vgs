@@ -63,7 +63,7 @@ detect_environment(){
     ENVTYPE='production'
   fi
 
-  export ENVTYPE
+  export ENVTYPE GIT_BRANCH GIT_SHA1
 }
 
 # Detect CI environment
