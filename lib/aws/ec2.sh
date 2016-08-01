@@ -79,15 +79,13 @@ vgs_aws_ec2_create_tags(){
 #   1) The instance id
 vgs_aws_ec2_get_asg_instance_state() {
   local instance_id=${1:?Must specify the instance id as the 1st argument}
-  local state; state=$(aws autoscaling describe-auto-scaling-instances \
+
+  if ! aws autoscaling describe-auto-scaling-instances \
     --instance-ids "$instance_id" \
     --query "AutoScalingInstances[?InstanceId == \`$instance_id\`].LifecycleState | [0]" \
-    --output text)
-  if [ $? != 0 ]; then
-    return 1
-  else
-    echo "$state"
-    return 0
+    --output text
+  then
+    e_abort 'Could not get instance state'
   fi
 }
 
@@ -99,19 +97,15 @@ vgs_aws_ec2_get_asg_instance_state() {
 #   1) The instance id
 vgs_aws_ec2_get_asg_name() {
   local instance_id=${1:?Must specify the instance id as the 1st argument}
-  local asg_name; asg_name=$(aws autoscaling \
+
+  if ! aws autoscaling \
     describe-auto-scaling-instances \
     --instance-ids "$instance_id" \
     --output text \
-    --query AutoScalingInstances[0].AutoScalingGroupName)
-
-  if [ $? != 0 ]; then
-    return 1
-  else
-    echo "$asg_name"
+    --query AutoScalingInstances[0].AutoScalingGroupName
+  then
+    e_abort 'Could not get autoscaling group name'
   fi
-
-  return 0
 }
 
 # Moves the instance into the Standby state in AutoScaling group
@@ -121,8 +115,7 @@ vgs_aws_ec2_autoscaling_enter_standby(){
 
   e_info 'Checking if this instance has already been moved in the Standby state'
   local instance_state
-  instance_state=$(vgs_aws_ec2_get_asg_instance_state "$instance_id")
-  if [ $? != 0 ]; then
+  if ! instance_state=$(vgs_aws_ec2_get_asg_instance_state "$instance_id"); then
     e_abort 'Unable to get this instance lifecycle state.'
   fi
 
@@ -135,11 +128,11 @@ vgs_aws_ec2_autoscaling_enter_standby(){
   fi
 
   e_info "Putting instance $instance_id into Standby"
-  aws autoscaling enter-standby \
+  if ! aws autoscaling enter-standby \
     --instance-ids "$instance_id" \
     --auto-scaling-group-name "$asg_name" \
     --should-decrement-desired-capacity
-  if [ $? != 0 ]; then
+  then
     e_abort "Failed to put instance $instance_id into Standby for ASG $asg_name."
   fi
 
@@ -148,8 +141,6 @@ vgs_aws_ec2_autoscaling_enter_standby(){
     printf '.' && sleep 5
   done
   e_ok ' Done.'
-
-  return 0
 }
 
 # Attempts to move instance out of Standby and into InService.
@@ -159,8 +150,7 @@ vgs_aws_ec2_autoscaling_exit_standby(){
 
   e_info 'Checking if this instance has already been moved out of Standby state'
   local instance_state
-  instance_state=$(vgs_aws_ec2_get_asg_instance_state "$instance_id")
-  if [ $? != 0 ]; then
+  if ! instance_state=$(vgs_aws_ec2_get_asg_instance_state "$instance_id"); then
     e_abort 'Unable to get this instance lifecycle state.'
   fi
 
@@ -173,10 +163,10 @@ vgs_aws_ec2_autoscaling_exit_standby(){
   fi
 
   e_info "Moving instance $instance_id out of Standby"
-  aws autoscaling exit-standby \
+  if ! aws autoscaling exit-standby \
     --instance-ids "$instance_id" \
     --auto-scaling-group-name "$asg_name"
-  if [ $? != 0 ]; then
+  then
     e_abort "Failed to put instance $instance_id back into InService for ASG $asg_name."
   fi
 
@@ -185,8 +175,6 @@ vgs_aws_ec2_autoscaling_exit_standby(){
     printf '.' && sleep 5
   done
   e_ok ' Done.'
-
-  return 0
 }
 
 # NAME: vgs_aws_ec2_get_ubuntu_official_ami_id
