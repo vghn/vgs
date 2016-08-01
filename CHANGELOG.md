@@ -1,3 +1,6 @@
+## Version 0.0.36 / 2016-08-01
+  * Improve enter/exit standby functions ([Vlad - 3a49225](https://github.com/vghn/vgs/commit/3a492256b7a87c96bbe5a28933255ad32c993e8f))
+
 ## Version 0.0.35 / 2016-07-30
   * Minor fixes ([Vlad - 48a4de9](https://github.com/vghn/vgs/commit/48a4de922de283d323fcb441366663fe270128d9))
   * Clean-up environment detection function ([Vlad - 3c5f892](https://github.com/vghn/vgs/commit/3c5f8927c61d4adaf1866a860c7e2877ca3e5ab4))
