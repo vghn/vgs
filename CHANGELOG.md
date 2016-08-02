@@ -1,3 +1,6 @@
+## Version 0.0.37 / 2016-08-02
+  * Improve bash colors ([Vlad - 3e3ea23](https://github.com/vghn/vgs/commit/3e3ea23b77bfa0de85bee5a850219b6e1fe65da4))
+
 ## Version 0.0.36 / 2016-08-01
   * Improve enter/exit standby functions ([Vlad - 3a49225](https://github.com/vghn/vgs/commit/3a492256b7a87c96bbe5a28933255ad32c993e8f))
 
