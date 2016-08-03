@@ -108,6 +108,21 @@ vgs_aws_ec2_get_asg_name() {
   fi
 }
 
+# Returns the desired capacity for the specified AutoScaling Group
+get_asg_desired_capacity(){
+  local instance_id; instance_id=$(vgs_aws_ec2_get_instance_id)
+  local asg_name; asg_name=$(vgs_aws_ec2_get_asg_name "$instance_id")
+
+  if ! count="$(aws autoscaling describe-auto-scaling-groups \
+    --auto-scaling-group-names "$asg_name" \
+    --query "AutoScalingGroups[0].DesiredCapacity" \
+    --output text || true)"
+  then
+    e_abort "Unable to get the desired capacity for ${asg_name} group."
+  fi
+  [[ "$count" =~ ^[0-9]+$ ]] && echo "$count" || echo 0
+}
+
 # Moves the instance into the Standby state in AutoScaling group
 vgs_aws_ec2_autoscaling_enter_standby(){
   local instance_id; instance_id=$(vgs_aws_ec2_get_instance_id)

@@ -1,3 +1,7 @@
+## Version 0.0.38 / 2016-08-03
+  * Add ECS functions ([Vlad - 71a1040](https://github.com/vghn/vgs/commit/71a104097474c37e87044e88713b931c7d17f222))
+  * Add function to get the ASG desired capacity ([Vlad - 2700930](https://github.com/vghn/vgs/commit/2700930a788ed912d0c0d09c01fb59cd12f02474))
+
 ## Version 0.0.37 / 2016-08-02
   * Improve bash colors ([Vlad - 3e3ea23](https://github.com/vghn/vgs/commit/3e3ea23b77bfa0de85bee5a850219b6e1fe65da4))
 
