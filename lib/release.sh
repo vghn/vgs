@@ -105,10 +105,7 @@ vgs_release_version_increment_major(){ awk -F'[.]' '{print $1+1".0.0"}' "$versio
 #   1) The type of change (required)
 #   2) The new version (required)
 vgs_release_commit_changes(){
-  local commit_message="Bump ${1} version to v${2}
-
-[skip ci]
-"
+  local commit_message="Bump ${1} version to v${2}"
 
   echo "Committing version and changelog files ($1 version $2)"
   git add "$version_file" "$changelog_file"
@@ -155,6 +152,7 @@ vgs_release_main(){
   read -r -n1 -s
   vgs_release_commit_changes "$release" "$new_version"
   vgs_release_push_changes
+  vgs_release_wait_for_ci
 
   vgs_git_switch_branch "$release_branch"
   vgs_git_merge_branch "$git_branch" "Release v${new_version}" "$sign_commit"
