@@ -426,6 +426,12 @@ vgs_aws_ec2_run_command(){
     --query 'Reservations[].Instances[].InstanceId' \
     --output text)
 
+  if [[ -n "$ids" ]]; then
+    e_info "Found ids: ${ids}, for group ${role}"
+  else
+    e_warn 'Did not find any instances!'; return
+  fi
+
   command_id=$(aws ssm send-command \
     --document-name "AWS-RunShellScript" \
     --instance-ids "$ids" \
@@ -435,6 +441,15 @@ vgs_aws_ec2_run_command(){
     --query 'Command.CommandId' \
     --output text)
 
-  # Wait until at least 1 invocation returns succes
-  until [[ $(aws ssm list-commands --region us-east-1 --command-id "$command_id" --query 'Commands[].Status' --output text) =~ 'Success' ]]; do sleep 1; done
+  if [[ -n "$command_id" ]]; then
+    e_info "Wait for command (id: $command_id)"
+    status=
+    until [[ "$status" =~ ^(Success|Failed|Timed Out|Cancelled)$ ]]; do
+      status="$(aws ssm list-commands --command-id "$command_id" --query 'Commands[].Status' --output text)"
+      sleep 1
+    done
+    e_info "Command returned '${status}'"
+  else
+    e_abort 'Could not send command'
+  fi
 }
