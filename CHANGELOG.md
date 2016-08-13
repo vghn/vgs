@@ -1,3 +1,6 @@
+## Version 0.0.40 / 2016-08-13
+  * Revert #6038cb0 ([Vlad - 8dc7d52](https://github.com/vghn/vgs/commit/8dc7d5266bd37d5feaf9bd882d79d82f16cec399))
+
 ## Version 0.0.39 / 2016-08-13
   * Improve SSM command ([Vlad - ea2f281](https://github.com/vghn/vgs/commit/ea2f2813de720850efdd3c0f099ae2163efb5893))
   * Do not wait for the CI server and do not build bump commit ([Vlad - 6038cb0](https://github.com/vghn/vgs/commit/6038cb0954c4420016e71dbacbdce6511d4de5bd))
