@@ -1,5 +1,5 @@
 # VGS  (UNDER DEVELOPMENT!)
-  [![Circle CI](https://circleci.com/gh/vghn/vgs/tree/master.svg?style=svg)](https://circleci.com/gh/vghn/vgs/tree/master)
+  [![Build Status](https://travis-ci.org/vghn/vgs.svg?branch=master)](https://travis-ci.org/vghn/vgs)
 
 A collection of useful functions
 

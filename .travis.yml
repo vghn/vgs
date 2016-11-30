@@ -1,0 +1,16 @@
+branches:
+  except:
+    - /^v\d/
+
+addons:
+  apt:
+    sources:
+      - debian-sid
+    packages:
+      - shellcheck
+
+script: find ./{bin,lib} -type f | xargs shellcheck
+
+notifications:
+  slack:
+    secure: "chs7wC64v6Bu5M+46af6WuWolk1j+dPnMmSIEHM3mAkaXLQ3vtDxt1wBf3Ar3yj0yC+VAdsHfn0RIZs9qBme/Vg753UTII+rSNARoGwuIpDn4/g0zURhNYpyJXe62bi/m+JuuuX3JcLUL3pFP+vja+9ikX2fotlQI8oJXvk7idVf7Tt3l6JSHNSL2RqThiKCdi4zprUgC0ZfmFWDUL7EQgQHoaNJ9bttX5WI23eX0MOjRduUKjNTSkV3LHG54wK6dxMecB0KfYN7wwuMXWe0nQJlPLNxux4QVk5F8lFwwBzfPwx//IDg/ls1SeGKgiDzvjSTUkz1/9X+8ks0+AHVFpMNHj7AnK8osnvmqBwuprTQUKELcb4L5NlMTtfmWi1K2D5qqs1EokMeME3hVVeXs0wWlmLplbfTeMLAWEYHaA2kFW9ouunT5WB6pC0+qPR42yNoUVUJcUP4jIehISn7ryh5SADsbaoFjFmMBUE+xvLJOUbz5Z3rGzfXppFEJlltXZ0/XZboRLgEZUD6ic5AkWYsvVlgb0M/jJSFInbzKttmiQZXTYy2nUgAonlVK8pCHPv3fuWFgLTH3xo4Rn1I9HEfelzbjE09Mduy4D4XbEv3dLRv+aQ9JIQIYl7b0ohQO9UVD0ddVyt+jzZiuyScHU731K/rHX/dHcZ6ez8AcMA="
