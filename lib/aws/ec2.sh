@@ -427,7 +427,7 @@ vgs_aws_ec2_run_command(){
     --output text)
 
   if [[ -n "$ids" ]]; then
-    e_info "Found ids: ${ids}, for group ${role}"
+    e_info "Found instances: ${ids}"
   else
     e_warn 'Did not find any instances!'; return
   fi
