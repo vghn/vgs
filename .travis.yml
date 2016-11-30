@@ -9,7 +9,7 @@ addons:
     packages:
       - shellcheck
 
-script: bash -c 'shopt -s globstar; shellcheck **/*.sh'
+script: find ./{bin,lib} -type f | xargs shellcheck
 
 notifications:
   slack:
