@@ -1,3 +1,6 @@
+branches:
+  except:
+  - "/^v\\d/"
 addons:
   apt:
     sources:
