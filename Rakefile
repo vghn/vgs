@@ -67,12 +67,14 @@ namespace :release do
       sh "git push --set-upstream origin #{release_branch}"
 
       # Waiting for CI to finish
-      sh "git checkout #{initial_branch}"
       puts 'Waiting for CI to finish'
-      sleep 5 until ci_status(initial_branch) == 'success'
+      sleep 5 until ci_status(release_branch) == 'success'
 
       # Merge release branch
+      sh "git checkout #{initial_branch}"
       sh "git merge --gpg-sign --no-ff --message 'Release v#{release}' #{release_branch}"
+
+      # Tag release
       sh "git tag --sign v#{release} --message 'Release v#{release}'"
       sh 'git push --follow-tags'
     end
