@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.1.1](https://github.com/vghn/vgs/tree/v0.1.1) (2016-12-02)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.1.0...v0.1.1)
+
+**Fixed bugs:**
+
+- Improve release workflow [\#22](https://github.com/vghn/vgs/pull/22) ([vladgh](https://github.com/vladgh))
+
 ## [v0.1.0](https://github.com/vghn/vgs/tree/v0.1.0) (2016-12-02)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.0.40...v0.1.0)
 
