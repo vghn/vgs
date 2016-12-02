@@ -67,7 +67,7 @@ namespace :release do
       sh "git push --set-upstream origin #{release_branch}"
 
       # Waiting for CI to finish
-      sh "git checkout -b #{initial_branch}"
+      sh "git checkout #{initial_branch}"
       puts 'Waiting for CI to finish'
       sleep 5 until ci_status(initial_branch) == 'success'
 
