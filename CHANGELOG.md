@@ -1,174 +1,177 @@
-## Version 0.0.40 / 2016-08-13
-  * Revert #6038cb0 ([Vlad - 8dc7d52](https://github.com/vghn/vgs/commit/8dc7d5266bd37d5feaf9bd882d79d82f16cec399))
+# Change Log
 
-## Version 0.0.39 / 2016-08-13
-  * Improve SSM command ([Vlad - ea2f281](https://github.com/vghn/vgs/commit/ea2f2813de720850efdd3c0f099ae2163efb5893))
-  * Do not wait for the CI server and do not build bump commit ([Vlad - 6038cb0](https://github.com/vghn/vgs/commit/6038cb0954c4420016e71dbacbdce6511d4de5bd))
+## [v0.1.0](https://github.com/vghn/vgs/tree/v0.1.0) (2016-12-02)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.40...v0.1.0)
 
-## Version 0.0.38 / 2016-08-03
-  * Add ECS functions ([Vlad - 71a1040](https://github.com/vghn/vgs/commit/71a104097474c37e87044e88713b931c7d17f222))
-  * Add function to get the ASG desired capacity ([Vlad - 2700930](https://github.com/vghn/vgs/commit/2700930a788ed912d0c0d09c01fb59cd12f02474))
+**Implemented enhancements:**
 
-## Version 0.0.37 / 2016-08-02
-  * Improve bash colors ([Vlad - 3e3ea23](https://github.com/vghn/vgs/commit/3e3ea23b77bfa0de85bee5a850219b6e1fe65da4))
+- Add more functions [\#19](https://github.com/vghn/vgs/pull/19) ([vladgh](https://github.com/vladgh))
+- Configure release workflow [\#18](https://github.com/vghn/vgs/pull/18) ([vladgh](https://github.com/vladgh))
+- Simplify travis.yml [\#17](https://github.com/vghn/vgs/pull/17) ([vladgh](https://github.com/vladgh))
+- Change to Travis-CI [\#16](https://github.com/vghn/vgs/pull/16) ([vladgh](https://github.com/vladgh))
+- The AWS-CLI now has a presign command [\#15](https://github.com/vghn/vgs/pull/15) ([vladgh](https://github.com/vladgh))
 
-## Version 0.0.36 / 2016-08-01
-  * Improve enter/exit standby functions ([Vlad - 3a49225](https://github.com/vghn/vgs/commit/3a492256b7a87c96bbe5a28933255ad32c993e8f))
+**Fixed bugs:**
 
-## Version 0.0.35 / 2016-07-30
-  * Minor fixes ([Vlad - 48a4de9](https://github.com/vghn/vgs/commit/48a4de922de283d323fcb441366663fe270128d9))
-  * Clean-up environment detection function ([Vlad - 3c5f892](https://github.com/vghn/vgs/commit/3c5f8927c61d4adaf1866a860c7e2877ca3e5ab4))
-  * Improve git environment detection ([Vlad - c19e985](https://github.com/vghn/vgs/commit/c19e98529a66cb2583168d8632ec82a83e12462d))
-  * Fix release script ([Vlad - 7f02224](https://github.com/vghn/vgs/commit/7f0222458cd06d7bd87d4f3e755f11dfc433facd))
+- Fix release task [\#21](https://github.com/vghn/vgs/pull/21) ([vladgh](https://github.com/vladgh))
+- Fix push command in release task [\#20](https://github.com/vghn/vgs/pull/20) ([vladgh](https://github.com/vladgh))
 
-## Version 0.0.34 / 2016-07-26
-  * Add environment detection ([Vlad - 68303e1](https://github.com/vghn/vgs/commit/68303e111d97620ed3e5c9734e4aaa42e6bb1076))
-  * Add git branch and sha detection ([Vlad - f0b8e8c](https://github.com/vghn/vgs/commit/f0b8e8cc71851f773ae776dab5a6598cd284f989))
-  * Fix environment persistence when switching branches ([Vlad - cc1ddd9](https://github.com/vghn/vgs/commit/cc1ddd9669b806acaaee762311d24966f8491160))
+## [v0.0.40](https://github.com/vghn/vgs/tree/v0.0.40) (2016-08-13)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.39...v0.0.40)
 
-## Version 0.0.33 / 2016-07-25
-  * Allow specifying the base ami codename ([Vlad - a1d08ae](https://github.com/vghn/vgs/commit/a1d08aede7802415946f6c4fef4197acff510e50))
-  * Add function to get the value of a ClodFormation parameter ([Vlad - c8a88da](https://github.com/vghn/vgs/commit/c8a88da5bd435073c33aacb85981652ac3f2907f))
-  * Improve CloudFormation scripts ([Vlad - b9c595a](https://github.com/vghn/vgs/commit/b9c595ad1c0d91f8db29d6aa6fb40e08098ae3dd))
-  * Fix generation of s3 presigned url ([Vlad - 3295221](https://github.com/vghn/vgs/commit/3295221e7ab5027e182ead212792d910b35c4ec4))
+## [v0.0.39](https://github.com/vghn/vgs/tree/v0.0.39) (2016-08-13)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.38...v0.0.39)
 
-## Version 0.0.32 / 2016-07-18
-  * Get ubuntu ami id defaults to xenial ([Vlad - 059111b](https://github.com/vghn/vgs/commit/059111b123fe58fd0c22efe8e513c634ad2fadd5))
-  * Minor updates ([Vlad - 036ab7a](https://github.com/vghn/vgs/commit/036ab7a91a37645c9ac71e6023b74161fd109b90))
+**Implemented enhancements:**
 
-## Version 0.0.31 / 2016-07-12
-  * Improve AWS Elastic File System functions ([Vlad - 4166ea4](https://github.com/vghn/vgs/commit/4166ea4f83d92bb18c1e213508922f589220636b))
-  * Check if EFS mounted correctly ([Vlad - c9660fd](https://github.com/vghn/vgs/commit/c9660fdee6340795499cb70afcd59a81f8d43fe2))
-  * Check the release type ([Vlad - 7cd6fd5](https://github.com/vghn/vgs/commit/7cd6fd59e89c6cb7780b43f1c82ecaef951406f6))
+- Create documentation for each function [\#12](https://github.com/vghn/vgs/issues/12)
+- Use Google's shell style guide [\#9](https://github.com/vghn/vgs/issues/9)
 
-## Version 0.0.30 / 2016-06-23
-  * Fix deployement functon ([Vlad - aab5435](https://github.com/vghn/vgs/commit/aab5435937fa39da2c313dd31569496272e0b515))
+## [v0.0.38](https://github.com/vghn/vgs/tree/v0.0.38) (2016-08-03)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.37...v0.0.38)
 
-## Version 0.0.29 / 2016-06-22
-  * Improve function arguments ([Vlad - be6e335](https://github.com/vghn/vgs/commit/be6e335b9ad508580f2d52c44541c25ec5c528cc))
-  * Add release usage ([Vlad - 6c463c1](https://github.com/vghn/vgs/commit/6c463c14e0ecc13698759220204892e86106ea04))
-  * Add function to get the latest git tag ([Vlad - 4247276](https://github.com/vghn/vgs/commit/42472767b04813b0cf90b407598e8355cfb6a0e9))
-  * Fix release script ([Vlad - e05ddb8](https://github.com/vghn/vgs/commit/e05ddb8ff80542d3e23a128b6ae988b72a712a59))
-  * Add function to trap exit and notify Slack ([Vlad - 3690b79](https://github.com/vghn/vgs/commit/3690b795bc1222fa6e320b868d62e3d3c3e34423))
-  * Improve install method ([Vlad - 388f0f3](https://github.com/vghn/vgs/commit/388f0f378b86e5057533bbec5f4bd741257d58a8))
+## [v0.0.37](https://github.com/vghn/vgs/tree/v0.0.37) (2016-08-02)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.36...v0.0.37)
 
-## Version 0.0.28 / 2016-05-26
-  * Allow tagging the merge commits and tags ([Vlad - 39df4cd](https://github.com/vghn/vgs/commit/39df4cdebfbe5d85139a68c2e4fe58575ef97d71))
+## [v0.0.36](https://github.com/vghn/vgs/tree/v0.0.36) (2016-08-01)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.35...v0.0.36)
 
-## Version 0.0.27 / 2016-05-26
-  * Add release option to sign commits ([Vlad - 6e6ec8f](https://github.com/vghn/vgs/commit/6e6ec8fdc33d5a0791448e8a81c56ffac9be0717))
+## [v0.0.35](https://github.com/vghn/vgs/tree/v0.0.35) (2016-07-30)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.34...v0.0.35)
 
-## Version 0.0.26 / 2016-05-23
-  * Allow an extra list of image ids to keep ([Vlad - 122972b](https://github.com/vghn/vgs/commit/122972b21310679bc2251b657b25a6fd36eee243))
-  * Add function to list all images in use ([Vlad - 4c34d04](https://github.com/vghn/vgs/commit/4c34d04cd5f9d34ed4c0a2e7e471f52cd360a644))
+## [v0.0.34](https://github.com/vghn/vgs/tree/v0.0.34) (2016-07-26)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.33...v0.0.34)
 
-## Version 0.0.25 / 2016-05-23
-  * Add function to list S3 keys ([Vlad - 4b2c3f9](https://github.com/vghn/vgs/commit/4b2c3f9af71baf0e6e8f01e3814a26963c0c6881))
+## [v0.0.33](https://github.com/vghn/vgs/tree/v0.0.33) (2016-07-25)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.32...v0.0.33)
 
-## Version 0.0.24 / 2016-05-22
-  * Add function to get the physical resource id ([Vlad - 51f49c6](https://github.com/vghn/vgs/commit/51f49c69f636115650c1c706c532d56b7640ea64))
+## [v0.0.32](https://github.com/vghn/vgs/tree/v0.0.32) (2016-07-18)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.31...v0.0.32)
 
-## Version 0.0.23 / 2016-05-20
-  * Fix quotes in CI scripts ([Vlad - 7d5230f](https://github.com/vghn/vgs/commit/7d5230fa9ecc49df8cb9338037a46781e87fc3d6))
-  * Improve range detection in release script ([Vlad - e18e32a](https://github.com/vghn/vgs/commit/e18e32afb682c7893ce104ae1d441c3ea87dcaa0))
+## [v0.0.31](https://github.com/vghn/vgs/tree/v0.0.31) (2016-07-12)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.30...v0.0.31)
 
-## Version 0.0.22 / 2016-05-19
-  * Create version and changelog files if absent ([Vlad - 78c3ace](https://github.com/vghn/vgs/commit/78c3ace8fa299ba7f9deb9ea9e06b432e7fe038b))
+## [v0.0.30](https://github.com/vghn/vgs/tree/v0.0.30) (2016-06-23)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.29...v0.0.30)
 
-## Version 0.0.21 / 2016-05-19
-  * Use v0.0.0 format for tags ([Vlad - 5dc407f](https://github.com/vghn/vgs/commit/5dc407fbe93be7613d3747f2c57e88cfd07b7daf))
+## [v0.0.29](https://github.com/vghn/vgs/tree/v0.0.29) (2016-06-22)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.28...v0.0.29)
 
-## Version 0.0.20 / 2016-05-19
-  * Break down release script into smaller functions ([Vlad - aecb56c](https://github.com/vghn/vgs/commit/aecb56c29b5016b52beab2290eca043448fd1e6c))
+**Implemented enhancements:**
 
-## Version 0.0.19 / 2016-05-13
-  * Improve distibution detection ([Vlad - df10615](https://github.com/vghn/vgs/commit/df10615be009c883104cacd40c4a9ba42d0b3e63))
+- Do not encourage piping curl into sh [\#11](https://github.com/vghn/vgs/issues/11)
+- Improve install script [\#10](https://github.com/vghn/vgs/issues/10)
 
-## Version 0.0.18 / 2016-05-11
-  * Be consistent ([Vlad - 2f0c25d](https://github.com/vghn/vgs/commit/2f0c25de2401408c1edebe0046d552a707856c13))
+## [v0.0.28](https://github.com/vghn/vgs/tree/v0.0.28) (2016-05-26)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.27...v0.0.28)
 
-## Version 0.0.17 / 2016-05-10
-  * Fix required parameters in was functions ([Vlad - e7dc66c](https://github.com/vghn/vgs/commit/e7dc66cf5034a6765c96e3a320456778f6cd40eb))
-  * Update comments ([Vlad - 38d7ef1](https://github.com/vghn/vgs/commit/38d7ef1ba61517990c48c5d8d3b9ea41206030a2))
-  * Add slack notifications colors ([Vlad - 19e17b0](https://github.com/vghn/vgs/commit/19e17b0f24acaa912aff68d383458354a0560df2))
-  * Add parameter to specify release branch ([Vlad - 6ec718b](https://github.com/vghn/vgs/commit/6ec718b54decb5a87a16346dfc36d3e711d7df57))
+## [v0.0.27](https://github.com/vghn/vgs/tree/v0.0.27) (2016-05-26)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.26...v0.0.27)
 
-## Version 0.0.16 / 2016-04-07
-  * Always load entire library ([Vlad - 4914963](https://github.com/vghn/vgs/commit/4914963f32dde6a173963721991bb06b825539ca))
+## [v0.0.26](https://github.com/vghn/vgs/tree/v0.0.26) (2016-05-23)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.25...v0.0.26)
 
-## Version 0.0.15 / 2016-03-27
-  * Add parse yaml function ([Vlad - ef382b5](https://github.com/vghn/vgs/commit/ef382b5b7682ce7e257fc143a0db3f4c0cbb674f))
+**Implemented enhancements:**
 
-## Version 0.0.14 / 2016-03-26
-  * Add generate presigned url function ([Vlad - 20d66ea](https://github.com/vghn/vgs/commit/20d66eabb4fb280c37d70e2f5b6392cb99b3d3ab))
+- Add a function to list used image ids [\#14](https://github.com/vghn/vgs/issues/14)
+- The image purge script should allow extra images to be kept [\#13](https://github.com/vghn/vgs/issues/13)
+- Create script to purge old deployment artefacts from S3 [\#7](https://github.com/vghn/vgs/issues/7)
 
-## Version 0.0.13 / 2016-03-26
-  * Fix output load times ([Vlad - cb69cf2](https://github.com/vghn/vgs/commit/cb69cf25da6af9712b0da1f7b9e681b896c755e2))
+## [v0.0.25](https://github.com/vghn/vgs/tree/v0.0.25) (2016-05-23)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.24...v0.0.25)
 
-## Version 0.0.12 / 2016-03-25
-  * Detect installation path ([Vlad - 1106a25](https://github.com/vghn/vgs/commit/1106a25d56b3ee0860b35244e62d5b39c6e89761))
+## [v0.0.24](https://github.com/vghn/vgs/tree/v0.0.24) (2016-05-22)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.23...v0.0.24)
 
-## Version 0.0.11 / 2016-03-25
-  * Add encrypt/decrypt functions ([Vlad - 0161d15](https://github.com/vghn/vgs/commit/0161d15f2fa57bced83a1f581091dbb50bf0cbc8))
+## [v0.0.23](https://github.com/vghn/vgs/tree/v0.0.23) (2016-05-21)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.22...v0.0.23)
 
-## Version 0.0.10 / 2016-03-24
-  * Improve cloudformation functions ([Vlad - 9535dc8](https://github.com/vghn/vgs/commit/9535dc88c646f84fff6a70093f78d1c47b0899ba))
+## [v0.0.22](https://github.com/vghn/vgs/tree/v0.0.22) (2016-05-19)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.0.21...v0.0.22)
 
-## Version 0.0.9 / 2016-03-21
-  * Improve deployment scripts ([Vlad - 944ad4b](https://github.com/vghn/vgs/commit/944ad4bb94d4faaf58ca62ba646c223270b91e7a))
+## [v0.0.21](https://github.com/vghn/vgs/tree/v0.0.21) (2016-05-19)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.20...v0.0.21)
 
-## Version 0.0.8 / 2016-03-13
-  * Fix release script ([Vlad - 1edf5a9](https://github.com/vghn/vgs/commit/1edf5a9d7016eaa3849beec3801c0206194d4dfe))
+## [0.0.20](https://github.com/vghn/vgs/tree/0.0.20) (2016-05-19)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.19...0.0.20)
 
-## Version 0.0.7 / 2016-03-13
-  * Improve CI script output ([Vlad - c22b109](https://github.com/vghn/vgs/commit/c22b109d59ffd2aac878532ec31842c4969ea361))
-  * Load bash colors only if needed ([Vlad - e25d50a](https://github.com/vghn/vgs/commit/e25d50abc7f0523cdf89aa88b8679576bf9b7ba6))
-  * Fix typo ([Vlad - c4bafeb](https://github.com/vghn/vgs/commit/c4bafebcb45d5a154f09b25daf2bda6e1361f788))
+## [0.0.19](https://github.com/vghn/vgs/tree/0.0.19) (2016-05-13)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.18...0.0.19)
 
-## Version 0.0.6 / 2016-03-12
-  * Create an install script ([Vlad - 6dc2e20](https://github.com/vghn/vgs/commit/6dc2e2068ae085de63627eae557dd4ef39e6acff))
-  * Improve CI script ([Vlad - 62e90e9](https://github.com/vghn/vgs/commit/62e90e97a71732dc3cfc1393bee8a8d6fff4afdf))
+## [0.0.18](https://github.com/vghn/vgs/tree/0.0.18) (2016-05-11)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.17...0.0.18)
 
-## Version 0.0.5 / 2016-03-11
-  * Change S3 bucket ([Vlad - 7810994](https://github.com/vghn/vgs/commit/78109946891b64c579426f0cf2f3841a5b13de47))
-  * Improve deploy script ([Vlad - 4c18944](https://github.com/vghn/vgs/commit/4c1894493ccb1ab27bb72345c90f629e524f9498))
+## [0.0.17](https://github.com/vghn/vgs/tree/0.0.17) (2016-05-10)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.16...0.0.17)
 
-## Version 0.0.4 / 2016-03-11
-  * Fix typo ([Vlad - 9f45fab](https://github.com/vghn/vgs/commit/9f45fab4edef9ef806ac0735b2f739f6fbe56e88))
+## [0.0.16](https://github.com/vghn/vgs/tree/0.0.16) (2016-04-07)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.15...0.0.16)
 
-## Version 0.0.3 / 2016-03-11
-  * Add loading function ([Vlad - bc89d4e](https://github.com/vghn/vgs/commit/bc89d4eaff1dca2202cb3f77e99d1fe8532696c1))
-  * Add a self update function ([Vlad - 2e37978](https://github.com/vghn/vgs/commit/2e37978213f377039fd05ee0bbed887fee0a1b41))
-  * Fix release functions ([Vlad - 3a0644c](https://github.com/vghn/vgs/commit/3a0644cda32d7c57ddeca45d22c1c15791fec706))
-  * Add GIT functions ([Vlad - f78d273](https://github.com/vghn/vgs/commit/f78d27328d173cc894deee00201e683495c45d58))
-  * Fix typo ([Vlad - 36fcc90](https://github.com/vghn/vgs/commit/36fcc904b5170ec717d44fa35d38e6813965b097))
-  * Create a release function ([Vlad - 97ef489](https://github.com/vghn/vgs/commit/97ef48938b8cbeb8d99ac1a5a7865a96321322e7))
-  * Fix deployment files ([Vlad - 645607f](https://github.com/vghn/vgs/commit/645607f642b21fd9ed403910712ebc02635babd8))
-  * Fix typo ([Vlad - c5a98ad](https://github.com/vghn/vgs/commit/c5a98ad590d71c1e14cade101efe8e3e6e83ce85))
-  * Ensure we are in the root directory ([Vlad - a676b80](https://github.com/vghn/vgs/commit/a676b802216093dad5cad03d853ae8742a1adcd0))
-  * Fix release command ([Vlad - a21a49f](https://github.com/vghn/vgs/commit/a21a49f42a481531214396d5e7fec267b6f05260))
-  * Fix release function ([Vlad - 985441e](https://github.com/vghn/vgs/commit/985441ec25e74722d2a838f00e5a62c54296c060))
+## [0.0.15](https://github.com/vghn/vgs/tree/0.0.15) (2016-03-28)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.14...0.0.15)
 
-## Version 0.0.2 / 2016-03-10
-  * Use shorter latest archive name ([Vlad - e010ac6](https://github.com/vghn/vgs/commit/e010ac65d3f92c8eebd955621b4e1b5f3c58cbfd))
-  * Fix deploy.sh ([Vlad - 52e159f](https://github.com/vghn/vgs/commit/52e159f166c1ee8d5772d508aa0071f4bbc5c155))
+## [0.0.14](https://github.com/vghn/vgs/tree/0.0.14) (2016-03-26)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.13...0.0.14)
 
-## Version 0.0.1 / 2016-03-10
-  * Initial import ([Vlad - 666a09f](https://github.com/vghn/vgs/commit/666a09f2cd2cbae4d842d80890c4aaa69be86cc0))
-  * Fix paths ([Vlad - 216393a](https://github.com/vghn/vgs/commit/216393ad9606706bd88f892912b96e45c386c22d))
-  * Fix CI ([Vlad - 1c3cdea](https://github.com/vghn/vgs/commit/1c3cdea3ba364e09991a510f9b3fd2a309bf23eb))
-  * Do not fail on load ([Vlad - 869cd4f](https://github.com/vghn/vgs/commit/869cd4f2dd9baff3483c3065126749f45bb1d5df))
-  * Lint code ([Vlad - 6a23249](https://github.com/vghn/vgs/commit/6a232497780117a9bcd8025b2f05ea0d96f437b0))
-  * Fix load command ([Vlad - d213e3e](https://github.com/vghn/vgs/commit/d213e3e55f73561ac037f8e2a9e74ad29412a0d8)) ([Vlad - 1afc13a](https://github.com/vghn/vgs/commit/1afc13a3bb62acf1938e03cfe310c7c8695dc575)) ([Vlad - 2a5a2ec](https://github.com/vghn/vgs/commit/2a5a2ecafc54e0adfdeb4c01251414d5d184ea52))
-  * Debug ci script ([Vlad - 83829be](https://github.com/vghn/vgs/commit/83829be0407a32f668fcb3d320204a18e1efa669))
-  * Improve deployment ([Vlad - 2b2b6da](https://github.com/vghn/vgs/commit/2b2b6da5cbc23eaa8a1afa3b6b9be06980bba55a))
-  * Do not fail tput ([Vlad - 8b8e5af](https://github.com/vghn/vgs/commit/8b8e5af49807f7475be0be4fa1a0c9770142ada2))
-  * Ignore pkg directory ([Vlad - 52940c5](https://github.com/vghn/vgs/commit/52940c5e7c7511dd6807382ffe75772280478d26))
-  * Fix deployment path ([Vlad - cb6d053](https://github.com/vghn/vgs/commit/cb6d0531b0c0b229efeaea71201d719f9d30ddc6))
-  * Stop debugging ci.sh ([Vlad - ba56413](https://github.com/vghn/vgs/commit/ba5641355d76c6cc51d6e6d848a200986a1cedbf))
-  * Add build badge ([Vlad - dd8026f](https://github.com/vghn/vgs/commit/dd8026fe6d4853e6ca8cbfd25c14f306bdeee9f7))
-  * Build number should default to 0 ([Vlad - 2280f0d](https://github.com/vghn/vgs/commit/2280f0d4107e189c4a17a6abaab42fe0985f6525))
-  * Fix function documentation ([Vlad - 0a7e7ba](https://github.com/vghn/vgs/commit/0a7e7bacb0d0b46e4a3018ab836182a0436ff434))
-  * Add a release script ([Vlad - 8214663](https://github.com/vghn/vgs/commit/8214663f7c4bc4d1839e0e7a5deb639bfa3c667d))
-  * Fix release script ([Vlad - 4f4fb8b](https://github.com/vghn/vgs/commit/4f4fb8b445ef39b5f629c7b40f3a81f52316cd37))
-  * Rename scripts dir ([Vlad - 16447f0](https://github.com/vghn/vgs/commit/16447f01bcd07c9db1bdfc938777a70b91c0b57b))
+## [0.0.13](https://github.com/vghn/vgs/tree/0.0.13) (2016-03-26)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.12...0.0.13)
+
+## [0.0.12](https://github.com/vghn/vgs/tree/0.0.12) (2016-03-25)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.11...0.0.12)
+
+## [0.0.11](https://github.com/vghn/vgs/tree/0.0.11) (2016-03-25)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.10...0.0.11)
+
+## [0.0.10](https://github.com/vghn/vgs/tree/0.0.10) (2016-03-24)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.9...0.0.10)
+
+## [0.0.9](https://github.com/vghn/vgs/tree/0.0.9) (2016-03-21)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.8...0.0.9)
+
+## [0.0.8](https://github.com/vghn/vgs/tree/0.0.8) (2016-03-13)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.7...0.0.8)
+
+## [0.0.7](https://github.com/vghn/vgs/tree/0.0.7) (2016-03-13)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.6...0.0.7)
+
+**Implemented enhancements:**
+
+- Protect master branch [\#8](https://github.com/vghn/vgs/issues/8)
+
+## [0.0.6](https://github.com/vghn/vgs/tree/0.0.6) (2016-03-12)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.5...0.0.6)
+
+## [0.0.5](https://github.com/vghn/vgs/tree/0.0.5) (2016-03-12)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.4...0.0.5)
+
+**Merged pull requests:**
+
+- Improve deployment script [\#6](https://github.com/vghn/vgs/pull/6) ([vladgh](https://github.com/vladgh))
+
+## [0.0.4](https://github.com/vghn/vgs/tree/0.0.4) (2016-03-11)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.3...0.0.4)
+
+## [0.0.3](https://github.com/vghn/vgs/tree/0.0.3) (2016-03-11)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.2...0.0.3)
+
+**Implemented enhancements:**
+
+- Add a function to self upgrade [\#5](https://github.com/vghn/vgs/issues/5)
+- Add `is\_vgs` function to return if it is loaded or not [\#4](https://github.com/vghn/vgs/issues/4)
+- Add a release function [\#1](https://github.com/vghn/vgs/issues/1)
+
+**Fixed bugs:**
+
+- Fix release functions [\#3](https://github.com/vghn/vgs/issues/3)
+
+## [0.0.2](https://github.com/vghn/vgs/tree/0.0.2) (2016-03-11)
+[Full Changelog](https://github.com/vghn/vgs/compare/0.0.1...0.0.2)
+
+## [0.0.1](https://github.com/vghn/vgs/tree/0.0.1) (2016-03-10)
+**Merged pull requests:**
+
+- Initial release [\#2](https://github.com/vghn/vgs/pull/2) ([vladgh](https://github.com/vladgh))
+
+
+
+\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
