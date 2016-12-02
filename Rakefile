@@ -50,7 +50,7 @@ namespace :release do
     task level.to_sym do
       v = increment_version(level)
       release = "#{v[:major]}.#{v[:minor]}.#{v[:patch]}"
-      release_branch = "release_v#{release}"
+      release_branch = "release_v#{release.gsub(/[^0-9A-Za-z]/, '_')}"
       initial_branch = git_branch
 
       # Create a new release branch
