@@ -64,7 +64,7 @@ namespace :release do
 
       # Push the new changes
       sh "git commit --gpg-sign --message 'Release v#{release}' CHANGELOG.md"
-      sh "git push --set-upstream #{release_branch}"
+      sh "git push --set-upstream origin #{release_branch}"
 
       # Waiting for CI to finish
       sh "git checkout -b #{initial_branch}"
