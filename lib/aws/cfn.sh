@@ -150,6 +150,42 @@ vgs_aws_cfn_tail() {
   echo "$final_line"
 }
 
+# NAME: vgh_aws_cfn_watch
+# DESCRIPTION: Clean display of single most recent event status for each
+#              resource in a CloudFormation stack
+#              https://github.com/alestic/aws-cloudformation-stack-status
+# USAGE: vgh_aws_cfn_watch --stack {Stack name} --watch
+# PARAMETERS:
+#   1) --stack: Stack name (required)
+#   2) --watch: Monitor all stack resource progress live (Interrupt with Ctrl-C)
+vgh_aws_cfn_watch(){
+  local stack watch
+  stack=
+  watch=
+
+  while [ $# -gt 0 ]; do
+    case $1 in
+      --stack) stack="$2";                            shift 2 ;;
+      --watch) watch=1;                                 shift ;;
+      --*)     echo "$0: Unrecognized option: $1" >&2; exit 1 ;;
+      *) break ;;
+    esac
+  done
+
+  if [ -n "$watch" ]; then
+    watch -t -n1 bash -c "'source ${VGS_DIR}/load; vgh_aws_cfn_watch --stack ${stack}'"
+    return
+  fi
+
+  aws cloudformation describe-stack-events \
+    --stack-name "$stack" \
+    --output text \
+    --query 'StackEvents[*].[ResourceStatus,LogicalResourceId,ResourceType,Timestamp]' |
+  sort -k4r |
+  perl -ane 'print if !$seen{$F[1]}++' |
+  column -t
+}
+
 # NAME: vgh_aws_cfn_params_list_images_in_use
 # DESCRIPTION: Gets all image ids for all autoscaling launch configurations
 # USAGE: vgh_aws_cfn_params_list_images_in_use {Stack name}
