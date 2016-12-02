@@ -85,6 +85,12 @@ detect_ci_environment(){
 # Check if RVM is loaded
 is_rvm() { [[ $(type rvm 2>/dev/null | head -1) =~ 'rvm is ' ]] ;}
 
+# Set bundle directory
+set_bundle_directory(){
+  cd "${1:-}" || return 1
+  export BUNDLE_GEMFILE="${PWD}/Gemfile"
+}
+
 # Get External ip
 vgs_get_external_ip(){
   dig +short myip.opendns.com @resolver1.opendns.com 2>/dev/null || true
