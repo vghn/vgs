@@ -1,3 +1,6 @@
+# Configure the load path so all dependencies in your Gemfile can be required
+require 'bundler/setup'
+
 require 'rainbow'
 
 def info(message)
@@ -52,7 +55,7 @@ def git_clean_repo
     abort('ERROR: There are untracked files.')
   end
 
-  return true
+  true
 end
 
 # Get version number from git tags
@@ -86,9 +89,16 @@ def configure_changelog(config, release: nil)
 end
 
 # GitHub CHANGELOG generator
-require 'github_changelog_generator/task'
-GitHubChangelogGenerator::RakeTask.new(:unreleased) do |config|
-  configure_changelog(config)
+# Might not be always present, for example with
+# `bundle install --without development`
+begin
+  # GitHub CHANGELOG generator
+  require 'github_changelog_generator/task'
+  GitHubChangelogGenerator::RakeTask.new(:unreleased) do |config|
+    configure_changelog(config)
+  end
+rescue LoadError
+  warn 'github_changelog_generator gem is not installed'
 end
 
 # Release task
@@ -133,13 +143,19 @@ namespace :release do
   end
 end
 
-# List all tasks by default
-task :default do
-  puts `rake -T`
-end
-
 # Version
 desc 'Display version'
 task :version do
   puts "Current version: #{version}"
+end
+
+# Create a list of contributors from GitHub
+desc 'Populate CONTRIBUTORS file'
+task :contributors do
+  system("git log --format='%aN' | sort -u > CONTRIBUTORS")
+end
+
+# List all tasks by default
+task :default do
+  puts `rake -T`
 end
