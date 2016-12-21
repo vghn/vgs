@@ -5,7 +5,7 @@
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"
 
 # Load functions
-for file in ${VGS_DIR}/lib/aws/*.sh; do
+for file in ${VGS_SHLIB}/aws/*.sh; do
   # shellcheck disable=1090
   . "$file"
 done
