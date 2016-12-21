@@ -2,13 +2,14 @@
 # Loads VGS
 
 # VARs
-export VGS_DIR VGS_TMP
+export VGS_DIR VGS_SHLIB VGS_TMP
 VGS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+VGS_SHLIB="${VGS_DIR}/shlib"
 VGS_TMP="$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')"
 
 # Load VGS functions
-if [[ -d "$VGS_DIR" ]]; then
-  for file in ${VGS_DIR}/lib/*.sh; do
+if [[ -d "$VGS_SHLIB" ]]; then
+  for file in ${VGS_SHLIB}/*.sh; do
     # shellcheck disable=1090
     . "$file"
   done
