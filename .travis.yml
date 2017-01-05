@@ -1,5 +1,5 @@
 language: ruby
-rvm: 2.3.3
+rvm: 2.4.0
 sudo: false
 branches:
   except:
@@ -10,6 +10,10 @@ addons:
     - debian-sid
     packages:
     - shellcheck
+cache:
+  directories:
+  - vendor/bundle
+install: bundle install --path vendor/bundle
 script: find ./shlib -type f -name '*.sh' | xargs shellcheck
 notifications:
   slack:
