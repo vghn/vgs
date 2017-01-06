@@ -11,7 +11,7 @@ module VGH
   # Version module
   module Version
     # Split the version number
-    def version_hash
+    def semantic_hash
       @version_hash ||= begin
         {}.tap do |h|
           h[:major], h[:minor], h[:patch], h[:rev], h[:rev_hash] = VERSION[1..-1].split(/[.-]/)
@@ -20,8 +20,8 @@ module VGH
     end
 
     # Increment the version number
-    def version_increment(level)
-      new_version = version_hash.dup
+    def bump(level)
+      new_version = semantic_hash.dup
       new_version[level] = new_version[level].to_i + 1
       to_zero = LEVELS[LEVELS.index(level) + 1..LEVELS.size]
       to_zero.each { |z| new_version[z] = 0 }
@@ -105,7 +105,7 @@ namespace :release do
   VGH::LEVELS.each do |level|
     desc "Increment #{level} version"
     task level.to_sym do
-      new_version = version_increment(level)
+      new_version = bump(level)
       release = "#{new_version[:major]}.#{new_version[:minor]}.#{new_version[:patch]}"
       release_branch = "release_v#{release.gsub(/[^0-9A-Za-z]/, '_')}"
       initial_branch = branch
