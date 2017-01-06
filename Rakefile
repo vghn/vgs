@@ -111,7 +111,7 @@ namespace :release do
       initial_branch = branch
 
       # Check if the repo is clean
-      git_clean_repo
+      clean_repo
 
       # Create a new release branch
       sh "git checkout -b #{release_branch}"
@@ -128,7 +128,7 @@ namespace :release do
 
       # Waiting for CI to finish
       puts 'Waiting for CI to finish'
-      sleep 5 until git_ci_status(release_branch) == 'success'
+      sleep 5 until ci_status(release_branch) == 'success'
 
       # Merge release branch
       sh "git checkout #{initial_branch}"
