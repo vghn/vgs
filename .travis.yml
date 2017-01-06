@@ -13,7 +13,7 @@ addons:
 cache:
   directories:
   - vendor/bundle
-install: bundle install --path vendor/bundle
+install: bundle install --without development --path vendor/bundle
 script: find ./shlib -type f -name '*.sh' | xargs shellcheck
 notifications:
   slack:
