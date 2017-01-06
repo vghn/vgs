@@ -1,5 +1,21 @@
 # Change Log
 
+## [v0.1.2](https://github.com/vghn/vgs/tree/v0.1.2) (2017-01-06)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.1.1...v0.1.2)
+
+**Implemented enhancements:**
+
+- Consolidate rake tasks [\#28](https://github.com/vghn/vgs/pull/28) ([vladgh](https://github.com/vladgh))
+- Use the Ruby version that is preinstalled on Travis [\#27](https://github.com/vghn/vgs/pull/27) ([vladgh](https://github.com/vladgh))
+- Update LICENSE [\#26](https://github.com/vghn/vgs/pull/26) ([vladgh](https://github.com/vladgh))
+- Separate ruby and bash files [\#25](https://github.com/vghn/vgs/pull/25) ([vladgh](https://github.com/vladgh))
+- Improve Rakefile [\#24](https://github.com/vghn/vgs/pull/24) ([vladgh](https://github.com/vladgh))
+- Unify rake tasks and libraries [\#23](https://github.com/vghn/vgs/pull/23) ([vladgh](https://github.com/vladgh))
+
+**Fixed bugs:**
+
+- Fix git method names [\#29](https://github.com/vghn/vgs/pull/29) ([vladgh](https://github.com/vladgh))
+
 ## [v0.1.1](https://github.com/vghn/vgs/tree/v0.1.1) (2016-12-02)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.1.0...v0.1.1)
 
