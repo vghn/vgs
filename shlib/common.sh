@@ -72,12 +72,12 @@ detect_ci_environment(){
   export PR=false
   export BUILD=${GIT_SHA1:-0}
   if [[ ${CIRCLECI:-false} == true ]]; then
-    export PR=${CIRCLE_PR_NUMBER}
-    export BUILD=${CIRCLE_BUILD_NUM}
+    export PR=${CIRCLE_PR_NUMBER:-}
+    export BUILD=${CIRCLE_BUILD_NUM:-}
     git config --global user.name "CircleCI"
   elif [[ ${TRAVIS:-false} == true ]]; then
-    export PR=${TRAVIS_PULL_REQUEST}
-    export BUILD=${TRAVIS_BUILD_NUMBER}
+    export PR=${TRAVIS_PULL_REQUEST:-false}
+    export BUILD=${TRAVIS_BUILD_NUMBER:-}
     git config --global user.name "TravisCI"
   fi
 }
