@@ -39,6 +39,7 @@ Check the comment of each function
 Please report any bugs to https://github.com/vghn/vgs/issues
 
 ## Contributing:
+Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 1. Open an issue to discuss proposed changes
 2. Fork the repository
 3. Create your feature branch: `git checkout -b my-new-feature`
@@ -47,7 +48,6 @@ Please report any bugs to https://github.com/vghn/vgs/issues
 6. Submit a pull request :D
 
 ### Guidelines:
-
 - Respect the style described at http://wiki.bash-hackers.org/scripting/style
 
 - Use [ShellCheck](http://www.shellcheck.net/about.html) to verify your code
@@ -57,7 +57,6 @@ Please report any bugs to https://github.com/vghn/vgs/issues
   EX: `vgs_aws_install_cli()` (where aws.sh is the filename)
 
 - Each function should be documented in this format:
-
   ```
   # NAME: name_of_function
   # DESCRIPTION: A description of what it does
