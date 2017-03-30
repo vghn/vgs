@@ -3,7 +3,10 @@ require 'bundler/setup'
 
 # Include task modules
 require 'vtasks/release'
-Vtasks::Release.new
+Vtasks::Release.new(
+  write_changelog: true,
+  ci_status: true
+)
 
 # Display version
 desc 'Display version'
