@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Loads VGS
 
+# DEBUG
+[ -z "${DEBUG:-}" ] || set -x
+
 # VARs
 export VGS_DIR VGS_SHLIB VGS_TMP
 VGS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
