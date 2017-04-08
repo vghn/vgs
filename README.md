@@ -19,7 +19,11 @@ wget -O- https://github.com/vghn/vgs/archive/master.tar.gz | tar xz
 
 ## Load
 ```
-. ~/vgs/load
+# Load VGS library (https://github.com/vghn/vgs)
+# shellcheck disable=1091
+[[ -s /opt/vgs/load ]] && . /opt/vgs/load
+# shellcheck disable=1090
+[[ -s ~/vgs/load ]] && . ~/vgs/load
 ```
 
 ## Sample scripts
