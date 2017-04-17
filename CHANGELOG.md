@@ -1,5 +1,26 @@
 # Change Log
 
+## [v0.1.3](https://github.com/vghn/vgs/tree/v0.1.3) (2017-04-17)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.1.2...v0.1.3)
+
+**Implemented enhancements:**
+
+- Simpler rake tasks listing [\#41](https://github.com/vghn/vgs/pull/41) ([vladgh](https://github.com/vladgh))
+- Load libraries one time only [\#40](https://github.com/vghn/vgs/pull/40) ([vladgh](https://github.com/vladgh))
+- Update README [\#39](https://github.com/vghn/vgs/pull/39) ([vladgh](https://github.com/vladgh))
+- Add DEBUG global variable [\#38](https://github.com/vghn/vgs/pull/38) ([vladgh](https://github.com/vladgh))
+- Remove Faradaygem version requirement [\#37](https://github.com/vghn/vgs/pull/37) ([vladgh](https://github.com/vladgh))
+- Add the new release task options [\#35](https://github.com/vghn/vgs/pull/35) ([vladgh](https://github.com/vladgh))
+- Use Vtasks [\#34](https://github.com/vghn/vgs/pull/34) ([vladgh](https://github.com/vladgh))
+- Add Code of Conduct [\#33](https://github.com/vghn/vgs/pull/33) ([vladgh](https://github.com/vladgh))
+- Use the new Trusty build container in TravisCI [\#31](https://github.com/vghn/vgs/pull/31) ([vladgh](https://github.com/vladgh))
+- Improve Rakefile [\#30](https://github.com/vghn/vgs/pull/30) ([vladgh](https://github.com/vladgh))
+
+**Fixed bugs:**
+
+- Fix Faraday gem version [\#36](https://github.com/vghn/vgs/pull/36) ([vladgh](https://github.com/vladgh))
+- Fix CI environment detection [\#32](https://github.com/vghn/vgs/pull/32) ([vladgh](https://github.com/vladgh))
+
 ## [v0.1.2](https://github.com/vghn/vgs/tree/v0.1.2) (2017-01-06)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.1.1...v0.1.2)
 
