@@ -5,7 +5,9 @@ require 'bundler/setup'
 require 'vtasks/release'
 Vtasks::Release.new(
   write_changelog: true,
-  ci_status: true
+  wait_for_ci_success: true,
+  bug_labels: 'Type: Bug',
+  enhancement_labels: 'Type: Enhancement'
 )
 
 # Display version
@@ -27,4 +29,3 @@ Rake::Task[:default].clear if Rake::Task.task_defined?(:default)
 task :default do
   system 'rake -T'
 end
-
