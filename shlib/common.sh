@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # Common Functions
 
+# set env loaded flag if not yet set
+: vgs_env_loaded:"${vgs_env_loaded:=0}":
+# increase load count counter
+: vgs_env_loaded:$(( vgs_env_loaded+=1 )):
+
 # Check if root
 is_root() { [[ $EUID == 0 ]] ;}
 

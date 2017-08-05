@@ -11,13 +11,7 @@ VGS_SHLIB="${VGS_DIR}/shlib"
 VGS_TMP="$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')"
 
 # Load VGS functions
-export vgs_env_loaded
-# set env loaded flag if not yet set
-: vgs_env_loaded:"${vgs_env_loaded:=0}":
-# increase load count counter
-: vgs_env_loaded:$(( vgs_env_loaded+=1 )):
-
-if [[ -d "$VGS_SHLIB" ]] && (( vgs_env_loaded == 1 )); then
+if [[ -d "$VGS_SHLIB" ]] && [[ ${vgs_env_loaded:=0} == 0 ]]; then
   for file in ${VGS_SHLIB}/*.sh; do
     # shellcheck disable=1090
     . "$file"
