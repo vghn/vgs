@@ -1,7 +1,7 @@
 # VGS
   [![Build Status](https://travis-ci.org/vghn/vgs.svg?branch=master)](https://travis-ci.org/vghn/vgs)
 
-Vlad's collection of functions
+Vlad's collection of libraries
 
 ## Install
 - Via GIT:
