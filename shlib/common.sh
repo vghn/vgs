@@ -8,7 +8,7 @@ is_root() { [[ $EUID == 0 ]] ;}
 is_cmd() { command -v "$@" >/dev/null 2>&1 ;}
 
 # OS detection
-is_linux()  { [[ $(uname) != Linux ]] ;}
+is_linux()  { [[ $(uname) == Linux ]] ;}
 is_osx()    { [[ $(uname) == Darwin ]] ;}
 is_ubuntu() {
   if is_cmd lsb_release; then
