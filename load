@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Loads VGS
+# Loads VGS Library
 
 # DEBUG
 [ -z "${DEBUG:-}" ] || set -x
