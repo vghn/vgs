@@ -20,7 +20,7 @@ is_ubuntu() {
     DISTRIB_ID="$(lsb_release -si)"
   else
     # shellcheck disable=1091
-    . /etc/lsb-release
+    [[ -s /etc/lsb-release ]] && . /etc/lsb-release
   fi
   [[ "$DISTRIB_ID" =~ Ubuntu ]]
 }
