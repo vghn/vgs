@@ -17,3 +17,11 @@ script: find ./shlib -type f -name '*.sh' | xargs shellcheck
 notifications:
   slack:
     secure: 0swZcTu5zhxrf3qhJM/TS+ATOVSxppIhM/CZkAhPlcIoyvvPQeVs82zvMPi+c7fXl2qgdVOzfM7V/Sua0PvDuEKaoz+GsUWsqpNwTEkIERC4GNzAHw5reU+aiFNnnpr1kYzv2eUAiaUR8Qpprd0RW/O6idGDfLdLMFN2GE/1rq4NUyMGD4VjILBTrO4QVXK+Dj3VNs9709JtXkjD8QvAmY+u33b8nxq12xXNasxf5smuwk15ur05fvf1bmg/2+BoKp3v8HsWnPvc8TBnjwezg+jX0Gf4yXDPKY9bPGhfTQksLSxNvplgMFkuQ+SGO0/5+uIK8O+sQcvBJtl1xycvDNtsjFaGcZPTJ6Pd95VtbHHlwfZ/f0bPvq65H919ktRX1pcV/eie+XQ4lH9wdfcRxn+NuTld0Nt/vnPycJ1qgIq/6lVbtiELxG8rMl95GecflTX2BMEk7m7Z+CiFA5/1KXPlx/MeDSEp6G6wG6rYAMZswfL+NfT7q1qp8E+7eML+ZI+/IV0WN1LK4b4syOlD0RC0D0J7BTlWKa7GYDc4VbFfAe8FV17Cp7gtMQGRqoG3fHXjnfuhLHkt4ZzxHDc31gZYCzooy69cbw3RP9YcsYjeVmjLFZ0QrpylW5j8iRVjblJqu7zjThPJKzlTi8AWq8Wn7ruuqWXakn6049GD8Hg=
+  webhooks:
+    urls:
+    - 'https://webhook.atomist.com/travis'
+    on_cancel: always
+    on_error: always
+    on_start: always
+    on_failure: always
+    on_success: always
