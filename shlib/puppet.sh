@@ -8,7 +8,8 @@ vgs_puppet_agent_install(){
   deb="puppetlabs-release-${pc}-$(lsb_release -cs).deb"
 
   if [ -s /etc/apt/sources.list.d/puppetlabs-${pc}.list ]; then
-    e_warn 'The Official PuppetLabs Repository is already configured' && return
+    e_warn 'The Official PuppetLabs Repository is already configured'
+    return 0
   else
     vgs_is_wget
 

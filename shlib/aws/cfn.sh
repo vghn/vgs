@@ -129,7 +129,7 @@ vgs_aws_cfn_tail() {
 
   if [[ -z "$stack" ]]; then e_abort "Usage: ${FUNCNAME[0]} stack"; fi
 
-  until echo "$current" | tail -1 | egrep -q "${stack}.*_(COMPLETE|FAILED)"
+  until echo "$current" | tail -1 | grep -E -q "${stack}.*_(COMPLETE|FAILED)"
   do
     if ! output=$(vgs_aws_cfn_events "$stack"); then
       # Something went wrong with vgs_aws_cfn_events (like stack not known)
@@ -174,7 +174,7 @@ vgh_aws_cfn_watch(){
 
   if [ -n "$watch" ]; then
     watch -t -n1 bash -c "'source ${VGS_DIR}/load; vgh_aws_cfn_watch --stack ${stack}'"
-    return
+    return 0
   fi
 
   aws cloudformation describe-stack-events \

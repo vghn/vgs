@@ -3,7 +3,7 @@
 
 # Returns the branch name
 vgs_git_branch(){
-  if ! git symbolic-ref --short HEAD 2>/dev/null; then return; fi
+  if ! git symbolic-ref --short HEAD 2>/dev/null; then return 0; fi
 }
 
 # Returns the short SHA-1 hash
@@ -73,5 +73,5 @@ vgs_git_tag_get_latest(){
 
 # Make sure we are in the root directory
 vgs_git_goto_root(){
-  cd "$(git rev-parse --show-cdup)" || return
+  cd "$(git rev-parse --show-cdup)" || return 0
 }

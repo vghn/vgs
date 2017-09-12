@@ -21,7 +21,7 @@ vgs_aws_efs_mount(){
   vgs_is_nfs
 
   # Check if already mounted
-  if mount | grep -q "$mnt"; then e_info "'${mnt}' already mounted"; return; fi
+  if mount | grep -q "$mnt"; then e_info "'${mnt}' already mounted"; return 0; fi
 
   if [ ! -d "$path" ]; then
     e_info "Creating '${path}' and mounting Elastic File System"

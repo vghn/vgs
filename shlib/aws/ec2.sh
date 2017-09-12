@@ -135,11 +135,11 @@ vgs_aws_ec2_autoscaling_enter_standby(){
   fi
 
   if [ "$instance_state" == 'Standby' ]; then
-    e_info 'Instance is already in Standby; nothing to do.'; return
+    e_info 'Instance is already in Standby; nothing to do.'; return 0
   elif [ "$instance_state" == 'Pending' ]; then
-    e_info 'Instance is Pending; nothing to do.'; return
+    e_info 'Instance is Pending; nothing to do.'; return 0
   elif [ "$instance_state" == 'Pending:Wait' ]; then
-    e_info 'Instance is Pending:Wait; nothing to do.'; return
+    e_info 'Instance is Pending:Wait; nothing to do.'; return 0
   fi
 
   e_info "Putting instance $instance_id into Standby"
@@ -170,11 +170,11 @@ vgs_aws_ec2_autoscaling_exit_standby(){
   fi
 
   if [ "$instance_state" == 'InService' ]; then
-    e_info 'Instance is already in InService; nothing to do.'; return
+    e_info 'Instance is already in InService; nothing to do.'; return 0
   elif [ "$instance_state" == 'Pending' ]; then
-    e_info 'Instance is Pending; nothing to do.'; return
+    e_info 'Instance is Pending; nothing to do.'; return 0
   elif [ "$instance_state" == 'Pending:Wait' ]; then
-    e_info 'Instance is Pending:Wait; nothing to do.'; return
+    e_info 'Instance is Pending:Wait; nothing to do.'; return 0
   fi
 
   e_info "Moving instance $instance_id out of Standby"
@@ -429,7 +429,7 @@ vgs_aws_ec2_run_command(){
   if [[ -n "$ids" ]]; then
     e_info "Found instances: ${ids}"
   else
-    e_warn 'Did not find any instances!'; return
+    e_warn 'Did not find any instances!'; return 0
   fi
 
   command_id=$(aws ssm send-command \
