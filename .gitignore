@@ -1,5 +1,6 @@
-Gemfile.lock
 .bundle/
 pkg/
 tmp/
 vendor/
+Gemfile.lock
+gems.locked
