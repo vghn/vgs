@@ -198,12 +198,12 @@ vgs_aws_ec2_autoscaling_exit_standby(){
 # USAGE: vgs_aws_ec2_get_ubuntu_official_ami_id {Distribution} {Type} {Arch} \
 #          {Virtualization}
 # PARAMETERS:
-#   1) Distribution code name (defaults to 'trusty')
+#   1) Distribution code name (defaults to 'xenial')
 #   2) Root device type (defaults to 'ebs-ssd')
 #   3) Architecture (defaults to 'amd64')
 #   4) Virtualization (defaults to 'hvm')
 vgs_aws_ec2_get_ubuntu_official_ami_id() {
-  local dist=${1:-trusty}
+  local dist=${1:-xenial}
   local dtyp=${2:-ebs-ssd}
   local arch=${3:-amd64}
   local virt=${4:-hvm}
