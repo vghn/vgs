@@ -20,10 +20,8 @@ wget -O- https://github.com/vghn/vgs/archive/master.tar.gz | tar xz
 ## Load
 ```
 # Load VGS library (https://github.com/vghn/vgs)
-# shellcheck disable=1091
-[[ -s /opt/vgs/load ]] && . /opt/vgs/load
 # shellcheck disable=1090
-[[ -s ~/vgs/load ]] && . ~/vgs/load
+. "${VGS_PATH:-${HOME}/vgs}/load" || { echo 'VGS library is required' >&2; exit 1; }
 ```
 
 ## Sample scripts
