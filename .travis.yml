@@ -4,16 +4,23 @@ language: ruby
 branches:
   except:
   - "/^v\\d/"
-addons:
-  apt:
-    sources:
-    - debian-sid
-    packages:
-    - shellcheck
 cache:
   directories:
   - vendor/bundle
-install: bundle install --without development --path vendor/bundle
+before_install: |
+  if ! git diff --name-only "$TRAVIS_COMMIT_RANGE" 2>/dev/null | grep -qvE '(.md)|^(CODEOWNERS)|^(LICENSE)|^(docs)'; then
+    echo 'Non-essential files were updated, skipping CI.'
+    travis_terminate 0
+  fi
+install: 
+  # Install a custom version of shellcheck instead of Travis CI's default
+  - scversion='stable' # or "v0.4.7", or "latest"
+  - wget "https://storage.googleapis.com/shellcheck/shellcheck-${scversion}.linux.x86_64.tar.xz"
+  - tar --xz -xvf "shellcheck-${scversion}.linux.x86_64.tar.xz"
+  - shellcheck() { "shellcheck-${scversion}/shellcheck" "$@"; }
+  - shellcheck --version
+  # Install gems
+  - bundle install --without development --path vendor/bundle
 script: find ./shlib -type f -name '*.sh' | xargs shellcheck
 notifications:
   webhooks:
