@@ -45,8 +45,23 @@ apt_update() { e_info 'Updating APT' && apt-get -qy update < /dev/null ;}
 # Upgrade box
 apt_upgrade(){ e_info 'Upgrading box' && sudo apt-get -qy upgrade < /dev/null ;}
 
+# Load private environment
+load_env(){
+  if [[ -s "${APPDIR}/.env" ]]; then
+    # shellcheck disable=1090
+    . "${APPDIR}/.env" 2>/dev/null || true
+  elif [[ -s "${APPDIR}/.env.gpg" ]]; then
+    # shellcheck disable=1090
+    . <( ( echo "$ENCRYPT_KEY" | base64 --decode --ignore-garbage ) |  gpg --batch --yes --decrypt --passphrase-fd 0 "${APPDIR}/.env.gpg" ) 2>/dev/null || true
+  fi
+
+  # Detect environment (fallback to production)
+  detect_environment 2>/dev/null || ENVTYPE="${ENVTYPE:-production}"
+}
+
 # Detect environment
 detect_environment(){
+  # Git environment
   GIT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo '')
   GIT_SHA1=$(git rev-parse --short HEAD 2>/dev/null || echo '0')
   if [[ -n "${ENVTYPE:-}" ]]; then # If env var
@@ -68,23 +83,19 @@ detect_environment(){
     ENVTYPE='production'
   fi
 
-  export ENVTYPE GIT_BRANCH GIT_SHA1
-}
-
-# Detect CI environment
-detect_ci_environment(){
-  export CI=${CI:-false}
-  export PR=false
-  export BUILD=${GIT_SHA1:-0}
+  # CI environment
+  IS_CI=${CI:-false}
+  IS_PR=${PR:-false}
+  BUILD=${GIT_SHA1:-0}
   if [[ ${CIRCLECI:-false} == true ]]; then
-    export PR=${CIRCLE_PR_NUMBER:-}
+    export IS_PR=${CIRCLE_PR_NUMBER:-}
     export BUILD=${CIRCLE_BUILD_NUM:-}
-    git config --global user.name "CircleCI"
   elif [[ ${TRAVIS:-false} == true ]]; then
-    export PR=${TRAVIS_PULL_REQUEST:-false}
+    export IS_PR=${TRAVIS_PULL_REQUEST:-false}
     export BUILD=${TRAVIS_BUILD_NUMBER:-}
-    git config --global user.name "TravisCI"
   fi
+
+  export ENVTYPE GIT_BRANCH GIT_SHA1 IS_CI IS_PR BUILD
 }
 
 # Check if RVM is loaded
