@@ -21,7 +21,7 @@ install:
     shellcheck() { "shellcheck-${scversion}/shellcheck" "$@"; }
     shellcheck --version
   # Install gems
-  - bundle install --without development --path vendor/bundlescript: find ./shlib -type f -name '*.sh' | xargs shellcheck
+  - bundle install --without development --path vendor/bundle
 script: find ./shlib -type f -name '*.sh' -exec shellcheck {} +
 notifications:
   webhooks:
