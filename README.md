@@ -15,6 +15,7 @@ sudo git clone https://github.com/vghn/vgs.git /opt/vgs
 - Via WGet
 ```
 wget -O- https://github.com/vghn/vgs/archive/master.tar.gz | tar xz
+mv ./vgs-master ~/vgs
 ```
 
 ## Load

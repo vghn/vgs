@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Loads VGS Library
 
+# Bash strict mode
+set -euo pipefail
+IFS=$'\n\t'
+
 # DEBUG
 [ -z "${DEBUG:-}" ] || set -x
 
