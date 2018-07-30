@@ -32,7 +32,7 @@ vgs_aws_cfn_wait(){
 # USAGE: vgs_aws_cfn_get_resource {Stack} {Resource}
 # PARAMETERS:
 #   1) Stack name
-#   1) Resource logical ID
+#   2) Resource logical ID
 vgs_aws_cfn_get_resource(){
   local stack resource
   stack="$1"
