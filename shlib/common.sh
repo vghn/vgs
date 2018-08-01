@@ -52,7 +52,7 @@ load_env(){
     . "${APPDIR}/.env" 2>/dev/null || true
   elif [[ -s "${APPDIR}/.env.gpg" ]]; then
     # shellcheck disable=1090
-    . <( ( echo "$ENCRYPT_KEY" | base64 --decode --ignore-garbage ) |  gpg --batch --yes --decrypt --passphrase-fd 0 "${APPDIR}/.env.gpg" ) 2>/dev/null || true
+    . <( gpg --batch --yes --pinentry-mode loopback --passphrase "$( echo "$ENCRYPT_KEY" | base64 --decode --ignore-garbage )" --decrypt "${APPDIR}/.env.gpg" ) 2>/dev/null || true
   fi
 
   # Detect environment (fallback to production)
