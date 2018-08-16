@@ -31,7 +31,7 @@ vgs_aws_get_metadata(){
 }
 
 # Load functions
-for file in ${VGS_SHLIB}/aws/*.sh; do
+for file in "${VGS_SHLIB}"/aws/*.sh; do
   # shellcheck disable=1090
   . "$file"
 done
