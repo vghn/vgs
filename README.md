@@ -38,6 +38,9 @@ EOF
 ## Functions
 Check the comment of each function
 
+## Scripts
+Check the comment of each script
+
 ## Bugs
 Please report any bugs to https://github.com/vghn/vgs/issues
 
