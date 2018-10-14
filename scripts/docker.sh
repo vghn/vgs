@@ -136,9 +136,11 @@ tag_image(){
 # Notify Microbadger
 notify_microbadger(){
   if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
+    echo 'Found MICROBADGER_TOKENS array'
     local token
     token="${MICROBADGER_TOKENS[${DOCKER_REPO}]:-}"
     if [[ -n "$token" ]]; then
+      echo "Using MicroBadger Token for ${DOCKER_REPO}"
       MICROBADGER_URL="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
     fi
   fi
