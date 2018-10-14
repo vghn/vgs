@@ -134,11 +134,10 @@ tag_image(){
 
 # Notify Microbadger
 notify_microbadger(){
-  local tokens_file token microbadger_url
+  local token microbadger_url
 
-  tokens_file="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/.microbadger"
-  # shellcheck disable=1090
-  if [[ -s "$tokens_file" ]]; then . "$tokens_file"; fi
+  # shellcheck disable=1091
+  if [[ -s ./microbadger ]]; then . ./microbadger; fi
 
   if [[ -n "${MICROBADGER_URL:-}" ]]; then
     microbadger_url="$MICROBADGER_URL"
