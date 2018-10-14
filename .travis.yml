@@ -1,17 +1,9 @@
 dist: trusty
 group: travis_latest
 language: ruby
-branches:
-  except:
-  - "/^v\\d/"
 cache:
   directories:
   - vendor/bundle
-before_install: |
-  if ! git diff --name-only "$TRAVIS_COMMIT_RANGE" 2>/dev/null | grep -qvE '(.md)|^(CODEOWNERS)|^(LICENSE)|^(docs)'; then
-    echo 'Non-essential files were updated, skipping CI.'
-    travis_terminate 0
-  fi
 install:
   # Install a custom version of shellcheck instead of Travis CI's default
   - |
@@ -22,7 +14,7 @@ install:
     shellcheck --version
   # Install gems
   - bundle install --without development --path vendor/bundle
-script: find ./shlib -type f -name '*.sh' -exec shellcheck {} +
+script: find ./scripts ./shlib -type f -name '*.sh' -exec shellcheck {} +
 notifications:
   webhooks:
     urls: https://vbot.ghn.me/travis
