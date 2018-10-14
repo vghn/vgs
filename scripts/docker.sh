@@ -32,13 +32,13 @@ IFS=$'\n\t'
 
 # VARs
 GIT_TAG="$(git describe --always --tags)"
-BUILD_PATH="${BUILD_PATH:-/}"
+DOCKER_BUILD_PATH="${DOCKER_BUILD_PATH:-$(pwd)}"
 DOCKERFILE_PATH="${DOCKERFILE_PATH:-Dockerfile}"
 DOCKER_USERNAME="${DOCKER_USERNAME:-}"
 DOCKER_PASSWORD="${DOCKER_PASSWORD:-}"
 DOCKER_REPO="${DOCKER_REPO:-}"
 DOCKER_TAG="${DOCKER_TAG:-latest}"
-IMAGE_NAME="${IMAGE_NAME:-${DOCKER_REPO}:${DOCKER_TAG}}"
+DOCKER_IMAGE_NAME="${IMAGE_NAME:-${DOCKER_REPO}:${DOCKER_TAG}}"
 MICROBADGER_TOKENS="${MICROBADGER_TOKENS:-}"
 MICROBADGER_URL="${MICROBADGER_URL:-}"
 
@@ -104,22 +104,22 @@ build_image(){
 
   echo 'Build the image with the specified arguments'
   (
-    cd ".${BUILD_PATH}" # In most places it is relative but starts with `/` (for example in Docker Hub this is `/` or `/dir`)
+    cd "${DOCKER_BUILD_PATH}"
     docker build \
       --build-arg VERSION="$GIT_TAG" \
       --build-arg VCS_URL="$(git config --get remote.origin.url)" \
       --build-arg VCS_REF="$(git rev-parse --short HEAD)" \
       --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
       --file "$DOCKERFILE_PATH" \
-      --tag "$IMAGE_NAME" \
+      --tag "$DOCKER_IMAGE_NAME" \
       .
   )
 }
 
 # Push
 push_image(){
-  echo "Pushing ${IMAGE_NAME}"
-  docker push "${IMAGE_NAME}"
+  echo "Pushing ${DOCKER_IMAGE_NAME}"
+  docker push "${DOCKER_IMAGE_NAME}"
 }
 
 # Tag
@@ -128,7 +128,7 @@ tag_image(){
 
   for version in "${major}.${minor}.${patch}" "${major}.${minor}" "${major}"; do
     echo "Pushing version (${DOCKER_REPO}:${version})"
-    docker tag "$IMAGE_NAME" "${DOCKER_REPO}:${version}"
+    docker tag "$DOCKER_IMAGE_NAME" "${DOCKER_REPO}:${version}"
     docker push "${DOCKER_REPO}:${version}"
   done
 }
