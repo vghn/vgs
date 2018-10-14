@@ -35,7 +35,6 @@ IFS=$'\n\t'
 [ -z "${DEBUG:-}" ] || set -x
 
 # VARs
-APPDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../" && pwd -P)"
 GIT_TAG="$(git describe --always --tags)"
 BUILD_PATH="${BUILD_PATH:-/}"
 DOCKERFILE_PATH="${DOCKERFILE_PATH:-Dockerfile}"
