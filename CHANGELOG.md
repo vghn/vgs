@@ -1,5 +1,25 @@
 # Change Log
 
+## [v0.2.0](https://github.com/vghn/vgs/tree/v0.2.0) (2018-10-14)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.1.3...v0.2.0)
+
+**Implemented enhancements:**
+
+- Add docker and release scripts [\#52](https://github.com/vghn/vgs/issues/52)
+- Add AWS configure function [\#51](https://github.com/vghn/vgs/issues/51)
+- Improve environment detection [\#50](https://github.com/vghn/vgs/issues/50)
+- Use the latest TravisCI environment [\#49](https://github.com/vghn/vgs/issues/49)
+- Default to Xenial when looking for latest AMI [\#48](https://github.com/vghn/vgs/issues/48)
+- Adhere to recommended community standards [\#43](https://github.com/vghn/vgs/issues/43)
+- Switch to new Bundler file names [\#47](https://github.com/vghn/vgs/pull/47) ([vladgh](https://github.com/vladgh))
+- Receive build notifications via Atomist [\#46](https://github.com/vghn/vgs/pull/46) ([vladgh](https://github.com/vladgh))
+- Update options for the release task [\#42](https://github.com/vghn/vgs/pull/42) ([vladgh](https://github.com/vladgh))
+
+**Fixed bugs:**
+
+- Fix loading [\#45](https://github.com/vghn/vgs/issues/45)
+- Fix Linux detection [\#44](https://github.com/vghn/vgs/issues/44)
+
 ## [v0.1.3](https://github.com/vghn/vgs/tree/v0.1.3) (2017-04-17)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.1.2...v0.1.3)
 
