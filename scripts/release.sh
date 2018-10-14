@@ -13,6 +13,9 @@
 #   - `BUG_LABELS`: [STRING] Issues with the specified labels will be added to "Fixed bugs" section (defaults to `bug`)
 #   - `ENHANCEMENT_LABELS`: [STRING] Issues with the specified labels will be added to "Implemented enhancements" section (defaults to `enhancement`)
 #
+# Usage:
+# $ WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ./scripts/release.sh
+#
 # Note:
 # First time you have to create an annotated tag and commit the initial CHANGELOG, before creating issues or pull requests (if there these are not present it will fail)
 # $ git tag --sign v0.0.0 --message 'Release v0.0.0' && git push --follow-tags
