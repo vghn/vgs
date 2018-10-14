@@ -43,6 +43,7 @@ DOCKER_PASSWORD="${DOCKER_PASSWORD:-}"
 DOCKER_REPO="${DOCKER_REPO:-}"
 DOCKER_TAG="${DOCKER_TAG:-latest}"
 IMAGE_NAME="${IMAGE_NAME:-${DOCKER_REPO}:${DOCKER_TAG}}"
+MICROBADGER_FILE="${MICROBADGER_FILE:-./.microbadger}"
 
 # Usage
 usage(){
@@ -134,22 +135,17 @@ tag_image(){
 
 # Notify Microbadger
 notify_microbadger(){
-  local token microbadger_url
-
-  # shellcheck disable=1091
-  if [[ -s ./.microbadger ]]; then . ./.microbadger; fi
-
-  if [[ -n "${MICROBADGER_URL:-}" ]]; then
-    microbadger_url="$MICROBADGER_URL"
-  fi
+  # shellcheck disable=1090
+  if [[ -s "$MICROBADGER_FILE" ]]; then . "$MICROBADGER_FILE"; fi
 
   if [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
+    local token
     token="${MICROBADGER_TOKENS[${DOCKER_REPO}]:-}"
-    microbadger_url="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
+    MICROBADGER_URL="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
   fi
 
-  if [[ -n "${microbadger_url:-}" ]]; then
-    echo "Notify MicroBadger: $(curl -sX POST "$microbadger_url")"
+  if [[ -n "${MICROBADGER_URL:-}" ]]; then
+    echo "Notify MicroBadger: $(curl -sX POST "$MICROBADGER_URL")"
   fi
 }
 
