@@ -135,6 +135,12 @@ tag_image(){
 
 # Notify Microbadger
 notify_microbadger(){
+  ls -lah
+  ls -lah ..
+  ls -lah ../..
+
+  cat "$MICROBADGER_FILE"
+
   # shellcheck disable=1090
   if [[ -s "$MICROBADGER_FILE" ]]; then . "$MICROBADGER_FILE"; fi
 
