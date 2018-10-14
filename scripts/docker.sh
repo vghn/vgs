@@ -11,14 +11,10 @@
 #     Tag     /^v([0-9]+)\.([0-9]+)\.([0-9]+)$/     /           {\1}.{\2}
 #     Tag     /^v([0-9]+)\.([0-9]+)\.([0-9]+)$/     /           {\1}
 #
-# Sample `.microbadger` file for a single repo:
-#    #!/usr/bin/env bash
-#    # MicroBadger URL
+# Sample MicroBadger URL
 #    export MICROBADGER_URL="https://hooks.microbadger.com/images/myuser/myrepo/ABCDEF="
 #
-# Sample `.microbadger` file for multiple repos with tokens array:
-#     #!/usr/bin/env bash
-#     # MicroBadger tokens
+# Sample MicroBadger Tokens
 #     declare -A MICROBADGER_TOKENS=(
 #       ['myuser/myrepo']='ABCDEF='
 #     )
@@ -43,7 +39,8 @@ DOCKER_PASSWORD="${DOCKER_PASSWORD:-}"
 DOCKER_REPO="${DOCKER_REPO:-}"
 DOCKER_TAG="${DOCKER_TAG:-latest}"
 IMAGE_NAME="${IMAGE_NAME:-${DOCKER_REPO}:${DOCKER_TAG}}"
-MICROBADGER_FILE="${MICROBADGER_FILE:-./.microbadger}"
+MICROBADGER_TOKENS="${MICROBADGER_TOKENS:-}"
+MICROBADGER_URL="${MICROBADGER_URL:-}"
 
 # Usage
 usage(){
@@ -135,19 +132,12 @@ tag_image(){
 
 # Notify Microbadger
 notify_microbadger(){
-  ls -lah
-  ls -lah ..
-  ls -lah ../..
-
-  cat "$MICROBADGER_FILE"
-
-  # shellcheck disable=1090
-  if [[ -s "$MICROBADGER_FILE" ]]; then . "$MICROBADGER_FILE"; fi
-
-  if [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
+  if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
     local token
     token="${MICROBADGER_TOKENS[${DOCKER_REPO}]:-}"
-    MICROBADGER_URL="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
+    if [[ -n "$token" ]]; then
+      MICROBADGER_URL="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
+    fi
   fi
 
   if [[ -n "${MICROBADGER_URL:-}" ]]; then
