@@ -107,7 +107,10 @@ build_image(){
 
   echo 'Build the image with the specified arguments'
   (
-  cd "${APPDIR}${BUILD_PATH}" # In Docker Hub this is `/` or `/dir`
+  if [[ "$BUILD_PATH" != '/' ]]; then
+    cd "$BUILD_PATH"
+  fi
+
   docker build \
     --build-arg VERSION="$GIT_TAG" \
     --build-arg VCS_URL="$(git config --get remote.origin.url)" \
@@ -153,15 +156,9 @@ notify_microbadger(){
     microbadger_url="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
   fi
 
-  if [[ -n "$microbadger_url" ]]; then
+  if [[ -n "${microbadger_url:-}" ]]; then
     echo "Notify MicroBadger: $(curl -sX POST "$microbadger_url")"
   fi
-}
-
-# Test
-test_image(){
-  export PATH="$PATH":~/bin
-  # TODO dgoss run ...
 }
 
 # Logic
@@ -179,9 +176,6 @@ main(){
       ;;
     notify)
       notify_microbadger
-      ;;
-    test)
-      test_image
       ;;
     *)
       usage
