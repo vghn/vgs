@@ -137,7 +137,7 @@ notify_microbadger(){
   local token microbadger_url
 
   # shellcheck disable=1091
-  if [[ -s ./microbadger ]]; then . ./microbadger; fi
+  if [[ -s ./.microbadger ]]; then . ./.microbadger; fi
 
   if [[ -n "${MICROBADGER_URL:-}" ]]; then
     microbadger_url="$MICROBADGER_URL"
