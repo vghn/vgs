@@ -39,8 +39,6 @@ DOCKER_PASSWORD="${DOCKER_PASSWORD:-}"
 DOCKER_REPO="${DOCKER_REPO:-}"
 DOCKER_TAG="${DOCKER_TAG:-latest}"
 DOCKER_IMAGE_NAME="${IMAGE_NAME:-${DOCKER_REPO}:${DOCKER_TAG}}"
-MICROBADGER_TOKENS="${MICROBADGER_TOKENS:-}"
-MICROBADGER_URL="${MICROBADGER_URL:-}"
 
 # Usage
 usage(){
@@ -135,7 +133,7 @@ tag_image(){
 
 # Notify Microbadger
 notify_microbadger(){
-  if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
+  if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -a" ]]; then
     echo 'Found MICROBADGER_TOKENS array'
     local token
     token="${MICROBADGER_TOKENS[${DOCKER_REPO}]:-}"
