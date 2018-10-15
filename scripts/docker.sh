@@ -14,11 +14,10 @@
 # Sample MicroBadger URL
 #    export MICROBADGER_URL="https://hooks.microbadger.com/images/myuser/myrepo/ABCDEF="
 #
-# Sample MicroBadger Tokens
+# Sample MicroBadger Tokens file (MICROBADGER_TOKENS_FILE). When exporting a variable containing an array, child processes cannot see the array.  There isn't really a good way to encode an array variable into the environment.
 #     declare -A MICROBADGER_TOKENS=(
 #       ['myuser/myrepo']='ABCDEF='
 #     )
-#     export MICROBADGER_TOKENS
 #
 # Links:
 #   - https://docs.docker.com/docker-cloud/builds/advanced/
@@ -39,6 +38,8 @@ DOCKER_PASSWORD="${DOCKER_PASSWORD:-}"
 DOCKER_REPO="${DOCKER_REPO:-}"
 DOCKER_TAG="${DOCKER_TAG:-latest}"
 DOCKER_IMAGE_NAME="${IMAGE_NAME:-${DOCKER_REPO}:${DOCKER_TAG}}"
+MICROBADGER_TOKENS_FILE="${MICROBADGER_TOKENS_FILE:-}"
+MICROBADGER_URL="${MICROBADGER_URL:-}"
 
 # Usage
 usage(){
@@ -133,8 +134,14 @@ tag_image(){
 
 # Notify Microbadger
 notify_microbadger(){
-  if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -a" ]]; then
-    echo 'Found MICROBADGER_TOKENS array'
+  # shellcheck disable=1090
+  if [[ -s "$MICROBADGER_TOKENS_FILE" ]]; then . "$MICROBADGER_TOKENS_FILE"; fi
+
+  # Remove Docker Hub prefix
+  DOCKER_REPO="${DOCKER_REPO#index.docker.io/}"
+
+  if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
+    echo "Found MICROBADGER_TOKENS array in ${MICROBADGER_TOKENS_FILE}"
     local token
     token="${MICROBADGER_TOKENS[${DOCKER_REPO}]:-}"
     if [[ -n "$token" ]]; then
