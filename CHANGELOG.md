@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.2.1](https://github.com/vghn/vgs/tree/v0.2.1) (2018-10-15)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.2.0...v0.2.1)
+
+**Fixed bugs:**
+
+- Fix MicroBadger notification [\#53](https://github.com/vghn/vgs/issues/53)
+
 ## [v0.2.0](https://github.com/vghn/vgs/tree/v0.2.0) (2018-10-14)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.1.3...v0.2.0)
 
