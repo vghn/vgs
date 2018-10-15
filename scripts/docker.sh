@@ -18,6 +18,7 @@
 #     declare -A MICROBADGER_TOKENS=(
 #       ['myuser/myrepo']='ABCDEF='
 #     )
+#     export MICROBADGER_TOKENS
 #
 # Links:
 #   - https://docs.docker.com/docker-cloud/builds/advanced/
