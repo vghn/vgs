@@ -25,6 +25,40 @@ vgs_aws_configure(){
   fi
 }
 
+# NAME: vgs_aws_credentials
+# DESCRIPTION: Configure AWS Temporary Credentials
+# USAGE: vgs_aws_credentials {Access Key} {Secret Key} {Role Arn}
+# PARAMETERS:
+#   1) AWS access key
+#   2) AWS secret key
+#   3) AWS role arn
+vgs_aws_credentials(){
+  local aws_access_key_id="${1:?Must specify the access key id as the 1st argument}"
+  local aws_secret_access_key="${2:?Must specify the secret access key as the 2nd argument}"
+  local aws_role_arn="${3:?Must specify the role arn as the 3rd argument}"
+
+  e_info 'Get temporary credentials for AWS'
+
+  # Clear out existing AWS session environment, or the awscli call will fail
+  unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_PROFILE
+
+  # Read temporary credentials
+  read -r -a AWS_STS <<< "$( \
+    AWS_ACCESS_KEY_ID="${aws_access_key_id:-}" \
+    AWS_SECRET_ACCESS_KEY="${aws_secret_access_key:-}" \
+    aws sts assume-role --output text \
+    --role-arn "${aws_role_arn:-}" \
+    --role-session-name "$(hostname)_$(date +%Y%m%d)" \
+    --duration-seconds 900 \
+    --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' \
+    )"
+
+  # Export temporary credentials
+  export AWS_ACCESS_KEY_ID="${AWS_STS[0]}"
+  export AWS_SECRET_ACCESS_KEY="${AWS_STS[1]}"
+  export AWS_SESSION_TOKEN="${AWS_STS[2]}"
+}
+
 # AWS MetaData Service
 vgs_aws_get_metadata(){
   wget --timeout=2 --tries=0 -qO- "http://169.254.169.254/latest/meta-data/${*}"
