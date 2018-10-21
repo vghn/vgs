@@ -30,6 +30,10 @@ IFS=$'\n\t'
 # DEBUG
 [ -z "${DEBUG:-}" ] || set -x
 
+# Load VGS library
+# shellcheck disable=1090
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/load"
+
 # VARs
 GIT_TAG="$(git describe --always --tags)"
 DOCKER_BUILD_PATH="${DOCKER_BUILD_PATH:-$(pwd)}"
