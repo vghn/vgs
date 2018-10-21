@@ -1,5 +1,14 @@
 # Change Log
 
+## [v0.2.3](https://github.com/vghn/vgs/tree/v0.2.3) (2018-10-21)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.2.2...v0.2.3)
+
+**Implemented enhancements:**
+
+- Use a DOCKER\_NO\_CACHE environment variable [\#58](https://github.com/vghn/vgs/issues/58)
+- Load VGS inside scripts as well [\#57](https://github.com/vghn/vgs/issues/57)
+- Remove VTasks gem dependency [\#56](https://github.com/vghn/vgs/issues/56)
+
 ## [v0.2.2](https://github.com/vghn/vgs/tree/v0.2.2) (2018-10-21)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.2.1...v0.2.2)
 
