@@ -36,6 +36,7 @@ IFS=$'\n\t'
 
 # VARs
 GIT_TAG="$(git describe --always --tags)"
+DOCKER_NO_CACHE="${DOCKER_NO_CACHE:-false}"
 DOCKER_BUILD_PATH="${DOCKER_BUILD_PATH:-$(pwd)}"
 DOCKERFILE_PATH="${DOCKERFILE_PATH:-Dockerfile}"
 DOCKER_USERNAME="${DOCKER_USERNAME:-}"
@@ -105,6 +106,12 @@ deepen_git_repo(){
 # Build
 build_image(){
   deepen_git_repo
+
+  # Pull image before build to speed up the building process
+  if [[ "$DOCKER_NO_CACHE" == 'false' ]]; then
+    echo 'Pulling image'
+    docker pull "${DOCKER_REPO}:latest"
+  fi
 
   echo 'Build the image with the specified arguments'
   (
