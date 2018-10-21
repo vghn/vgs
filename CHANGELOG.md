@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.2.2](https://github.com/vghn/vgs/tree/v0.2.2) (2018-10-21)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.2.1...v0.2.2)
+
+**Implemented enhancements:**
+
+- Fix passphrase for GPG prior than 2.2 [\#55](https://github.com/vghn/vgs/issues/55)
+- Add script for temporary AWS credentials [\#54](https://github.com/vghn/vgs/issues/54)
+
 ## [v0.2.1](https://github.com/vghn/vgs/tree/v0.2.1) (2018-10-15)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.2.0...v0.2.1)
 
