@@ -149,7 +149,7 @@ notify_microbadger(){
   # shellcheck disable=1090
   if [[ -s "$MICROBADGER_TOKENS_FILE" ]]; then . "$MICROBADGER_TOKENS_FILE"; fi
 
-  # Remove Docker Hub prefix
+  # Remove Docker Hub prefix (if it exists)
   DOCKER_REPO="${DOCKER_REPO#index.docker.io/}"
 
   if [[ -n "$DOCKER_REPO" ]] && [[ "$(declare -p MICROBADGER_TOKENS 2>/dev/null)" =~ "declare -A" ]]; then
