@@ -1,5 +1,4 @@
 dist: xenial
-group: travis_latest
 language: ruby
 cache:
   directories:
