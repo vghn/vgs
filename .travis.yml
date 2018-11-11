@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 group: travis_latest
 language: ruby
 cache:
