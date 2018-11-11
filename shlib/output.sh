@@ -5,7 +5,7 @@
 if [ -n "$TERM" ] && \
    [ "$TERM" != dumb ] && \
    [ "$TERM" != unknown ] && \
-   [ -n "$(which tput)" ]
+   [ "$(command -v tput >/dev/null 2>&1)"  ]
 then
   export fgblk fgred fggrn fgylw fgblu fgpur fgcyn fgwht
   fgblk="$(tput setaf 0 || true)"     # Black - Regular
@@ -59,11 +59,11 @@ fi
 # Logging stuff.
 is_silent() { [[ ${SILENT:-} == true ]] ;}
 is_color()  { [[ ${TERM:-} =~ color ]] ;}
-e_header()  { is_silent || { is_color && printf "\n${mkbold}${bfgwht}%s${normal}\n" "$@" || printf "\n%s\n" "$@" ;} ;}
-e_footer()  { is_silent || { is_color && printf "\n${mkbold}${bfgwht}%s${normal}\n" "$@" || printf "  ➜  %s\n" "$@";} ;}
-e_ok()      { is_silent || { is_color && printf "  ${bfggrn}✔${normal}  %s\n" "$@" || printf "  ✔  %s\n" "$@" ;} ;}
-e_error()   { is_silent || { is_color && printf "  ${fgred}✖${normal}  %s\n" "$@" >&2 || printf "  ✖  %s\n" "$@";} ;}
-e_warn()    { is_silent || { is_color && printf "  ${fgylw}${normal}  %s\n" "$@" || printf "    %s\n" "$@";} ;}
-e_info()    { is_silent || { is_color && printf "  ${fgcyn}➜${normal}  %s\n" "$@" || printf "  ➜  %s\n" "$@";} ;}
+e_header()  { is_silent || { is_color && printf "\\n${mkbold}${bfgwht}%s${normal}\\n" "$@" || printf "\\n%s\\n" "$@" ;} ;}
+e_footer()  { is_silent || { is_color && printf "\\n${mkbold}${bfgwht}%s${normal}\\n" "$@" || printf "  ➜  %s\\n" "$@";} ;}
+e_ok()      { is_silent || { is_color && printf "  ${bfggrn}✔${normal}  %s\\n" "$@" || printf "  ✔  %s\\n" "$@" ;} ;}
+e_error()   { is_silent || { is_color && printf "  ${fgred}✖${normal}  %s\\n" "$@" >&2 || printf "  ✖  %s\\n" "$@";} ;}
+e_warn()    { is_silent || { is_color && printf "  ${fgylw}${normal}  %s\\n" "$@" || printf "    %s\\n" "$@";} ;}
+e_info()    { is_silent || { is_color && printf "  ${fgcyn}➜${normal}  %s\\n" "$@" || printf "  ➜  %s\\n" "$@";} ;}
 e_abort()   { e_error "$1"; return "${2:-1}" ;}
 e_finish()  { e_ok "Finished ${BASH_SOURCE[0]} at $(/bin/date "+%F %T")"; }

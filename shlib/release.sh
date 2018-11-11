@@ -76,7 +76,7 @@ vgs_release_write_version_to_file(){
 #   2) The changes (required)
 vgs_release_write_changes_to_file(){
   echo 'Writing the new changelog'
-  echo -e "## Version ${1} / $(date +%Y-%m-%d)\n${2}\n\n$(cat "$changelog_file")" > "${changelog_file}.new"
+  echo -e "## Version ${1} / $(date +%Y-%m-%d)\\n${2}\\n\\n$(cat "$changelog_file")" > "${changelog_file}.new"
   mv "${changelog_file}.new" "$changelog_file"
 }
 
