@@ -47,10 +47,10 @@ apt_upgrade(){ e_info 'Upgrading box' && sudo apt-get -qy upgrade < /dev/null ;}
 
 # Load private environment
 load_env(){
-  if [[ -s "${APPDIR}/.env" ]]; then
-    # shellcheck disable=1090
-    . "${APPDIR}/.env" 2>/dev/null || true
-  elif [[ -s "${APPDIR}/.env.gpg" ]]; then
+  if [[ -s .env ]]; then
+    # shellcheck disable=1091
+    . .env 2>/dev/null || true
+  elif [[ -s .env.gpg ]]; then
     # shellcheck disable=1090
     . <( ( echo "$ENCRYPT_KEY" | base64 --decode ) |  gpg --batch --yes --passphrase-fd 0 --decrypt .env.gpg ) 2>/dev/null || true
     # GPG 2.2+
