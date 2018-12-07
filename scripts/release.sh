@@ -13,13 +13,33 @@
 #   - `BUG_LABELS`: [STRING] Issues with the specified labels will be added to "Fixed bugs" section (defaults to `bug`)
 #   - `ENHANCEMENT_LABELS`: [STRING] Issues with the specified labels will be added to "Implemented enhancements" section (defaults to `enhancement`)
 #
-# Usage:
-# $ WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ./scripts/release.sh
+# USAGE:
+# $ WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh
 #
-# Note:
+# NOTE:
 # First time you have to create an annotated tag and commit the initial CHANGELOG, before creating issues or pull requests (if there these are not present it will fail)
 # $ git tag --sign v0.0.0 --message 'Release v0.0.0' && git push --follow-tags
-# $ bundle exec rake release:changes
+#
+# RAKE TASKS:
+# desc 'Generate a Change log from GitHub'
+# task release: ['release:changes']
+# namespace :release do
+#   require 'github_changelog_generator'
+#   desc 'Generate a Change log from GitHub'
+#   task :changes do
+#     system "BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh unreleased"
+#   end
+#   ['patch', 'minor', 'major'].each do |level|
+#     desc "Release #{level} version"
+#     task level.to_sym do
+#       system "WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh #{level}"
+#     end
+#   end
+# end
+# desc 'Display version'
+# task :version do
+#   system "git describe --always --tags 2>/dev/null || echo '0.0.0-0-0'"
+# end
 
 # Bash strict mode
 set -euo pipefail
