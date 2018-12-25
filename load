@@ -16,7 +16,7 @@ VGS_TMP="$(mktemp -d 2>/dev/null || mktemp -d -t 'tmp')"
 
 # Load VGS functions
 if [[ -d "$VGS_SHLIB" ]] && [[ ${vgs_env_loaded:=0} == 0 ]]; then
-  for file in ${VGS_SHLIB}/*.sh; do
+  for file in "${VGS_SHLIB}"/*.sh; do
     # shellcheck disable=1090
     . "$file"
   done
