@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 # AWS S3 functions
 
-# NAME: vgs_aws_s3_list_old_keys
-# DESCRIPTION: Returns a list of S3 objects, sorted by last modified date.
-#              The newest X items are excluded.
-#              * http://jmespath.org/specification.html#sort-by
-#              * http://jmespath.org/specification.html#reverse
-#              * http://jmespath.org/tutorial.html#slicing
-# USAGE: vgs_aws_s3_list_old_keys {Bucket} {Key Prefix} {Keep}
-# PARAMETERS:
+# Returns a list of S3 objects, sorted by last modified date.
+# The newest X items are excluded.
+# * http://jmespath.org/specification.html#sort-by
+# * http://jmespath.org/specification.html#reverse
+# * http://jmespath.org/tutorial.html#slicing
+# ARGUMENTS:
 #   1) The bucket name (required)
 #   2) The key prefix (required)
 #   3) How many items to keep (required)
@@ -28,10 +26,8 @@ vgs_aws_s3_list_old_keys(){
   fi
 }
 
-# NAME: vgs_aws_s3_get_latest_object
-# DESCRIPTION: Returns the last S3 object (sorted by last modified date).
-# USAGE: vgs_aws_s3_get_latest_object {Bucket} {Key Prefix}
-# PARAMETERS:
+# Returns the last S3 object (sorted by last modified date).
+# ARGUMENTS:
 #   1) The bucket name (required)
 #   2) The key prefix (required)
 vgs_aws_s3_get_latest_object(){
@@ -49,10 +45,8 @@ vgs_aws_s3_get_latest_object(){
   fi
 }
 
-# NAME: vgs_aws_s3_upload_encrypted
-# DESCRIPTION: Archives and encrypts a local path and uploads it to AWS S3.
-# USAGE: vgs_aws_s3_upload_encrypted {GPG Recipient} {Local Path} {S3 Path}
-# PARAMETERS:
+# Archives and encrypts a local path and uploads it to AWS S3.
+# ARGUMENTS:
 #   1) The GPG Recipient (required)
 #   2) The local path (required)
 #   3) The S3 path (required; ex: "s3://vgsec/$(date +"%Y%m%d_%H%M%S").tar.xz.gpg")
@@ -73,10 +67,8 @@ vgs_aws_s3_upload_encrypted(){
   fi
 }
 
-# NAME: vgs_aws_s3_download_decrypt
-# DESCRIPTION: Decrypts and extracts an the latest AWS S3 stored object
-# USAGE: vgs_aws_s3_download_decrypt {Bucket} {Key Prefix} {Local Path}
-# PARAMETERS:
+# Decrypts and extracts an the latest AWS S3 stored object
+# ARGUMENTS:
 #   1) The bucket name (required)
 #   2) The key prefix (required)
 #   3) The local path (required)

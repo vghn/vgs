@@ -8,12 +8,10 @@ vgs_aws_ecs_list_clusters(){
   fi
 }
 
-# NAME: vgs_aws_ecs_service_desired_running_count
-# DESCRIPTION: Returns the desired running count for the specified ECS Service
-# USAGE: vgs_aws_ecs_service_desired_running_count {Cluster} {Service}
-# PARAMETERS:
+# Returns the desired running count for the specified ECS Service
+# ARGUMENTS:
 #   1) The cluster name (required)
-#   1) The service name (required)
+#   2) The service name (required)
 vgs_aws_ecs_service_desired_running_count(){
   local cluster=${1:?Must specify the cluster name as the 1st argument}
   local service=${2:?Must specify the service name as the 2nd argument}

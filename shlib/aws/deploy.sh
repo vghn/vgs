@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # AWS CodeDeploy functions
 
-# NAME: vgs_aws_deploy_application_ensure
-# DESCRIPTION: Ensure AWS CodeDeploy Application exists. Returns the id.
-# USAGE: vgs_aws_deploy_application_ensure {Application name}
-# PARAMETERS:
+# Ensure AWS CodeDeploy Application exists. Returns the id.
+# ARGUMENTS:
 #   1) The application name (required)
 vgs_aws_deploy_application_ensure(){
   local name="${1:?Must specify the application name as the only argument}"
@@ -19,12 +17,8 @@ vgs_aws_deploy_application_ensure(){
   return 1
 }
 
-# NAME: vgs_aws_deploy_group_ensure
-# DESCRIPTION: Creates or updates an AWS CodeDeploy deployment group.
-#              Returns the id.
-# USAGE: vgs_aws_deploy_group_ensure {App} {Group} {Autoscaling Groups}
-#        {Configuration Name} {Service Role ARN}
-# PARAMETERS:
+# Creates or updates an AWS CodeDeploy deployment group. Returns the id.
+# ARGUMENTS:
 #   1) The application name (required)
 #   2) The deployment group name (required)
 #   3) A list of associated Auto Scaling groups (required)
@@ -62,10 +56,8 @@ vgs_aws_deploy_group_ensure(){
   echo "$id"
 }
 
-# NAME: vgs_aws_deploy_group_exists
-# DESCRIPTION: Returns the group id if the given deployment group exists.
-# USAGE: vgs_aws_deploy_group_exists {App} {Group}
-# PARAMETERS:
+# Returns the group id if the given deployment group exists.
+# ARGUMENTS:
 #   1) The application name
 #   2) The deployment group name
 vgs_aws_deploy_group_exists() {
@@ -87,11 +79,9 @@ vgs_aws_deploy_group_exists() {
   fi
 }
 
-# NAME: vgs_aws_deploy_list_running_deployments
-# DESCRIPTION: Returns the a list of running deployments for the given
+# Returns the a list of running deployments for the given
 # CodeDeploy application and group.
-# USAGE: vgs_aws_deploy_list_running_deployments {App} {Group}
-# PARAMETERS:
+# ARGUMENTS:
 #   1) The application name
 #   2) The deployment group name
 vgs_aws_deploy_list_running_deployments() {
@@ -107,11 +97,9 @@ vgs_aws_deploy_list_running_deployments() {
     --query 'deployments'
 }
 
-# NAME: vgs_aws_deploy_wait
-# DESCRIPTION: Waits until there are no other deployments in progress for the
+# Waits until there are no other deployments in progress for the
 # given CodeDeploy application and group.
-# USAGE: vgs_aws_deploy_wait {App} {Group}
-# PARAMETERS:
+# ARGUMENTS:
 #   1) The application name
 #   2) The deployment group name
 vgs_aws_deploy_wait() {
@@ -126,10 +114,8 @@ vgs_aws_deploy_wait() {
   e_ok ' Done.'
 }
 
-# NAME: vgs_aws_deploy_create_deployment
-# DESCRIPTION: Creates a CodeDeploy revision.
-# USAGE: vgs_aws_deploy_create_deployment {App} {Group} {Bucket} {Key} {Bundle} {Config}
-# PARAMETERS:
+# Creates a CodeDeploy revision.
+# ARGUMENTS:
 #   1) The application name
 #   2) The deployment group name
 #   3) The S3 bucket name

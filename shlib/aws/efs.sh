@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # AWS Elastic Container Service functions
 
-# NAME: vgs_aws_efs_mount
-# DESCRIPTION: Mount AWS Elastic File System
-# USAGE: vgs_aws_efs_mount {EFS ID} {path}
-# PARAMETERS:
+# Mount AWS Elastic File System
+# ARGUMENTS:
 #   1) Elastic File System ID (required)
 #   2) The local path where to mount the EFS
 vgs_aws_efs_mount(){

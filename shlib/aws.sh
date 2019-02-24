@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 # AWS functions
 
-# NAME: vgs_aws_configure
-# DESCRIPTION: Configure AWS Credentials
-# USAGE: vgs_aws_configure {Profile} {Access Key} {Secret Key} {Region}
-# PARAMETERS:
-#   1) Prodile name
+# Configure AWS Credentials
+# ARGUMENTS:
+#   1) Profile name
 #   2) AWS access key
 #   3) AWS secret key
 #   4) AWS region
@@ -25,10 +23,8 @@ vgs_aws_configure(){
   fi
 }
 
-# NAME: vgs_aws_credentials
-# DESCRIPTION: Configure AWS Temporary Credentials
-# USAGE: vgs_aws_credentials {Access Key} {Secret Key} {Role Arn}
-# PARAMETERS:
+# Configure AWS Temporary Credentials
+# ARGUMENTS:
 #   1) AWS access key
 #   2) AWS secret key
 #   3) AWS role arn

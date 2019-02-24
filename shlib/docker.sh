@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # Docker Functions
 
-# NAME: vgs_docker_container_is_running
-# DESCRIPTION: Returns true if the given containers are running
-# USAGE: vgs_docker_container_is_running {Container}
-# PARAMETERS:
+# Returns true if the given containers are running
+# ARGUMENTS:
 #   1) One or more container names or ids
 vgs_docker_container_is_running() {
   for container in "${@}"; do
@@ -16,10 +14,8 @@ vgs_docker_container_is_running() {
   done
 }
 
-# NAME: vgs_docker_container_exited_clean
-# DESCRIPTION: Returns true if the given containers returned a 0 exit code
-# USAGE: vgs_docker_container_exited_clean {Container}
-# PARAMETERS:
+# Returns true if the given containers returned a 0 exit code
+# ARGUMENTS:
 #   1) One or more container names or ids
 vgs_docker_container_exited_clean() {
   for container in "${@}"; do
@@ -28,10 +24,8 @@ vgs_docker_container_exited_clean() {
   done
 }
 
-# NAME: vgs_docker_image_load
-# DESCRIPTION: Loads a docker image from a local archive.
-# USAGE: vgs_docker_image_load {path}
-# PARAMETERS:
+# Loads a docker image from a local archive.
+# ARGUMENTS:
 #   1) The path to the archive
 vgs_docker_image_load(){
   local path=$1
@@ -43,10 +37,8 @@ vgs_docker_image_load(){
   fi
 }
 
-# NAME: vgs_docker_image_save
-# DESCRIPTION: Saves a compressed docker image to a local archive.
-# USAGE: vgs_docker_image_save {name} {path}
-# PARAMETERS:
+# Saves a compressed docker image to a local archive.
+# ARGUMENTS:
 #   1) Image name (Ex: user/image:tag)
 #   2) The path to the archive (Ex: /tmp/test.tgz)
 vgs_docker_image_save(){
@@ -57,10 +49,8 @@ vgs_docker_image_save(){
   docker save "$name" | gzip -c > "$path"
 }
 
-# NAME: vgs_docker_image_refresh_cache
-# DESCRIPTION: Refresh a cached docker image.
-# USAGE: vgs_docker_image_refresh_cache {path}
-# PARAMETERS:
+# Refresh a cached docker image.
+# ARGUMENTS:
 #   1) Image name
 #   2) The path to the archive
 vgs_docker_image_refresh_cache(){

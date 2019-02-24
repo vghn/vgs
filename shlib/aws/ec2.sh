@@ -30,8 +30,7 @@ vgh_aws_ec2_list_running_instances(){
     --output table
 }
 
-# NAME: vgs_aws_ec2_list_all_tags
-# DESCRIPTION: Returns all EC2 tags associated with the current instance.
+# Returns all EC2 tags associated with the current instance.
 # Prefixes each one with `ec2_tag_`. Useful for puppet facts.
 vgs_aws_ec2_list_all_tags(){
   aws --output text ec2 describe-tags \
@@ -41,10 +40,8 @@ vgs_aws_ec2_list_all_tags(){
     sed 's/.*/ec2_tag_&/'
 }
 
-# NAME: vgs_aws_ec2_get_tag
-# DESCRIPTION: Gets the value of an ec2 tag.
-# USAGE: vgs_aws_ec2_get_tag {Key Name} {Resource ID}
-# PARAMETERS:
+# Gets the value of an EC2 tag.
+# ARGUMENTS:
 #   1) The key name (defaults to 'Name')
 #   2) The resource id (defaults to the current instance id)
 vgs_aws_ec2_get_tag(){
@@ -57,10 +54,8 @@ vgs_aws_ec2_get_tag(){
     --query "Tags[*].[Value]" 2>/dev/null
 }
 
-# NAME: vgs_aws_ec2_create_tags
-# DESCRIPTION: Creates EC2 tags.
-# USAGE: vgs_aws_ec2_create_tags {Resource ID} {TAGS}
-# PARAMETERS:
+# Creates EC2 tags.
+# ARGUMENTS:
 #   1) The resource id (required)
 #   2) One or more tags (Key=string,Value=string ...)
 vgs_aws_ec2_create_tags(){
@@ -71,11 +66,9 @@ vgs_aws_ec2_create_tags(){
   aws ec2 create-tags --resources "$id" --tags "$@"
 }
 
-# NAME: vgs_aws_ec2_get_asg_instance_state
-# DESCRIPTION: Gets the state of the given <EC2 instance ID> as known by the AutoScaling
+# Gets the state of the given <EC2 instance ID> as known by the AutoScaling
 # group it's a part of.
-# USAGE: vgs_aws_ec2_get_asg_instance_state {EC2 instance ID}
-# PARAMETERS:
+# ARGUMENTS:
 #   1) The instance id
 vgs_aws_ec2_get_asg_instance_state() {
   local instance_id=${1:?Must specify the instance id as the 1st argument}
@@ -89,11 +82,9 @@ vgs_aws_ec2_get_asg_instance_state() {
   fi
 }
 
-# NAME: aws_get_autoscaling_group_name
-# DESCRIPTION: Returns the name of the auto scaling group this instance is a
+# Returns the name of the auto scaling group this instance is a
 # part of.
-# USAGE: vgs_aws_ec2_get_asg_name {EC2 instance ID}
-# PARAMETERS:
+# ARGUMENTS:
 #   1) The instance id
 vgs_aws_ec2_get_asg_name() {
   local instance_id=${1:?Must specify the instance id as the 1st argument}
@@ -192,12 +183,8 @@ vgs_aws_ec2_autoscaling_exit_standby(){
   e_ok ' Done.'
 }
 
-# NAME: vgs_aws_ec2_get_ubuntu_official_ami_id
-# DESCRIPTION: Retrieves the latest AMI ID for the official Ubuntu image.
-# The region defaults to us-east-1.
-# USAGE: vgs_aws_ec2_get_ubuntu_official_ami_id {Distribution} {Type} {Arch} \
-#          {Virtualization}
-# PARAMETERS:
+# Retrieves the latest AMI ID for the official Ubuntu image.
+# ARGUMENTS:
 #   1) Distribution code name (defaults to 'xenial')
 #   2) Root device type (defaults to 'ebs-ssd')
 #   3) Architecture (defaults to 'amd64')
@@ -218,11 +205,9 @@ vgs_aws_ec2_get_ubuntu_official_ami_id() {
     '$5 == dtyp && $6 == arch && $7 == region && $9 == virt { print $8 }'
 }
 
-# NAME: vgs_aws_ec2_get_ubuntu_base_image_id
-# DESCRIPTION: Retrieves the latest AMI ID for the official Ubuntu image
+# Retrieves the latest AMI ID for the official Ubuntu image
 # (x64 hvm ssd ebs).
-# USAGE: vgs_aws_ec2_get_ubuntu_base_image_id {Code Name}
-# PARAMETERS:
+# ARGUMENTS:
 #   1) Distribution code name (defaults to 'xenial-16.04')
 vgs_aws_ec2_get_ubuntu_base_image_id(){
   local codename=${1:-'xenial-16.04'}
@@ -246,11 +231,9 @@ vgs_aws_ec2_get_ubuntu_base_image_id(){
   fi
 }
 
-# NAME: vgs_aws_ec2_get_latest_ami_id
-# DESCRIPTION: Retrieves the latest AMI ID for a specified prefix.
-# USAGE: vgs_aws_ec2_get_latest_ami_id {Prefix}
-# PARAMETERS:
-#   1) The prefix
+# Retrieves the latest AMI ID for a specified prefix.
+# ARGUMENTS:
+#   1) Prefix
 vgs_aws_ec2_get_latest_ami_id() {
   local prefix="${1:-}"
   local id; id=$(aws ec2 describe-images \
@@ -267,15 +250,13 @@ vgs_aws_ec2_get_latest_ami_id() {
   fi
 }
 
-# NAME: vgs_aws_ec2_create_instance
-# DESCRIPTION: Deletes all but the most recent image
-# USAGE: vgs_aws_ec2_create_instance {Code Name} {Key} {Type} {User Data} {IAM Profile}
-# PARAMETERS:
+# Deletes all but the most recent image
+# ARGUMENTS:
 #   1) Base AMI codename (required)
-#   1) Key pair name (required)
-#   2) The instance type (required)
-#   3) The file containing the data to configure the instance (required)
-#   4) The IAM instance profile (required)
+#   2) Key pair name (required)
+#   3) The instance type (required)
+#   4) The file containing the data to configure the instance (required)
+#   5) The IAM instance profile (required)
 vgs_aws_ec2_create_instance(){
   local ami=${1:?Must specify the base ami codename as the 1st argument}
   local key=${2:?Must specify the key name as the 1st argument}
@@ -302,13 +283,11 @@ vgs_aws_ec2_create_instance(){
   fi
 }
 
-# NAME: vgs_aws_ec2_image_create
-# DESCRIPTION: Deletes all but the most recent image
-# USAGE: vgs_aws_ec2_image_create {Instance ID} {Prefix} {Description}
-# PARAMETERS:
+# Deletes all but the most recent image
+# ARGUMENTS:
 #   1) Instance ID (required)
-#   1) Image prefix (defaults to 'AMI')
-#   1) Image description (defaults to 'AMI')
+#   2) Image prefix (defaults to 'AMI')
+#   3) Image description (defaults to 'AMI')
 vgs_aws_ec2_image_create(){
   local instance_id=${1:?Must specify the instance id as the 1st argument}
   local prefix=${2:-AMI}
@@ -330,10 +309,8 @@ vgs_aws_ec2_image_create(){
   fi
 }
 
-# NAME: vgs_aws_ec2_images_purge
-# DESCRIPTION: Deletes all but the most recent image.
-# USAGE: vgs_aws_ec2_images_purge {Image name}
-# PARAMETERS:
+# Deletes all but the most recent image.
+# ARGUMENTS:
 #   1) Image name (required). Can contain wildcard (Ex: My_AMI_*)
 #   2) A list of image ids to keep (optional) (Ex: 'ami-123 ami-456')
 vgs_aws_ec2_images_purge(){
@@ -387,10 +364,8 @@ vgs_aws_ec2_elb_configure_health_check() {
   fi
 }
 
-# NAME: aws_elb_configure_health_check
-# DESCRIPTION: Modifies the Elastic Load Balancer' health check configuration
-# USAGE: aws_elb_configure_health_check {Config}
-# PARAMETERS:
+# Modifies the Elastic Load Balancer' health check configuration
+# ARGUMENTS:
 #   1) Configuration (required)
 #      Ex: Target=HTTP:80/,Interval=10,UnhealthyThreshold=5,HealthyThreshold=2,Timeout=5
 vgs_aws_ec2_elb_configure_health_check() {
@@ -402,10 +377,8 @@ vgs_aws_ec2_elb_configure_health_check() {
   fi
 }
 
-# NAME: vgs_aws_ec2_run_command
-# DESCRIPTION: Sends a command to instances
-# USAGE: vgs_aws_ec2_run_command {Filter} {Parameters} {Comment} {TimeOut}
-# PARAMETERS:
+# Sends a command to instances
+# ARGUMENTS:
 #   1) Filter the instances (required)
 #      See --filters section at http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html
 #      Ex: Name=tag:Group,Values=MyGroupName

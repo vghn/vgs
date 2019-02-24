@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # AWS CloudFormation functions
 
-# NAME: vgs_aws_cfn_wait
-# DESCRIPTION: Waits for the CloudFormation stack.
-# USAGE: vgs_aws_cfn_wait {Stack}
-# PARAMETERS:
+# Waits for the CloudFormation stack.
+# ARGUMENTS:
 #   1) Stack name
 vgs_aws_cfn_wait(){
   local stack="$1"
@@ -27,10 +25,8 @@ vgs_aws_cfn_wait(){
   fi
 }
 
-# NAME: vgs_aws_cfn_get_resource
-# DESCRIPTION: Gets the physical ID of a resource given a logical ID.
-# USAGE: vgs_aws_cfn_get_resource {Stack} {Resource}
-# PARAMETERS:
+# Gets the physical ID of a resource given a logical ID.
+# ARGUMENTS:
 #   1) Stack name
 #   2) Resource logical ID
 vgs_aws_cfn_get_resource(){
@@ -52,12 +48,10 @@ vgs_aws_cfn_get_resource(){
   fi
 }
 
-# NAME: vgs_aws_cfn_get_output
-# DESCRIPTION: Gets the value of a stack output.
-# USAGE: vgs_aws_cfn_get_output {Stack} {Output}
-# PARAMETERS:
+# Gets the value of a stack output.
+# ARGUMENTS:
 #   1) Stack name
-#   1) Output name
+#   2) Output name
 vgs_aws_cfn_get_output(){
   local stack output
   stack="$1"
@@ -76,12 +70,10 @@ vgs_aws_cfn_get_output(){
   fi
 }
 
-# NAME: vgs_aws_cfn_get_param
-# DESCRIPTION: Gets the value of a given parameter.
-# USAGE: vgs_aws_cfn_get_param {Stack} {Parameter}
-# PARAMETERS:
+# Gets the value of a given parameter.
+# ARGUMENTS:
 #   1) Stack name
-#   1) Parameter
+#   2) Parameter
 vgs_aws_cfn_get_parameter(){
   local stack parameter
   stack="$1"
@@ -100,10 +92,8 @@ vgs_aws_cfn_get_parameter(){
   fi
 }
 
-# NAME: vgs_aws_cfn_events
-# DESCRIPTION: Lists CloudFormation stack events.
-# USAGE: vgs_aws_cfn_events {Stack name}
-# PARAMETERS:
+# Lists CloudFormation stack events.
+# ARGUMENTS:
 #   1) Stack name (required)
 vgs_aws_cfn_events() {
   local stack output
@@ -118,10 +108,8 @@ vgs_aws_cfn_events() {
   fi
 }
 
-# NAME: vgs_aws_cfn_tail
-# DESCRIPTION: Show all events for CF stack until update completes or fails.
-# USAGE: vgs_aws_cfn_tail {Stack name}
-# PARAMETERS:
+# Show all events for CF stack until update completes or fails.
+# ARGUMENTS:
 #   1) Stack name (required)
 vgs_aws_cfn_tail() {
   local stack current final_line output previous
@@ -150,12 +138,10 @@ vgs_aws_cfn_tail() {
   echo "$final_line"
 }
 
-# NAME: vgh_aws_cfn_watch
-# DESCRIPTION: Clean display of single most recent event status for each
-#              resource in a CloudFormation stack
-#              https://github.com/alestic/aws-cloudformation-stack-status
-# USAGE: vgh_aws_cfn_watch --stack {Stack name} --watch
-# PARAMETERS:
+# Clean display of single most recent event status for each
+# resource in a CloudFormation stack
+# https://github.com/alestic/aws-cloudformation-stack-status
+# ARGUMENTS:
 #   1) --stack: Stack name (required)
 #   2) --watch: Monitor all stack resource progress live (Interrupt with Ctrl-C)
 vgh_aws_cfn_watch(){
@@ -186,10 +172,8 @@ vgh_aws_cfn_watch(){
   column -t
 }
 
-# NAME: vgh_aws_cfn_params_list_images_in_use
-# DESCRIPTION: Gets all image ids for all autoscaling launch configurations
-# USAGE: vgh_aws_cfn_params_list_images_in_use {Stack name}
-# PARAMETERS:
+# Gets all image ids for all autoscaling launch configurations
+# ARGUMENTS:
 #   1) Stack name (required)
 vgh_aws_cfn_params_list_images_in_use(){
   local stack images_in_use
@@ -210,10 +194,8 @@ vgh_aws_cfn_params_list_images_in_use(){
   echo "${images_in_use/ /}"
 }
 
-# NAME: vgh_aws_cfn_list_images_in_use
-# DESCRIPTION: Gets all image ids for all autoscaling launch configurations
-# USAGE: vgh_aws_cfn_list_images_in_use {Stack name}
-# PARAMETERS:
+# Gets all image ids for all autoscaling launch configurations
+# ARGUMENTS:
 #   1) Stack name (required)
 vgh_aws_cfn_list_images_in_use(){
   local stack images_in_use

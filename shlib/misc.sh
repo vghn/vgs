@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # Miscellaneous Functions
 
-# NAME: vgs_notify_slack
-# DESCRIPTION: Notify Slack Webhook. Requires a SLACK_WEBHOOK environment variable
-# USAGE: vgs_notify_slack {Channel} {Username} {Text}
-# PARAMETERS:
+# Notify Slack Webhook. Requires a SLACK_WEBHOOK environment variable
+# ARGUMENTS:
 #   1) The channel name (required)
 #   2) The user name (required)
 #   3) The text message (required)
@@ -20,16 +18,14 @@ vgs_notify_slack(){
   curl -s -X POST --data-urlencode "payload={\"channel\": \"#${channel}\", \"username\": \"${username}\", \"text\": \"${text}\", \"icon_emoji\": \":taurus:\"}" "$SLACK_WEBHOOK"
 }
 
-# NAME: vgs_slack_trap
-# DESCRIPTION: Traps exit and notify Slack.
-# ENVIRONMENT VARIABLES REQUIRED:
+# Traps exit and notify Slack.
+# GLOBALS:
 # - SLACK_CHANNEL
 # - SLACK_USER
 # - SLACK_WEBHOOK
-# USAGE: trap 'vgs_slack_trap $?' EXIT TERM INT
-# PARAMETERS:
+# ARGUMENTS:
 #   1) The exit status (required)
-#   1) The command title (optional)
+#   2) The command title (optional)
 vgs_slack_trap(){
   local exit_code cmd info title color text
   exit_code=${1:-0}
@@ -57,10 +53,8 @@ vgs_slack_trap(){
   echo "$title: $text"; exit "$exit_code"
 }
 
-# NAME: vgs_encrypt
-# DESCRIPTION: Encrypts a file.
-# USAGE: vgs_encrypt {Key} {Source} {Destination}
-# PARAMETERS:
+# Encrypts a file.
+# ARGUMENTS:
 #   1) The encryption key (required)
 #   2) The decrypted file (required)
 #   3) The encrypted file (required)
@@ -74,10 +68,8 @@ vgs_encrypt(){
   ( set +e; openssl aes-256-cbc -k "$key" -in "$in" -out "$out" )
 }
 
-# NAME: vgs_decrypt
-# DESCRIPTION: Encrypts a file.
-# USAGE: vgs_decrypt {Key} {Source} {Destination}
-# PARAMETERS:
+# Encrypts a file.
+# ARGUMENTS:
 #   1) The encryption key (required)
 #   2) The encrypted file (required)
 #   3) The decrypted file (required)
@@ -91,11 +83,9 @@ vgs_decrypt(){
   ( set +e; openssl aes-256-cbc -k "$key" -in "$in" -out "$out" -d )
 }
 
-# NAME: vgs_parse_yaml
-# DESCRIPTION: Parses an YAML file.
-#              Credits: https://gist.github.com/pkuczynski/8665367
-# USAGE: eval $(vgs_parse_yaml {File} {Prefix})
-# PARAMETERS:
+# Parses an YAML file.
+# Thanks: https://gist.github.com/pkuczynski/8665367
+# ARGUMENTS:
 #   1) The yaml file (required)
 #   2) The prefix (optional)
 vgs_parse_yaml() {

@@ -11,10 +11,8 @@ vgs_git_sha1(){
   if ! git rev-parse --short HEAD 2>/dev/null; then echo '0'; fi
 }
 
-# NAME: vgs_git_switch_branch
-# DESCRIPTION: Switches a git branch
-# USAGE: vgs_git_switch_branch {Branch}
-# PARAMETERS:
+# Switches a git branch
+# ARGUMENTS:
 #   1) The branch name (required)
 vgs_git_switch_branch(){
   local branch="${1:-}"
@@ -22,10 +20,8 @@ vgs_git_switch_branch(){
   git checkout "$branch"
 }
 
-# NAME: vgs_git_merge_branch
-# DESCRIPTION: Merges a git branch
-# USAGE: vgs_git_merge_branch {Branch} {Message}
-# PARAMETERS:
+# Merges a git branch
+# ARGUMENTS:
 #   1) The branch name (required)
 #   2) The message (required)
 #   3) Sign the resulting merge commit itself (defaults to false)
@@ -43,10 +39,8 @@ vgs_git_merge_branch(){
   fi
 }
 
-# NAME: vgs_git_tag_release
-# DESCRIPTION: Tags a release and pushes it upstream
-# USAGE: vgs_git_tag_release {Tag} {Description}
-# PARAMETERS:
+# Tags a release and pushes it upstream
+# ARGUMENTS:
 #   1) The tag name (required)
 #   2) The tag description (required)
 #   3) Sign the tag using the default GPG key (defaults to false)
