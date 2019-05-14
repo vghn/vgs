@@ -1,5 +1,14 @@
 # Change Log
 
+## [v0.2.4](https://github.com/vghn/vgs/tree/v0.2.4) (2019-05-14)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.2.3...v0.2.4)
+
+**Fixed bugs:**
+
+- Fix typo in release script [\#61](https://github.com/vghn/vgs/issues/61)
+- Fix unbound variable [\#60](https://github.com/vghn/vgs/issues/60)
+- Lint code [\#59](https://github.com/vghn/vgs/issues/59)
+
 ## [v0.2.3](https://github.com/vghn/vgs/tree/v0.2.3) (2018-10-21)
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.2.2...v0.2.3)
 
@@ -35,7 +44,6 @@
 - Use the latest TravisCI environment [\#49](https://github.com/vghn/vgs/issues/49)
 - Default to Xenial when looking for latest AMI [\#48](https://github.com/vghn/vgs/issues/48)
 - Adhere to recommended community standards [\#43](https://github.com/vghn/vgs/issues/43)
-- Switch to new Bundler file names [\#47](https://github.com/vghn/vgs/pull/47) ([vladgh](https://github.com/vladgh))
 - Receive build notifications via Atomist [\#46](https://github.com/vghn/vgs/pull/46) ([vladgh](https://github.com/vladgh))
 - Update options for the release task [\#42](https://github.com/vghn/vgs/pull/42) ([vladgh](https://github.com/vladgh))
 
@@ -49,6 +57,7 @@
 
 **Implemented enhancements:**
 
+- Switch to new Bundler file names [\#47](https://github.com/vghn/vgs/pull/47) ([vladgh](https://github.com/vladgh))
 - Simpler rake tasks listing [\#41](https://github.com/vghn/vgs/pull/41) ([vladgh](https://github.com/vladgh))
 - Load libraries one time only [\#40](https://github.com/vghn/vgs/pull/40) ([vladgh](https://github.com/vladgh))
 - Update README [\#39](https://github.com/vghn/vgs/pull/39) ([vladgh](https://github.com/vladgh))
