@@ -159,6 +159,8 @@ notify_microbadger(){
     if [[ -n "$token" ]]; then
       echo "Using MicroBadger Token for ${DOCKER_REPO}"
       MICROBADGER_URL="https://hooks.microbadger.com/images/${DOCKER_REPO}/${token}"
+    else
+      echo "No MicroBadger Token found for ${DOCKER_REPO}"
     fi
   fi
 
