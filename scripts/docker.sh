@@ -110,7 +110,7 @@ build_image(){
   # Pull image before build to speed up the building process
   if [[ "$DOCKER_NO_CACHE" == 'false' ]]; then
     echo 'Pulling image'
-    docker pull "${DOCKER_REPO}:latest"
+    docker pull "${DOCKER_REPO}:latest" || true
   fi
 
   echo 'Build the image with the specified arguments'
