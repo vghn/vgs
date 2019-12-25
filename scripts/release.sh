@@ -8,13 +8,13 @@
 # Environment Variables:
 #   - `CHANGELOG_GITHUB_TOKEN`: [STRING] GitHub Authentication Token (GitHub only allows 50 unauthenticated requests per hour). You can generate a token at https://github.com/settings/tokens/new?description=GitHub%20Changelog%20Generator%20token (you only need "repo" scope for private repositories)
 #   - `WRITE_CHANGELOG`: [Boolean] whether to write the changelog (defaults to `false`)
-#   - `REQUIRE_PULL_REQUEST`: [Boolean] in case the branch is protected and a pull request is required, the task will create a separate branch on #   which it will commit the changelog, and merge that into master (defaults to `false`). .
+#   - `REQUIRE_PULL_REQUEST`: [Boolean] in case the branch is protected and a pull request is required, the task will create a separate branch on #   which it will commit the changelog, and merge that into master (defaults to `false`).
 #   - `WAIT_FOR_CI_SUCCESS`: [Boolean] whether a "SUCCESS" CI status is required (defaults to `false`)
 #   - `BUG_LABELS`: [STRING] Issues with the specified labels will be added to "Fixed bugs" section (defaults to `bug`)
 #   - `ENHANCEMENT_LABELS`: [STRING] Issues with the specified labels will be added to "Implemented enhancements" section (defaults to `enhancement`)
 #
 # USAGE:
-# $ WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh
+# $ WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh patch
 #
 # NOTE:
 # First time you have to create an annotated tag and commit the initial CHANGELOG, before creating issues or pull requests (if there these are not present it will fail)
@@ -46,7 +46,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # DEBUG
-[ -z "${DEBUG:-}" ] || set -x
+[[ -z "${DEBUG:-}" ]] || set -x
 
 # Load VGS library
 # shellcheck disable=1090

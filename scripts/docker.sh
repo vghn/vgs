@@ -28,7 +28,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # DEBUG
-[ -z "${DEBUG:-}" ] || set -x
+[[ -z "${DEBUG:-}" ]] || set -x
 
 # Load VGS library
 # shellcheck disable=1090

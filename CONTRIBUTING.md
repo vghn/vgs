@@ -1,5 +1,6 @@
 # Contribute
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Bug reports and pull requests are welcome.
 This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct (see [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file).
@@ -13,8 +14,9 @@ This project is intended to be a safe, welcoming space for collaboration, and co
 
 **Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
 
-### Guidelines:
-- Respect the style described at http://wiki.bash-hackers.org/scripting/style
+## Guidelines
+
+- Respect the style described at <http://wiki.bash-hackers.org/scripting/style>
 
 - Use [ShellCheck](http://www.shellcheck.net/about.html) to verify your code
 
@@ -23,13 +25,14 @@ This project is intended to be a safe, welcoming space for collaboration, and co
   EX: `vgs_aws_install_cli()` (where aws.sh is the filename)
 
 - Each function should be documented in this format:
-  ```
-  # NAME: name_of_function
-  # DESCRIPTION: A description of what it does
-  # USAGE: name_of_function {param1} {param2}
-  # PARAMETERS:
-  #   1) describe each parameter (if any)
-  ```
+
+```sh
+# NAME: name_of_function
+# DESCRIPTION: A description of what it does
+# USAGE: name_of_function {param1} {param2}
+# PARAMETERS:
+#   1) describe each parameter (if any)
+```
 
 - If the script exports a variable it should be prefixed with the name of the
   script, all in capital letters with underscores.
