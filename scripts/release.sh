@@ -2,44 +2,15 @@
 # Semantic Release scripts
 #
 # This script generates a changelog based on tagged issues or pull requests and creates semantic version tags.
-# It uses the GitHub Changelog Generator gem (https://github.com/github-changelog-generator/github-changelog-generator):
-# $ [sudo] gem install github_changelog_generator
-#
-# Environment Variables:
-#   - `CHANGELOG_GITHUB_TOKEN`: [STRING] GitHub Authentication Token (GitHub only allows 50 unauthenticated requests per hour). You can generate a token at https://github.com/settings/tokens/new?description=GitHub%20Changelog%20Generator%20token (you only need "repo" scope for private repositories)
-#   - `WRITE_CHANGELOG`: [Boolean] whether to write the changelog (defaults to `false`)
-#   - `REQUIRE_PULL_REQUEST`: [Boolean] in case the branch is protected and a pull request is required, the task will create a separate branch on #   which it will commit the changelog, and merge that into master (defaults to `false`).
-#   - `WAIT_FOR_CI_SUCCESS`: [Boolean] whether a "SUCCESS" CI status is required (defaults to `false`)
-#   - `BUG_LABELS`: [STRING] Issues with the specified labels will be added to "Fixed bugs" section (defaults to `bug`)
-#   - `ENHANCEMENT_LABELS`: [STRING] Issues with the specified labels will be added to "Implemented enhancements" section (defaults to `enhancement`)
+# It uses GitHub Changelog Generator (https://github.com/github-changelog-generator/github-changelog-generator).
+# It also needs the following packages installed: git, docker and [hub](https://github.com/github/hub).
 #
 # USAGE:
-# $ WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh patch
+# $ ./scripts/release.sh patch
 #
 # NOTE:
 # First time you have to create an annotated tag and commit the initial CHANGELOG, before creating issues or pull requests (if there these are not present it will fail)
 # $ git tag --sign v0.0.0 --message 'Release v0.0.0' && git push --follow-tags
-#
-# RAKE TASKS:
-# desc 'Generate a Change log from GitHub'
-# task release: ['release:changes']
-# namespace :release do
-#   require 'github_changelog_generator'
-#   desc 'Generate a Change log from GitHub'
-#   task :changes do
-#     system "BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh unreleased"
-#   end
-#   ['patch', 'minor', 'major'].each do |level|
-#     desc "Release #{level} version"
-#     task level.to_sym do
-#       system "WRITE_CHANGELOG=true BUG_LABELS='Type: Bug' ENHANCEMENT_LABELS='Type: Enhancement' ~/vgs/scripts/release.sh #{level}"
-#     end
-#   end
-# end
-# desc 'Display version'
-# task :version do
-#   system "git describe --always --tags 2>/dev/null || echo '0.0.0-0-0'"
-# end
 
 # Bash strict mode
 set -euo pipefail
@@ -48,20 +19,25 @@ IFS=$'\n\t'
 # DEBUG
 [[ -z "${DEBUG:-}" ]] || set -x
 
-# Load VGS library
-# shellcheck disable=1090
-. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/load"
-
 # VARs
-BUG_LABELS="${BUG_LABELS:-bug}"
-CHANGELOG_GITHUB_TOKEN="${GITHUB_TOKEN:-}"
-ENHANCEMENT_LABELS="${ENHANCEMENT_LABELS:-enhancement}"
-GIT_TAG="$(git describe --always --tags)"
+## [STRING] GitHub user name
+GIT_REPO_OWNER="${GIT_REPO_OWNER:-$(basename "$(dirname "$(git remote get-url origin)")")}"
+## [STRING] GitHub repository name
+GIT_REPO="${GIT_REPO:-$(basename -s .git "$(git remote get-url origin)")}"
+## [STRING] GitHub Authentication Token (GitHub only allows 50 unauthenticated
+## requests per hour). You can generate a token at https://github.com/settings/tokens/new?description=GitHub%20Changelog%20Generator%20token
+## You only need "repo" scope for private repositories
+GITHUB_TOKEN="${GITHUB_TOKEN:-}"
+## [Boolean] Whether to write the changelog (defaults to `true`)
+## If `false` it will just created a git semantic versioned git tag
+WRITE_CHANGELOG="${WRITE_CHANGELOG:-true}"
+## [Boolean] In case the branch is protected and a pull request is required,
+## the task will create a separate branch on which it will commit the changelog,
+## and merge that into master (defaults to `false`)
 REQUIRE_PULL_REQUEST="${REQUIRE_PULL_REQUEST:-false}"
+## [Boolean] Whether a "SUCCESS" CI status is required (defaults to `false`)
+## requires GitHub Hub - https://github.com/github/hub)
 WAIT_FOR_CI_SUCCESS="${WAIT_FOR_CI_SUCCESS:-false}"
-WRITE_CHANGELOG="${WRITE_CHANGELOG:-false}"
-export BUG_LABELS CHANGELOG_GITHUB_TOKEN ENHANCEMENT_LABELS GIT_TAG \
-  REQUIRE_PULL_REQUEST WAIT_FOR_CI_SUCCESS WRITE_CHANGELOG
 
 # Usage
 usage(){
@@ -82,24 +58,28 @@ usage(){
   echo '  - unreleased'
   echo '    Adds unreleased changes to the CHANGELOG'
   echo ''
+  echo 'For the environment variables used to configure this script,'
+  echo ' check the comments in the VARs section'
+  echo ''
   echo '----------------------------------------------'
-  exit 1
 }
 
-# Check if the repository is clean
-git_clean_repo(){
-  git diff --quiet HEAD || (
-    echo 'ERROR: Commit your changes first'
-    return 1
-  )
+# Make sure things exists
+sanity_checks(){
+  if ! command -v git >/dev/null 2>&1; then echo 'ERROR: Git is not installed!'; exit 1; fi
+  if ! command -v hub >/dev/null 2>&1; then echo 'ERROR: GitHub Hub is not installed!'; exit 1; fi
+  if ! command -v docker >/dev/null 2>&1; then echo 'ERROR: Docker is not installed!'; exit 1; fi
+  if ! git diff --quiet HEAD; then echo 'ERROR: Commit your changes first'; exit 1; fi
 }
 
-# Generate semantic version style tags
-generate_semantic_version(){
+# Get semantic version from git tags (tag needs to be in the v1.2.3 format)
+get_semantic_version(){
+  GIT_TAG="$(git describe --always --tags)"
+
   # If tag matches semantic version
   if [[ "$GIT_TAG" != v* ]]; then
     echo "Version (${GIT_TAG}) does not match semantic version; Skipping..."
-    return
+    return 1
   fi
 
   # Break the version into components
@@ -107,71 +87,45 @@ generate_semantic_version(){
   semver="${semver%%-*}" # Remove the commit number
   IFS="." read -r -a semver <<< "$semver" # Create an array with version numbers
 
-  export MAJOR="${semver[0]}"
-  export MINOR="${semver[1]}"
-  export PATCH="${semver[2]}"
+  MAJOR="${semver[0]}"
+  MINOR="${semver[1]}"
+  PATCH="${semver[2]}"
 }
 
-# Increment Semantic Version
-increment(){
-  generate_semantic_version
-
-  case "${1:-patch}" in
-    major)
-      export MAJOR=$((MAJOR+1))
-      export MINOR=0
-      export PATCH=0
-      ;;
-    minor)
-      export MINOR=$((MINOR+1))
-      export PATCH=0
-      ;;
-    patch)
-      export PATCH=$((PATCH+1))
-      ;;
-    *)
-      export PATCH=$((PATCH+1))
-      ;;
-  esac
+# Generate changelog
+generate_changelog(){
+  eval "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN=${GITHUB_TOKEN} -v $(pwd):/usr/local/src/your-app ferrarimarco/github-changelog-generator --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
 }
 
-# Generate log
-generate_log(){
-  GCG_CMD="--bug-labels '${BUG_LABELS}' --enhancement-labels '${ENHANCEMENT_LABELS}'"
-
-  if command -v github_changelog_generator >/dev/null 2>&1; then
-    # If release is empty is the same as `unreleased`
-    eval "github_changelog_generator $GCG_CMD --future-release ${RELEASE:-}"
-  else
-    echo 'ERROR: github_changelog_generator is not installed!'
-    exit 1
-  fi
-}
-
-# logic
+# Logic
 main(){
+  sanity_checks
+  get_semantic_version
+
+  # Process arguments
   case "${1:-}" in
     major)
-      increment major
+      MAJOR=$((MAJOR+1)) MINOR=0 PATCH=0
+      shift
       ;;
     minor)
-      increment minor
+      MINOR=$((MINOR+1)) PATCH=0
+      shift
       ;;
     patch)
-      increment patch
+      PATCH=$((PATCH+1))
+      shift
       ;;
     unreleased)
-      generate_log; exit 0
+      generate_changelog --unreleased
+      return
       ;;
     *)
-      usage
+      usage; return
       ;;
   esac
 
-  if ! command -v git >/dev/null 2>&1; then echo 'ERROR: Git is not installed!'; exit 1; fi
-
-  git_clean_repo
-
+  # Compose release
   RELEASE="v${MAJOR}.${MINOR}.${PATCH}"
 
   # Detect branch names
@@ -182,33 +136,32 @@ main(){
     RELEASE_BRANCH="$INITIAL_BRANCH"
   fi
 
+  if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
+    echo 'Create a new release branch'
+    git checkout -b "$RELEASE_BRANCH"
+  fi
+
   if [[ "$WRITE_CHANGELOG" == 'true' ]]; then
-    generate_log
+    generate_changelog --future-release ${RELEASE:-}
 
-    git diff --quiet HEAD || (
-
-      if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
-        echo 'Create a new release branch'
-        git checkout -b "$RELEASE_BRANCH"
-      fi
-
+    if ! git diff --quiet HEAD; then
       echo 'Commit CHANGELOG'
       git add CHANGELOG.md
       git commit --gpg-sign --message "Update change log for ${RELEASE}" CHANGELOG.md
+    fi
+  fi
 
-      if [[ "$WAIT_FOR_CI_SUCCESS" == 'true' ]]; then
-        echo 'Waiting for CI to finish'
-        while [[ $(hub ci-status "$RELEASE_BRANCH") != "success" ]]; do
-          sleep 5
-        done
-      fi
+  if [[ "$WAIT_FOR_CI_SUCCESS" == 'true' ]]; then
+    echo 'Waiting for CI to finish'
+    while [[ $(hub ci-status "$RELEASE_BRANCH") != "success" ]]; do
+      sleep 5
+    done
+  fi
 
-      if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
-        echo 'Merge release branch'
-        git checkout "$INITIAL_BRANCH"
-        git merge --gpg-sign --no-ff --message "Release ${RELEASE}" "$RELEASE_BRANCH"
-      fi
-    )
+  if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
+    echo 'Merge release branch'
+    git checkout "$INITIAL_BRANCH"
+    git merge --gpg-sign --no-ff --message "Release ${RELEASE}" "$RELEASE_BRANCH"
   fi
 
   echo "Tag  ${RELEASE}"
