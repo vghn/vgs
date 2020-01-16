@@ -38,6 +38,9 @@ REQUIRE_PULL_REQUEST="${REQUIRE_PULL_REQUEST:-false}"
 ## [Boolean] Whether a "SUCCESS" CI status is required (defaults to `false`)
 ## requires GitHub Hub - https://github.com/github/hub)
 WAIT_FOR_CI_SUCCESS="${WAIT_FOR_CI_SUCCESS:-false}"
+## [Boolean] Whether to create a GitHub release (defaults to `true`)
+## requires GitHub Hub - https://github.com/github/hub)
+PUBLISH_RELEASE="${PUBLISH_RELEASE:-true}"
 
 # Usage
 usage(){
@@ -167,6 +170,18 @@ main(){
   echo "Tag  ${RELEASE}"
   git tag --sign "${RELEASE}" --message "Release ${RELEASE}"
   git push --follow-tags
+
+  if [[ "$PUBLISH_RELEASE" == 'true' ]]; then
+    echo 'Publish release'
+      cat<<EOF | hub release create -F - "$RELEASE"
+Release ${RELEASE}
+
+$(awk -v version="[${RELEASE}](https://github.com/${GIT_REPO_OWNER}/${GIT_REPO}/tree/${RELEASE})" '/## / {printit = $2 == version}; printit;' CHANGELOG.md)
+EOF
+    # This can also be used but the disadvantage is that it will scan and recreate the CHANGELOG again, plus the output file will be owned by root if the command is used inside the docker container:
+    # generate_changelog --header-label "Release_${RELEASE}" --unreleased-only --future-release "$RELEASE" --output release_notes.md
+    # hub release create -F release_notes.md "$RELEASE"
+  fi
 }
 
 # Run
