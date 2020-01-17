@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
-# Semantic Release scripts
+# Semantic Release
 #
-# This script generates a changelog based on tagged issues or pull requests and creates semantic version tags.
-# It uses GitHub Changelog Generator (https://github.com/github-changelog-generator/github-changelog-generator).
-# It also needs the following packages installed: git, docker and [hub](https://github.com/github/hub).
+# This script generates a changelog based on tagged issues or pull requests and creates semantic version tags and releases.
+#
+# It has the following dependencies:
+# - GitHub Changelog Generator (https://github.com/github-changelog-generator/github-changelog-generator)
+# - GitHub Hub (https://github.com/github/hub)
+# - Git
+# - Docker
 #
 # USAGE:
 # $ ./scripts/release.sh patch
