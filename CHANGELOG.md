@@ -1,8 +1,8 @@
 # Changelog
 
-## [v0.4.0](https://github.com/vghn/vgs/tree/v0.4.0) (2020-04-26)
+## [v0.3.2](https://github.com/vghn/vgs/tree/v0.3.2) (2020-04-26)
 
-[Full Changelog](https://github.com/vghn/vgs/compare/v0.4.0...v0.4.0)
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.4.0...v0.3.2)
 
 **Implemented enhancements:**
 
@@ -87,7 +87,6 @@
 - Adhere to recommended community standards [\#43](https://github.com/vghn/vgs/issues/43)
 - Switch to new Bundler file names [\#47](https://github.com/vghn/vgs/pull/47) ([vladgh](https://github.com/vladgh))
 - Receive build notifications via Atomist [\#46](https://github.com/vghn/vgs/pull/46) ([vladgh](https://github.com/vladgh))
-- Update options for the release task [\#42](https://github.com/vghn/vgs/pull/42) ([vladgh](https://github.com/vladgh))
 
 **Fixed bugs:**
 
@@ -100,6 +99,7 @@
 
 **Implemented enhancements:**
 
+- Update options for the release task [\#42](https://github.com/vghn/vgs/pull/42) ([vladgh](https://github.com/vladgh))
 - Simpler rake tasks listing [\#41](https://github.com/vghn/vgs/pull/41) ([vladgh](https://github.com/vladgh))
 - Load libraries one time only [\#40](https://github.com/vghn/vgs/pull/40) ([vladgh](https://github.com/vladgh))
 - Update README [\#39](https://github.com/vghn/vgs/pull/39) ([vladgh](https://github.com/vladgh))
@@ -115,7 +115,6 @@
 
 - Fix Faraday gem version [\#36](https://github.com/vghn/vgs/pull/36) ([vladgh](https://github.com/vladgh))
 - Fix CI environment detection [\#32](https://github.com/vghn/vgs/pull/32) ([vladgh](https://github.com/vladgh))
-- Fix git method names [\#29](https://github.com/vghn/vgs/pull/29) ([vladgh](https://github.com/vladgh))
 
 ## [v0.1.2](https://github.com/vghn/vgs/tree/v0.1.2) (2017-01-06)
 
@@ -129,6 +128,10 @@
 - Separate ruby and bash files [\#25](https://github.com/vghn/vgs/pull/25) ([vladgh](https://github.com/vladgh))
 - Improve Rakefile [\#24](https://github.com/vghn/vgs/pull/24) ([vladgh](https://github.com/vladgh))
 - Unify rake tasks and libraries [\#23](https://github.com/vghn/vgs/pull/23) ([vladgh](https://github.com/vladgh))
+
+**Fixed bugs:**
+
+- Fix git method names [\#29](https://github.com/vghn/vgs/pull/29) ([vladgh](https://github.com/vladgh))
 
 ## [v0.1.1](https://github.com/vghn/vgs/tree/v0.1.1) (2016-12-02)
 
