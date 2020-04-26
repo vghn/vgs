@@ -104,7 +104,7 @@ get_semantic_version(){
 # Generate changelog
 generate_changelog(){
   if command -v docker >/dev/null 2>&1; then
-    eval "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN=${CHANGELOG_GITHUB_TOKEN} -v $(pwd):/usr/local/src/your-app ferrarimarco/github-changelog-generator --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
+    eval "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN=${GITHUB_TOKEN} -v $(pwd):/usr/local/src/your-app ferrarimarco/github-changelog-generator --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
   elif command -v github_changelog_generator >/dev/null 2>&1; then
     eval "github_changelog_generator --token ${GITHUB_TOKEN} --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
   fi
