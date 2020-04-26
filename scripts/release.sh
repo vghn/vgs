@@ -76,7 +76,7 @@ sanity_checks(){
   if ! command -v git >/dev/null 2>&1; then echo 'ERROR: Git is not installed!'; exit 1; fi
   if ! command -v hub >/dev/null 2>&1; then echo 'ERROR: GitHub Hub is not installed!'; exit 1; fi
   if ! git diff --quiet HEAD; then echo 'ERROR: Commit your changes first'; exit 1; fi
-  if ! command -v github_changelog_generator >/dev/null 2>&1 || ! command -v docker >/dev/null 2>&1; then
+  if ( ! command -v github_changelog_generator >/dev/null 2>&1 ) || ( ! command -v docker >/dev/null 2>&1 ); then
     echo 'ERROR: The github_changelog_generator gem or docker is not installed!'; exit 1
   fi
 }
