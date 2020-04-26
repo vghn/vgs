@@ -76,7 +76,7 @@ sanity_checks(){
   if ! command -v git >/dev/null 2>&1; then echo 'ERROR: Git is not installed!'; exit 1; fi
   if ! command -v hub >/dev/null 2>&1; then echo 'ERROR: GitHub Hub is not installed!'; exit 1; fi
   if ! git diff --quiet HEAD; then echo 'ERROR: Commit your changes first'; exit 1; fi
-  if ! ( command -v github_changelog_generator >/dev/null 2>&1 || command -v docker >/dev/null 2>&1 ); then
+  if ! ( command -v docker >/dev/null 2>&1 || command -v github_changelog_generator >/dev/null 2>&1 ); then
     echo 'ERROR: The github_changelog_generator gem or docker is not installed!'; exit 1
   fi
 }
@@ -103,7 +103,11 @@ get_semantic_version(){
 
 # Generate changelog
 generate_changelog(){
-  eval "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN=${GITHUB_TOKEN} -v $(pwd):/usr/local/src/your-app ferrarimarco/github-changelog-generator --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
+  if command -v docker >/dev/null 2>&1; then
+    eval "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN=${CHANGELOG_GITHUB_TOKEN} -v $(pwd):/usr/local/src/your-app ferrarimarco/github-changelog-generator --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
+  elif command -v github_changelog_generator >/dev/null 2>&1; then
+    eval "github_changelog_generator --token ${GITHUB_TOKEN} --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
+  fi
 }
 
 # Logic
