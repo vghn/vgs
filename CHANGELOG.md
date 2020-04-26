@@ -1,5 +1,21 @@
 # Changelog
 
+## [v0.4.0](https://github.com/vghn/vgs/tree/v0.4.0) (2020-04-26)
+
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.4.0...v0.4.0)
+
+**Implemented enhancements:**
+
+- Add release publish option [\#66](https://github.com/vghn/vgs/pull/66) ([vladgh](https://github.com/vladgh))
+
+## [v0.4.0](https://github.com/vghn/vgs/tree/v0.4.0) (2020-01-16)
+
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.3.1...v0.4.0)
+
+**Implemented enhancements:**
+
+- Add GitHub Sponsors [\#65](https://github.com/vghn/vgs/pull/65) ([vladgh](https://github.com/vladgh))
+
 ## [v0.3.1](https://github.com/vghn/vgs/tree/v0.3.1) (2020-01-06)
 
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.3.0...v0.3.1)
@@ -99,6 +115,7 @@
 
 - Fix Faraday gem version [\#36](https://github.com/vghn/vgs/pull/36) ([vladgh](https://github.com/vladgh))
 - Fix CI environment detection [\#32](https://github.com/vghn/vgs/pull/32) ([vladgh](https://github.com/vladgh))
+- Fix git method names [\#29](https://github.com/vghn/vgs/pull/29) ([vladgh](https://github.com/vladgh))
 
 ## [v0.1.2](https://github.com/vghn/vgs/tree/v0.1.2) (2017-01-06)
 
@@ -112,10 +129,6 @@
 - Separate ruby and bash files [\#25](https://github.com/vghn/vgs/pull/25) ([vladgh](https://github.com/vladgh))
 - Improve Rakefile [\#24](https://github.com/vghn/vgs/pull/24) ([vladgh](https://github.com/vladgh))
 - Unify rake tasks and libraries [\#23](https://github.com/vghn/vgs/pull/23) ([vladgh](https://github.com/vladgh))
-
-**Fixed bugs:**
-
-- Fix git method names [\#29](https://github.com/vghn/vgs/pull/29) ([vladgh](https://github.com/vladgh))
 
 ## [v0.1.1](https://github.com/vghn/vgs/tree/v0.1.1) (2016-12-02)
 
