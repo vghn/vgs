@@ -13,7 +13,7 @@
 # $ ./scripts/release.sh patch
 #
 # NOTE:
-# First time you have to create an annotated tag and commit the initial CHANGELOG, before creating issues or pull requests (if there these are not present it will fail)
+# First time you have to create an annotated tag and commit the initial CHANGELOG, before creating issues or pull requests (if these are not present it will fail)
 # $ git tag --sign v0.0.0 --message 'Release v0.0.0' && git push --follow-tags
 
 # Bash strict mode
@@ -44,7 +44,7 @@ REQUIRE_PULL_REQUEST="${REQUIRE_PULL_REQUEST:-false}"
 WAIT_FOR_CI_SUCCESS="${WAIT_FOR_CI_SUCCESS:-false}"
 ## [Boolean] Whether to create a GitHub release (defaults to `true`)
 ## requires GitHub Hub - https://github.com/github/hub)
-PUBLISH_RELEASE="${PUBLISH_RELEASE:-true}"
+PUBLISH_RELEASE="${PUBLISH_RELEASE:-$WRITE_CHANGELOG}"
 
 # Usage
 usage(){
@@ -101,13 +101,75 @@ get_semantic_version(){
   PATCH="${semver[2]}"
 }
 
+# Create a new branch for the changelog
+create_release_branch(){
+  if [[ "$REQUIRE_PULL_REQUEST" != 'true' ]]; then return; fi
+
+  echo 'Create a new release branch'
+  RELEASE_BRANCH="release_${RELEASE//./_}"
+  git checkout -b "$RELEASE_BRANCH"
+}
+
 # Generate changelog
 generate_changelog(){
+  if [[ "$WRITE_CHANGELOG" != 'true' ]]; then return; fi
+
   if command -v docker >/dev/null 2>&1; then
     eval "docker run -it --rm -e CHANGELOG_GITHUB_TOKEN=${GITHUB_TOKEN} -v $(pwd):/usr/local/src/your-app ferrarimarco/github-changelog-generator --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
   elif command -v github_changelog_generator >/dev/null 2>&1; then
     eval "github_changelog_generator --token ${GITHUB_TOKEN} --user ${GIT_REPO_OWNER} --project ${GIT_REPO}" "${@:-}"
   fi
+}
+
+# Commit CHANGELOG.md
+commit_changelog(){
+  if [[ "$WRITE_CHANGELOG" != 'true' ]]; then return; fi
+  if git diff --quiet HEAD; then return; fi
+
+  echo 'Commit CHANGELOG'
+  git add CHANGELOG.md
+  git commit --gpg-sign --message "Update change log for ${RELEASE}" CHANGELOG.md
+}
+
+# Wait for the CI job to return SUCCESS
+wait_for_ci(){
+  if [[ "$WAIT_FOR_CI_SUCCESS" != 'true' ]]; then return; fi
+
+  echo 'Waiting for CI to finish'
+  while [[ $(hub ci-status "$RELEASE_BRANCH") != "success" ]]; do
+    sleep 5
+  done
+}
+
+# Merge release branch
+merge_release_branch(){
+  if [[ "$REQUIRE_PULL_REQUEST" != 'true' ]]; then return; fi
+
+  echo 'Merge release branch'
+  git checkout "$INITIAL_BRANCH"
+  git merge --gpg-sign --no-ff --message "Release ${RELEASE}" "$RELEASE_BRANCH"
+}
+
+# Tag release
+tag_release(){
+  echo "Tag  ${RELEASE}"
+  git tag --sign "${RELEASE}" --message "Release ${RELEASE}"
+  git push --follow-tags
+}
+
+# Publish GitHub release
+publish_release(){
+  if [[ "$PUBLISH_RELEASE" != 'true' ]]; then return; fi
+
+  echo 'Publish release'
+  cat<<EOF | hub release create -F - "$RELEASE"
+Release ${RELEASE}
+
+$(awk -v version="[${RELEASE}](https://github.com/${GIT_REPO_OWNER}/${GIT_REPO}/tree/${RELEASE})" '/## / {printit = $2 == version}; printit;' CHANGELOG.md)
+EOF
+  # This can also be used but the disadvantage is that it will scan and recreate the CHANGELOG again, plus the output file will be owned by root if the command is used inside the docker container:
+  # generate_changelog --header-label "Release_${RELEASE}" --unreleased-only --future-release "$RELEASE" --output release_notes.md
+  # hub release create -F release_notes.md "$RELEASE"
 }
 
 # Logic
@@ -141,57 +203,20 @@ main(){
   # Compose release
   RELEASE="v${MAJOR}.${MINOR}.${PATCH}"
 
-  # Detect branch names
+  # Branch names
   INITIAL_BRANCH="${GIT_BRANCH:-$(git symbolic-ref --short HEAD 2>/dev/null)}"
-  if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
-    RELEASE_BRANCH="release_${RELEASE//./_}"
-  else
-    RELEASE_BRANCH="$INITIAL_BRANCH"
-  fi
+  RELEASE_BRANCH="$INITIAL_BRANCH"
 
-  if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
-    echo 'Create a new release branch'
-    git checkout -b "$RELEASE_BRANCH"
-  fi
+  # Main logic
+  create_release_branch
 
-  if [[ "$WRITE_CHANGELOG" == 'true' ]]; then
-    generate_changelog --future-release ${RELEASE:-}
+  generate_changelog --future-release ${RELEASE:-}
+  commit_changelog
+  wait_for_ci
+  merge_release_branch
 
-    if ! git diff --quiet HEAD; then
-      echo 'Commit CHANGELOG'
-      git add CHANGELOG.md
-      git commit --gpg-sign --message "Update change log for ${RELEASE}" CHANGELOG.md
-    fi
-  fi
-
-  if [[ "$WAIT_FOR_CI_SUCCESS" == 'true' ]]; then
-    echo 'Waiting for CI to finish'
-    while [[ $(hub ci-status "$RELEASE_BRANCH") != "success" ]]; do
-      sleep 5
-    done
-  fi
-
-  if [[ "$REQUIRE_PULL_REQUEST" == 'true' ]]; then
-    echo 'Merge release branch'
-    git checkout "$INITIAL_BRANCH"
-    git merge --gpg-sign --no-ff --message "Release ${RELEASE}" "$RELEASE_BRANCH"
-  fi
-
-  echo "Tag  ${RELEASE}"
-  git tag --sign "${RELEASE}" --message "Release ${RELEASE}"
-  git push --follow-tags
-
-  if [[ "$PUBLISH_RELEASE" == 'true' ]]; then
-    echo 'Publish release'
-      cat<<EOF | hub release create -F - "$RELEASE"
-Release ${RELEASE}
-
-$(awk -v version="[${RELEASE}](https://github.com/${GIT_REPO_OWNER}/${GIT_REPO}/tree/${RELEASE})" '/## / {printit = $2 == version}; printit;' CHANGELOG.md)
-EOF
-    # This can also be used but the disadvantage is that it will scan and recreate the CHANGELOG again, plus the output file will be owned by root if the command is used inside the docker container:
-    # generate_changelog --header-label "Release_${RELEASE}" --unreleased-only --future-release "$RELEASE" --output release_notes.md
-    # hub release create -F release_notes.md "$RELEASE"
-  fi
+  tag_release
+  publish_release
 }
 
 # Run
