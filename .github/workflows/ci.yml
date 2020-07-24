@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Shellcheck
       run: |
+            wget "https://github.com/koalaman/shellcheck/releases/download/${SC_VERSION?}/shellcheck-${SC_VERSION?}.linux.x86_64.tar.xz"
             wget "https://storage.googleapis.com/shellcheck/shellcheck-${SC_VERSION}.linux.x86_64.tar.xz"
             tar --xz -xvf "shellcheck-${SC_VERSION}.linux.x86_64.tar.xz"
             shellcheck() { "shellcheck-${SC_VERSION}/shellcheck" "$@"; }
