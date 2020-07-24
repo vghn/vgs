@@ -1,5 +1,18 @@
 # Changelog
 
+## [v0.5.0](https://github.com/vghn/vgs/tree/v0.5.0) (2020-07-24)
+
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.4.0...v0.5.0)
+
+**Merged pull requests:**
+
+- Update shellcheck url [\#68](https://github.com/vghn/vgs/pull/68) ([vladgh](https://github.com/vladgh))
+- Improve release script [\#67](https://github.com/vghn/vgs/pull/67) ([vladgh](https://github.com/vladgh))
+
+## [v0.4.0](https://github.com/vghn/vgs/tree/v0.4.0) (2020-04-26)
+
+[Full Changelog](https://github.com/vghn/vgs/compare/v0.3.2...v0.4.0)
+
 ## [v0.3.2](https://github.com/vghn/vgs/tree/v0.3.2) (2020-04-26)
 
 [Full Changelog](https://github.com/vghn/vgs/compare/v0.3.1...v0.3.2)
@@ -24,7 +37,6 @@
 **Implemented enhancements:**
 
 - Switch to GitHub Actions [\#63](https://github.com/vghn/vgs/issues/63)
-- Use a DOCKER\_NO\_CACHE environment variable [\#58](https://github.com/vghn/vgs/issues/58)
 
 **Fixed bugs:**
 
@@ -46,9 +58,9 @@
 
 **Implemented enhancements:**
 
+- Use a DOCKER\_NO\_CACHE environment variable [\#58](https://github.com/vghn/vgs/issues/58)
 - Load VGS inside scripts as well [\#57](https://github.com/vghn/vgs/issues/57)
 - Remove VTasks gem dependency [\#56](https://github.com/vghn/vgs/issues/56)
-- Add script for temporary AWS credentials [\#54](https://github.com/vghn/vgs/issues/54)
 
 ## [v0.2.2](https://github.com/vghn/vgs/tree/v0.2.2) (2018-10-21)
 
@@ -57,6 +69,7 @@
 **Implemented enhancements:**
 
 - Fix passphrase for GPG prior than 2.2 [\#55](https://github.com/vghn/vgs/issues/55)
+- Add script for temporary AWS credentials [\#54](https://github.com/vghn/vgs/issues/54)
 
 ## [v0.2.1](https://github.com/vghn/vgs/tree/v0.2.1) (2018-10-15)
 
@@ -99,6 +112,7 @@
 - Add DEBUG global variable [\#38](https://github.com/vghn/vgs/pull/38) ([vladgh](https://github.com/vladgh))
 - Remove Faradaygem version requirement [\#37](https://github.com/vghn/vgs/pull/37) ([vladgh](https://github.com/vladgh))
 - Add the new release task options [\#35](https://github.com/vghn/vgs/pull/35) ([vladgh](https://github.com/vladgh))
+- Use Vtasks [\#34](https://github.com/vghn/vgs/pull/34) ([vladgh](https://github.com/vladgh))
 - Add Code of Conduct [\#33](https://github.com/vghn/vgs/pull/33) ([vladgh](https://github.com/vladgh))
 - Use the new Trusty build container in TravisCI [\#31](https://github.com/vghn/vgs/pull/31) ([vladgh](https://github.com/vladgh))
 - Improve Rakefile [\#30](https://github.com/vghn/vgs/pull/30) ([vladgh](https://github.com/vladgh))
@@ -114,7 +128,6 @@
 
 **Implemented enhancements:**
 
-- Use Vtasks [\#34](https://github.com/vghn/vgs/pull/34) ([vladgh](https://github.com/vladgh))
 - Consolidate rake tasks [\#28](https://github.com/vghn/vgs/pull/28) ([vladgh](https://github.com/vladgh))
 - Use the Ruby version that is preinstalled on Travis [\#27](https://github.com/vghn/vgs/pull/27) ([vladgh](https://github.com/vladgh))
 - Update LICENSE [\#26](https://github.com/vghn/vgs/pull/26) ([vladgh](https://github.com/vladgh))
