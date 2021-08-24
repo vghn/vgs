@@ -32,7 +32,7 @@ IFS=$'\n\t'
 
 # Load VGS library
 # shellcheck disable=SC1091
-. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/load"
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/load.sh"
 
 # VARs
 GIT_TAG="$(git describe --always --tags)"

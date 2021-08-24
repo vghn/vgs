@@ -159,7 +159,7 @@ vgh_aws_cfn_watch(){
   done
 
   if [ -n "$watch" ]; then
-    watch -t -n1 bash -c "'source ${VGS_DIR}/load; vgh_aws_cfn_watch --stack ${stack}'"
+    watch -t -n1 bash -c "'source ${VGS_DIR}/load.sh; vgh_aws_cfn_watch --stack ${stack}'"
     return 0
   fi
 
