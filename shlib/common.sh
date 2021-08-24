@@ -63,9 +63,7 @@ detect_environment(){
   # Git environment
   GIT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo '')
   GIT_SHA1=$(git rev-parse --short HEAD 2>/dev/null || echo '0')
-  if [[ -n "${ENVTYPE:-}" ]]; then # If env var
-    ENVTYPE="$ENVTYPE"
-  elif [[ -n "${GIT_BRANCH:-}" ]]; then # If git branch
+  if [[ -n "${GIT_BRANCH:-}" ]]; then # If git branch
     ENVTYPE="$GIT_BRANCH"
   elif [[ -n "${TRAVIS_BRANCH:-}" ]]; then # If TravisCI git branch
     ENVTYPE="$TRAVIS_BRANCH"
