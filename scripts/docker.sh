@@ -31,8 +31,8 @@ IFS=$'\n\t'
 [[ -z "${DEBUG:-}" ]] || set -x
 
 # Load VGS library
-# shellcheck disable=1090
-. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/load"
+# shellcheck disable=SC1091
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)/load.sh"
 
 # VARs
 GIT_TAG="$(git describe --always --tags)"
